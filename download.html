@@ -10,28 +10,76 @@
     <link rel="stylesheet" href="./css/iconfont.css">
     <link rel="stylesheet" href="./css/base.css">
     <link rel="stylesheet" href="./css/style.css">
+    <style>
+        .container-page {
+            gap: 1em;
+            padding: 2em;
+        }
+
+        .container-download-list {
+            width: 50%;
+        }
+
+        .download-item {
+            gap: 1em;
+            padding: 0.75em;
+        }
+
+        @media screen and (max-width: 1024px) {
+
+            .container-download-list {
+                width: 75%;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .container-page {
+                gap: 0.5em;
+                padding: 0.75em;
+            }
+
+            .container-download-list {
+                width: 100%;
+            }
+
+            .download-item {
+                gap: 0.5em;
+                padding: 0.75em;
+            }
+        }
+
+        @media screen and (max-width: 425px) {}
+    </style>
 </head>
 
 <body>
 
     <img class="background" src="./background.png" alt="">
 
-    <div class="flex-col align-center fill-wh" style="gap: 1em;padding: 2em">
+    <div class="container-page flex-col align-center fill-wh">
         <h2>恋恋光标</h2>
-        <div style="width: 50%;">
-            <div class="general-card flex-row align-center" style="gap: 1em;padding: 0.75em">
+        <div class="container-download-list">
+            <div class="general-card download-item flex-row align-center">
                 <!-- 头像 -->
                 <div>
                     <img class="avatar" src="./icon.jpg" alt="">
                 </div>
                 <!-- 资源明与下载链接 -->
-                <div>
+                <div style="flex-shrink: 1;min-width: 0;">
                     <h4>GitHub 下载</h4>
-                    <a style="color: gray">https://github.com/xiankuang/lianliancursor</a>
+                    <a style="color: gray;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        display: inline-block;
+                        width: 100%;
+                        max-width: 100%;">
+                        https://github.com/xiankuang/lianliancursor
+                    </a>
                 </div>
                 <!-- 下载按钮 -->
-                <div class="flex-row justify-end" style="flex: 1;">
-                    <button class="download-btn">
+                <div class="flex-row justify-end" style="flex: 1;flex-shrink: 0;">
+                    <button class="download-btn" style="white-space: nowrap;">
                         <span class="iconfont icon-xiazai"></span>
                         <span>下载</span>
                     </button>
