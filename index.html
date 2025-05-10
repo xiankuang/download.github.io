@@ -1,14 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>测试</title>
+    <link rel="stylesheet" href="./css/iconfont.css">
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/style.css">
 </head>
-<body>
-    <h3>欢迎来到线框的资源库</h3>
-    <a href="https://space.bilibili.com/400839602">我的b站主页</a>
 
+<body>
+<img class="background" src="./background.png" alt="">
+<div class="flex-col center fill-wh">
+    <div class="flex-row" style="gap: 1em;width: 80%;height: 90%">
+        <!-- 侧边个心信息 -->
+        <div class="general-card flex-col center" style="gap: 1em;flex: 1;padding: 1em">
+            <img class="avatar-large" src="./icon.jpg" alt="">
+            <h2>普通的线框</h2>
+            <div class="flex-row align-center" style="gap: 0.5em;">
+                <a href="https://space.bilibili.com/400839602" class="personal-homepage flex-row align-center"
+                   style="gap: 0.25em">
+                    <span class="iconfont icon-bilibili-line bilibili-color"></span>
+                    <span style="font-size: 14px">哔哩哔哩</span>
+                </a>
+                <a href="https://github.com/xiankuang" class="personal-homepage">
+                    <span class="iconfont icon-github"></span>
+                    <span style="font-size: 14px">GitHub</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- 内容 -->
+        <div style="overflow: hidden auto;flex: 3">
+            <!-- 资源表格 -->
+            <div style="display: grid;grid-template-columns: repeat(3, 1fr);gap: 1em;">
+                <a href="./download.html">
+                    <div class="general-card info-card flex-col">
+                        <img class="cover" src="./icon.jpg" alt="">
+                        <div class="flex-col"
+                             style="gap: 0.2em;padding: 0.75em 1em;border-top: 1px solid var(--border-color);">
+                            <h4 class="single-line-ellipsis">恋恋光标</h4>
+                            <p class="single-line-ellipsis" style="font-size: 14px;color: #666666">超级可爱</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="./download.html">
+                    <div class="general-card info-card flex-col">
+                        <img class="cover" src="./icon.jpg" alt="">
+                        <div class="flex-col"
+                             style="gap: 0.2em;padding: 0.75em 1em;border-top: 1px solid var(--border-color);">
+                            <h4 class="single-line-ellipsis">反色光标</h4>
+                            <p class="single-line-ellipsis" style="font-size: 14px;color: #666666">炫酷！</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="./download.html">
+                    <div class="general-card info-card flex-col">
+                        <img class="cover" src="./icon.jpg" alt="">
+                        <div class="flex-col"
+                             style="gap: 0.2em;padding: 0.75em 1em;border-top: 1px solid var(--border-color);">
+                            <h4 class="single-line-ellipsis">oneshot niko 光标</h4>
+                            <p class="single-line-ellipsis" style="font-size: 14px;color: #666666">阿巴阿巴</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!--<h2>欢迎来到线框的资源库</h2>-->
+    <!--<a href="https://space.bilibili.com/400839602" style="margin-bottom: 2em">我的b站主页</a>-->
+</div>
 </body>
+
 </html>

@@ -1,0 +1,27 @@
+@font-face {
+    font-family: "iconfont"; /* Project id 4916137 */
+    src: url('iconfont.woff2?t=1746869036834') format('woff2'),
+    url('iconfont.woff?t=1746869036834') format('woff'),
+    url('iconfont.ttf?t=1746869036834') format('truetype');
+}
+
+.iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-bilibili-line:before {
+    content: "\ea96";
+}
+
+.icon-github:before {
+    content: "\e66f";
+}
+
+.icon-xiazai:before {
+    content: "\e665";
+}
+
