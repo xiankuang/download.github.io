@@ -79,6 +79,19 @@ button.download-btn {
     border: 1px solid #bbb;
 } */
 
+.table {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.container-root {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+
+    width: 80%;
+    height: 90%;
+}
+
 .general-card {
     overflow: hidden;
     background: rgba(255, 255, 255, 0.75);
@@ -88,13 +101,17 @@ button.download-btn {
 }
 
 .no-wrap {
-    white-space: nowrap; /* 禁止换行 */
+    white-space: nowrap;
+    /* 禁止换行 */
 }
 
 .single-line-ellipsis {
-    white-space: nowrap; /* 禁止换行 */
-    overflow: hidden; /* 隐藏溢出内容 */
-    text-overflow: ellipsis; /* 显示省略号 */
+    white-space: nowrap;
+    /* 禁止换行 */
+    overflow: hidden;
+    /* 隐藏溢出内容 */
+    text-overflow: ellipsis;
+    /* 显示省略号 */
 }
 
 /* 下载卡片 */
@@ -138,4 +155,48 @@ img.background {
 
 .personal-homepage span {
     font-size: inherit;
+}
+
+@media screen and (max-width: 1440px) {
+    .table {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .container-root {
+        width: calc(100% - 5em);
+        height: calc(100% - 5em);
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .table {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .table {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .container-root {
+        grid-template-columns: 1fr 2fr;
+
+        width: calc(100% - 2em);
+        height: calc(100% - 2em);
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .table {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .container-root {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 2fr;
+
+        width: calc(100% - 1em);
+        height: calc(100% - 1em);
+    }
 }
