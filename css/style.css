@@ -149,6 +149,10 @@ img.background {
 }
 
 .personal-homepage {
+    display: flex;
+    flex-direction: row;
+    gap: 0.25em;
+    align-items: center;
     font-size: 16px;
     line-height: 1;
     background: #ffffff;
