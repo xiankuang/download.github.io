@@ -122,7 +122,6 @@ img.avatar-large {
 
 div.info-card {
     cursor: pointer;
-    box-shadow: 0 0 1em rgba(0, 0, 0, 0.1);
     transition: all 200ms ease-out;
 }
 
@@ -132,7 +131,7 @@ div.info-card:hover {
 
 div.info-card img.cover {
     width: 100%;
-    aspect-ratio: 3/2;
+    aspect-ratio: 1/1;
     object-fit: cover;
 }
 
