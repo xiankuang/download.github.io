@@ -1,19 +1,19 @@
-
 /* 恋恋光标卡片 */
-a[href="./Koishi-download.html"] {
+/* a[href="./Koishi-download.html"] {
     cursor: url('恋恋光标.png'), auto;
-}
+} */
 
 /* 初音未来光标卡片 */
-a[href="./miku-download.html"] {
+/* a[href="./miku-download.html"] {
     cursor: url('./cursor/miku.gif'), pointer;
-}
+} */
 
 /* niko光标卡片 */
-.a[href="./niko-download.html"] {
-    cursor: url('1112.'), pointer;
-}
-.background{
-    cursor: url('1112.'), pointer;
+a[href="./niko-download.html"],
+a[href="./niko-download.html"] * {
+    cursor: url('./1112.png'), pointer;
 }
 
+.background {
+    cursor: url('./1112.png'), pointer;
+}
