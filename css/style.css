@@ -207,6 +207,30 @@ img.background {
         height: calc(100% - 1em);
     }
 }
+/* 固定在窗口底部并居中的样式 */
+.fixed-bottom {
+    position: fixed;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 800px;
+    z-index: 100;
+    opacity: 0.2; /* 新增：设置透明度为50% */
+    transition: opacity 0.3s ease; /* 可选：添加透明度过渡动画 */
+}
+
+/* 鼠标悬停时恢复不透明（可选交互效果） */
+.fixed-bottom:hover {
+    opacity: 1; /* 鼠标移上去时恢复100%透明度 */
+}
+/* 移动端适配 */
+@media screen and (max-width: 768px) {
+    .fixed-bottom {
+        width: calc(100% - 2rem); /* 小屏幕下左右各留1rem边距 */
+        bottom: 0.5rem;           /* 底部间距减小 */
+    }
+}
 /* 淡入动画效果 */
 @keyframes fadeIn {
     from {
