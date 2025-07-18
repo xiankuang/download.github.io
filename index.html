@@ -5,22 +5,187 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- 页面图标 -->
     <link rel="icon" href="./icon.jpg" type="image/x-icon">
     <title>线框的主页</title>
     <link rel="stylesheet" href="./css/iconfont.css">
     <link rel="stylesheet" href="./css/base.css">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/cursor.css">
+    <style>
+        /* 弹窗样式 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        /* 精确位置图片样式 */
+        .precise-position-image-container {
+            position: absolute;
+            /* 弹窗与右边界之间的1/3处 */
+            left: calc(50% + 350px + (100vw - (50% + 400px)) / 6
+            );
+            /* 弹窗高度的3/4处（从顶部开始计算） */
+            top: calc(50% - 250px + 470px);
+            /* 初始在左侧外部（从左到右滑入） */
+            transform: translateX(-120%);
+            width: 25%; /* 弹窗宽度的四分之一 */
+            max-width: 180px; /* 最大宽度限制 */
+            z-index: 50; /* 确保在弹窗下方 */
+            transition: transform 0.5s ease 0.2s; /* 从左到右滑动动画 */
+        }
+        
+        .precise-position-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* 弹窗激活时显示图片（从左到右滑入） */
+        .modal-overlay.active .precise-position-image-container {
+            transform: translateX(0); /* 滑动到目标位置 */
+        }
+        
+        .modal-content {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            transform: translateY(20px);
+            transition: transform 0.4s ease, opacity 0.4s ease;
+            opacity: 0;
+        }
+        
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .modal-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            margin: 0;
+            font-size: 20px;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #888;
+            transition: color 0.2s;
+        }
+        
+        .close-modal:hover {
+            color: #333;
+        }
+        
+        .modal-body {
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+        }
+        
+        .modal-image-container {
+            width: 100%;
+            height: 533px; /* 弹窗图片高度 */
+            overflow: hidden;
+        }
+        
+        .modal-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .modal-details {
+            padding: 20px;
+        }
+        
+        .modal-desc {
+            margin-bottom: 20px;
+        }
+        
+        .container-download-list {
+            margin-bottom: 15px;
+        }
+        
+        .download-item {
+            padding: 15px;
+            gap: 15px;
+        }
+        
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        
+        .download-btn {
+            background-color: #007BFF;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background-color 0.2s;
+        }
+        
+        .download-btn:hover {
+            background-color: #0056b3;
+        }
+        
+        /* 移动端适配 */
+        @media (max-width: 600px) {
+            .modal-image-container {
+                height: 400px;
+            }
+            
+            .precise-position-image-container {
+                width: 20%;
+                max-width: 100px;
+                /* 移动端弹窗与右边界之间的1/3处 */
+                left: calc(50% + 45% + (100vw - (50% + 45%)) / 3);
+                /* 移动端弹窗高度的3/4处 */
+                top: calc(50% - 200px + 300px);
+            }
+        }
+    </style>
 </head>
-
 
 <body>
     <img class="background" src="./background.png" alt="">
-    <!-- ROOT -->
     <div class="flex-col center fill-wh">
         <div class="container-root" style="gap: 1em;">
-            <!-- 侧边个心信息 -->
+            <!-- 侧边信息 -->
             <div class="general-card flex-col center" style="gap: 1em;padding: 1em">
                 <img class="avatar-large" src="./icon.jpg" alt="">
                 <h2>普通的线框</h2>
@@ -39,144 +204,183 @@
                     </a>
                 </div>
                 <div style="text-align: center; color: #666; font-size: 16px;">
-        如果觉得框框画的很好可以去 ko-fi 或者 爱发电<br>给予线框一些支持，鼓励线框的创作。
-    </div>
+                    如果觉得框框画的很好可以去 ko-fi 或者 爱发电<br>给予线框一些支持，鼓励线框的创作。
+                </div>
             </div>
 
-            <!-- 内容 -->
+            <!-- 内容容器（动态生成卡片） -->
             <div style="overflow: hidden auto;">
-                <!-- 资源表格 -->
-                <div class="table" style="gap: 1em;">
-                    
-                    <a href="./download.html?resource=scm">
-                        <div class="general-card info-card flex-col fade-in-animation">
-                            <img class="cover" src="./icon/scm宣传.png" alt="">
-                            <div class="flex-col"
-                                style="gap: 0.2em;padding: 0.75em 1em;border-top: 1px solid var(--border-color);">
-                                <h4 class="single-line-ellipsis">简易光标制作器scm</h4>
-                                <p class="single-line-ellipsis" style="font-size: 14px;color: #666666">超级好用的光标编辑器</p>
-                            </div>
-                        </div>
-                    </a>
-                     <a href="./download.html?resource=yileina">
-                        <div class="general-card info-card flex-col fade-in-animation">
-                            <img class="cover" src="./icon/伊蕾娜光标宣传a2.gif" alt="">
-                            <div class="flex-col"
-                                style="gap: 0.2em;padding: 0.75em 1em;border-top: 1px solid var(--border-color);">
-                                <h4 class="single-line-ellipsis">伊蕾娜</h4>
-                                <p class="single-line-ellipsis" style="font-size: 14px;color: #666666">可爱</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="./download.html?resource=boqi">
-                        <div class="general-card info-card flex-col fade-in-animation">
-                            <img class="cover" src="./icon/波奇酱宣传a2.gif" alt="">
-                            <div class="flex-col"
-                                style="gap: 0.2em;padding: 0.75em 1em;border-top: 1px solid var(--border-color);">
-                                <h4 class="single-line-ellipsis">可爱波奇</h4>
-                                <p class="single-line-ellipsis" style="font-size: 14px;color: #666666">可爱</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="./download.html?resource=xnyxy">
-                        <div class="general-card info-card flex-col fade-in-animation">
-                            <img class="cover" src="./icon/小鸟游星野光标宣传2.gif" alt="">
-                            <div class="flex-col"
-                                style="gap: 0.2em;padding: 0.75em 1em;border-top: 1px solid var(--border-color);">
-                                <h4 class="single-line-ellipsis">可爱星野</h4>
-                                <p class="single-line-ellipsis" style="font-size: 14px;color: #666666">可爱星野</p>
-                            </div>
-                        </div>
-                    </a>
-                     <a href="./download.html?resource=ralsei">
-                        <div class="general-card info-card flex-col fade-in-animation">
-                            <img class="cover" src="./icon/三角符文小羊光标宣传2.gif" alt="">
-                            <div class="flex-col"
-                                style="gap: 0.2em;padding: 0.75em 1em;border-top: 1px solid var(--border-color);">
-                                <h4 class="single-line-ellipsis">ralsei</h4>
-                                <p class="single-line-ellipsis" style="font-size: 14px;color: #666666">超级可爱！</p>
-                            </div>
-                        </div>
-                    </a>
-                     <a href="./download.html?resource=miku">
-                        <div class="general-card info-card flex-col fade-in-animation">
-                            <img class="cover" src="./icon/初音未来光标宣传2.gif" alt="">
-                            <div class="flex-col"
-                                style="gap: 0.2em;padding: 0.75em 1em;border-top: 1px solid var(--border-color);">
-                                <h4 class="single-line-ellipsis">初音未来光标</h4>
-                                <p class="single-line-ellipsis" style="font-size: 14px;color: #666666">超级可爱！</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="./download.html?resource=koishi">
-                        <div class="general-card info-card flex-col fade-in-animation">
-                            <img class="cover" src="./icon/恋恋光标宣传2.gif" alt="">
-                            <div class="flex-col"
-                                style="gap: 0.2em;padding: 0.75em 1em;border-top: 1px solid var(--border-color);">
-                                <h4 class="single-line-ellipsis">恋恋光标</h4>
-                                <p class="single-line-ellipsis" style="font-size: 14px;color: #666666">用着用着就消失了</p>
-                            </div>
-                        </div>
-                    </a>
-                   
-                    <a href="./download.html?resource=niko2">
-                        <div class="general-card info-card flex-col fade-in-animation">
-                            <img class="cover" src="./icon/niko光标宣传2.gif" alt="">
-                            <div class="flex-col"
-                                style="gap: 0.2em;padding: 0.75em 1em;border-top: 1px solid var(--border-color);">
-                                <h4 class="single-line-ellipsis">oneshot niko 光标</h4>
-                                <p class="single-line-ellipsis" style="font-size: 14px;color: #666666">不敢用怕只能用一次</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="./download.html?resource=niko1">
-                        <div class="general-card info-card flex-col fade-in-animation">
-                            <img class="cover" src="./icon/niko1.0光标宣传2.gif" alt="">
-                            <div class="flex-col"
-                                style="gap: 0.2em;padding: 0.75em 1em;border-top: 1px solid var(--border-color);">
-                                <h4 class="single-line-ellipsis">oneshot niko 光标（旧）</h4>
-                                <p class="single-line-ellipsis" style="font-size: 14px;color: #666666">不敢用怕只能用一次</p>
-                            </div>
-                        </div>
-                    </a>
-                   
-                    <a href="./download.html?resource=scm">
-                        <div class="general-card info-card flex-col fade-in-animation">
-                            <img class="cover" src="./icon/小桃光标宣传2.gif" alt="">
-                            <div class="flex-col"
-                                style="gap: 0.2em;padding: 0.75em 1em;border-top: 1px solid var(--border-color);">
-                                <h4 class="single-line-ellipsis">碧蓝档案小桃光标</h4>
-                                <p class="single-line-ellipsis" style="font-size: 14px;color: #666666">omg是王小桃</p>
-                            </div>
-                        </div>
-                    </a>
-                     <a href="./download.html?resource=gifcursor">
-                        <div class="general-card info-card flex-col fade-in-animation">
-                            <img class="cover" src="./icon/动态简单像素光标宣传.gif" alt="">
-                            <div class="flex-col"
-                                style="gap: 0.2em;padding: 0.75em 1em;border-top: 1px solid var(--border-color);">
-                                <h4 class="single-line-ellipsis">动态简单像素光标</h4>
-                                <p class="single-line-ellipsis" style="font-size: 14px;color: #666666">最经典的光标</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="./download.html?resource=ungifcursor">
-                        <div class="general-card info-card flex-col fade-in-animation">
-                            <img class="cover" src="./icon/反色动态简单像素光标.gif" alt="">
-                            <div class="flex-col"
-                                style="gap: 0.2em;padding: 0.75em 1em;border-top: 1px solid var(--border-color);">
-                                <h4 class="single-line-ellipsis">反色动态简单像素光标</h4>
-                                <p class="single-line-ellipsis" style="font-size: 14px;color: #666666">最经典的光标的反色</p>
-                            </div>
-                        </div>
-                    </a>
-                 
+                <div class="table" style="gap: 1em;" id="resourceContainer">
+                    <!-- 卡片将通过JS动态生成 -->
                 </div>
             </div>
         </div>
-        <!--<h2>欢迎来到线框的资源库</h2>-->
-        <!--<a href="https://space.bilibili.com/400839602" style="margin-bottom: 2em">我的b站主页</a>-->
     </div>
+
+    <!-- 弹窗组件 -->
+    <div class="modal-overlay" id="resourceModal">
+        <!-- 精确位置的图片 -->
+        <div class="precise-position-image-container">
+            <img src="222.png" alt="精确位置图片" class="precise-position-image">
+        </div>
+        
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">资源详情</h3>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-image-container">
+                    <img src="./111.png" alt="资源图片" id="modalImage" class="modal-image">
+                </div>
+                <div class="modal-details">
+                    <p class="modal-desc" id="modalDescription">描述信息</p>
+                    
+                    <div class="container-download-list">
+                        <div class="general-card download-item flex-row align-center" data-type="quark">
+                            <div>
+                                <img class="avatar" src="./夸克.png" alt="夸克网盘图标">
+                            </div>
+                            <div style="flex-shrink: 1;min-width: 0;">
+                                <h4>夸克云盘</h4>
+                                <a id="quark-link" class="modal-download-link" style="color: gray; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; width: 100%; max-width: 100%;">
+                                    https://example.com/quark
+                                </a>
+                            </div>
+                            <div class="flex-row justify-end" style="flex: 1;flex-shrink: 0;">
+                                <a id="quark-btn" href="http://example.com" class="download-btn" target="_blank" style="white-space: nowrap;">
+                                    <span class="iconfont icon-xiazai"></span>
+                                    <span>下载</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="container-download-list">
+                        <div class="general-card download-item flex-row align-center" data-type="baidu">
+                            <div>
+                                <img class="avatar" src="./百度云.png" alt="百度网盘图标">
+                            </div>
+                            <div style="flex-shrink: 1;min-width: 0;">
+                                <h4>百度云盘</h4>
+                                <a id="baidu-link" class="modal-download-link" style="color: gray; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; width: 100%; max-width: 100%;">
+                                    https://example.com/baidu
+                                </a>
+                            </div>
+                            <div class="flex-row justify-end" style="flex: 1;flex-shrink: 0;">
+                                <a id="baidu-btn" href="http://example.com" class="download-btn" target="_blank" style="white-space: nowrap;">
+                                    <span class="iconfont icon-xiazai"></span>
+                                    <span>下载</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="container-download-list">
+                        <div class="general-card download-item flex-row align-center" data-type="lanzou">
+                            <div>
+                                <img class="avatar" src="./蓝奏.png" alt="蓝奏云图标">
+                            </div>
+                            <div style="flex-shrink: 1;min-width: 0;">
+                                <h4>蓝奏云</h4>
+                                <a id="lanzou-link" class="modal-download-link" style="color: gray; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; width: 100%; max-width: 100%;">
+                                    https://example.com/lanzou
+                                </a>
+                            </div>
+                            <div class="flex-row justify-end" style="flex: 1;flex-shrink: 0;">
+                                <a id="lanzou-btn" href="http://example.com" class="download-btn" target="_blank" style="white-space: nowrap;">
+                                    <span class="iconfont icon-xiazai"></span>
+                                    <span>下载</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 引入资源数据文件和交互逻辑 -->
+    <script src="resources.js"></script>
+    <script>
+        // DOM 元素
+        const resourceContainer = document.getElementById('resourceContainer');
+        const modal = document.getElementById('resourceModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDescription = document.getElementById('modalDescription');
+        const modalImage = document.getElementById('modalImage');
+        const closeModal = document.getElementById('closeModal');
+
+        // 动态生成卡片
+        function renderResourceCards() {
+            if (!resourceContainer) return;
+
+            resources.forEach(resource => {
+                const card = document.createElement('div');
+                card.className = 'general-card info-card flex-col fade-in-animation cursor-pointer';
+                card.innerHTML = `
+                    <img class="cover" src="${resource.image}" alt="${resource.title}">
+                    <div class="flex-col" style="gap: 0.2em;padding: 0.75em 1em;border-top: 1px solid var(--border-color);">
+                        <h4 class="single-line-ellipsis">${resource.title}</h4>
+                        <p class="single-line-ellipsis" style="font-size: 14px;color: #666666">${resource.description}</p>
+                    </div>
+                `;
+                
+                // 添加点击事件
+                card.addEventListener('click', () => openModal(resource));
+                
+                resourceContainer.appendChild(card);
+            });
+        }
+
+        // 打开弹窗
+        function openModal(resource) {
+            modalTitle.textContent = resource.title;
+            modalDescription.textContent = resource.description;
+            
+            // 设置弹窗图片
+            modalImage.src = resource.image || './111.png';
+            modalImage.alt = `${resource.title} 预览图`;
+            
+            // 处理下载链接
+            const platforms = ['quark', 'baidu', 'lanzou'];
+            platforms.forEach(platform => {
+                const linkElement = document.getElementById(`${platform}-link`);
+                const btnElement = document.getElementById(`${platform}-btn`);
+                
+                if (resource.links[platform]) {
+                    linkElement.textContent = resource.links[platform];
+                    linkElement.href = resource.links[platform];
+                    btnElement.href = resource.links[platform];
+                    linkElement.closest('.download-item').style.display = 'flex';
+                } else {
+                    linkElement.closest('.download-item').style.display = 'none';
+                }
+            });
+            
+            // 显示弹窗
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // 关闭弹窗
+        function closeModalHandler() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // 事件监听
+        closeModal.addEventListener('click', closeModalHandler);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModalHandler();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) closeModalHandler();
+        });
+
+        // 页面加载后执行
+        window.addEventListener('DOMContentLoaded', renderResourceCards);
+    </script>
 </body>
 
 </html>
