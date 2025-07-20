@@ -12,6 +12,17 @@ const resources = [
         }
     },
     {
+        id: 'lingmeng',
+        title: '博丽灵梦',
+        description: 'good apple',
+        image: './icon/灵梦宣传aa2.gif',
+        links: {
+            quark: 'https://pan.quark.cn/s/5e61d07a2cf5',
+            baidu: 'https://pan.baidu.com/s/1zz4IaEfU_bmqHP7tOHO6ow?pwd=xkxk',
+            lanzou: 'https://wwpy.lanzoue.com/b00l2378pi',
+        }
+    },
+    {
         id: 'yileina',
         title: '伊蕾娜',
         description: '可爱',
