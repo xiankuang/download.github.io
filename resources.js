@@ -8,7 +8,7 @@ const resources = [
         links: {
             quark: 'https://pan.quark.cn/s/beecfb268264',
             baidu: 'https://pan.baidu.com/s/1JJs5Jnr3lEtm0SerPfbiFA?pwd=xkxk',
-            lanzou: 'https://wwpy.lanzoue.com/b00l1y0s2d密码:go1m',
+            lanzou: 'https://wwpy.lanzoue.com/b00l1y0s2d',
         }
     },
     {
@@ -19,7 +19,7 @@ const resources = [
         links: {
             quark: 'https://pan.quark.cn/s/0b9aeb8ba9ed',
             baidu: 'https://pan.baidu.com/s/1B27QOHyN2Fzc6hFvymchmg?pwd=xkxk',
-            lanzou: 'https://wwpy.lanzoue.com/b00l2116qj密码:51ew'
+            lanzou: 'https://wwpy.lanzoue.com/b00l2116qj'
         }
     },
     {
@@ -30,7 +30,7 @@ const resources = [
         links: {
             quark: 'https://pan.quark.cn/s/7b4b1bd17cb1',
             baidu: 'https://pan.baidu.com/s/1TGmpGpNkmu4OU2kUPMvhig?pwd=xkxk',
-            lanzou: 'https://wwpy.lanzoue.com/b00l20d4he密码:8v7l'
+            lanzou: 'https://wwpy.lanzoue.com/b00l20d4he'
         }
     },
     {
@@ -41,7 +41,7 @@ const resources = [
         links: {
             quark: 'https://pan.quark.cn/s/b605be6adac5',
             baidu: 'https://pan.baidu.com/s/1VM88_hZAVGLIVr6y2wmSIw?pwd=xkxk',
-            lanzou: 'https://wwpy.lanzoue.com/b00l203cmh密码:fxuf'
+            lanzou: 'https://wwpy.lanzoue.com/b00l203cmh'
         }
     },
     {
@@ -52,7 +52,7 @@ const resources = [
         links: {
             quark: 'https://pan.quark.cn/s/fdd616816133',
             baidu: 'https://pan.baidu.com/s/1PuVAmVSNcccaH3P_UzdgaQ?pwd=xkxk',
-            lanzou: 'https://wwpy.lanzoue.com/b00l1zb6ub密码:g85v'
+            lanzou: 'https://wwpy.lanzoue.com/b00l1zb6ub'
         }
     },
     {
@@ -63,7 +63,7 @@ const resources = [
         links: {
             quark: 'https://pan.quark.cn/s/aa5d3badc6ac',
             baidu: 'https://pan.baidu.com/s/1-IFShF99Dnm65_wkrQUcYA?pwd=xkxk',
-            lanzou: 'https://wwpy.lanzoue.com/b00l1xwemf密码:97qe'
+            lanzou: 'https://wwpy.lanzoue.com/b00l1xwemf'
         }
     },
     {
@@ -74,7 +74,7 @@ const resources = [
         links: {
             quark: 'https://pan.quark.cn/s/c952fa6b39fb',
             baidu: 'https://pan.baidu.com/s/1ccQnlAOTsJdO1jgdQiPaMA?pwd=xkxk',
-            lanzou: 'https://wwpy.lanzoue.com/b00l1y20gb密码:cfur'
+            lanzou: 'https://wwpy.lanzoue.com/b00l1y20gb'
         }
     },
     {
@@ -85,7 +85,7 @@ const resources = [
         links: {
             quark: 'https://pan.quark.cn/s/a4e0d941bf2d',
             baidu: 'https://pan.baidu.com/s/14w7K0B46__oL1hnw2ck0yw?pwd=xkxk',
-            lanzou: 'https://wwpy.lanzoue.com/b00l1y19mf密码:9fgw'
+            lanzou: 'https://wwpy.lanzoue.com/b00l1y19mf'
         }
     },
     {
@@ -107,7 +107,7 @@ const resources = [
         links: {
             quark: 'https://pan.quark.cn/s/beecfb268264',
             baidu: 'https://pan.baidu.com/s/1JJs5Jnr3lEtm0SerPfbiFA?pwd=xkxk',
-            lanzou: 'https://wwpy.lanzoue.com/b00l1y0s2d密码:go1m',
+            lanzou: 'https://wwpy.lanzoue.com/b00l1y0s2d',
         }
     },
     {
@@ -118,7 +118,7 @@ const resources = [
         links: {
             quark: 'https://pan.quark.cn/s/fccb7ad0e841',
             baidu: 'https://pan.baidu.com/s/1PdahtFMN1wy36G4hzEt2NQ?pwd=xkxk',
-            lanzou: 'https://wwpy.lanzoue.com/b00l1y2wsf密码:51qc'
+            lanzou: 'https://wwpy.lanzoue.com/b00l1y2wsf'
         }
     },
     {
@@ -129,7 +129,7 @@ const resources = [
         links: {
             quark: 'https://pan.quark.cn/s/623d5e5a5728',
             baidu: 'https://pan.baidu.com/s/1N60sFEjWX4NH1CL6fA-mWg?pwd=xkxk',
-            lanzou: 'https://wwpy.lanzoue.com/b00l1ywr3a密码:42zk'
+            lanzou: 'https://wwpy.lanzoue.com/b00l1ywr3a'
         }
     }
 ];
