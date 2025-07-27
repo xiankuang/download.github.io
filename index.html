@@ -37,17 +37,13 @@
         /* 精确位置图片样式 */
         .precise-position-image-container {
             position: absolute;
-            /* 弹窗与右边界之间的1/3处 */
-            left: calc(50% + 350px + (100vw - (50% + 400px)) / 6
-            );
-            /* 弹窗高度的3/4处（从顶部开始计算） */
-            top: calc(50% - 250px + 470px);
-            /* 初始在左侧外部（从左到右滑入） */
+            left: calc(50% + 315px + (100vw - (50% + 360px)) / 6);
+            top: calc(50% - 225px + 423px);
             transform: translateX(-120%);
-            width: 25%; /* 弹窗宽度的四分之一 */
-            max-width: 180px; /* 最大宽度限制 */
-            z-index: 50; /* 确保在弹窗下方 */
-            transition: transform 0.5s ease 0.2s; /* 从左到右滑动动画 */
+            width: 25%;
+            max-width: 162px;
+            z-index: 50;
+            transition: transform 0.5s ease 0.2s;
         }
         
         .precise-position-image {
@@ -57,17 +53,16 @@
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
         }
         
-        /* 弹窗激活时显示图片（从左到右滑入） */
         .modal-overlay.active .precise-position-image-container {
-            transform: translateX(0); /* 滑动到目标位置 */
+            transform: translateX(0);
         }
         
         .modal-content {
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-            width: 90%;
-            max-width: 800px;
+            width: 81%;
+            max-width: 720px;
             display: flex;
             flex-direction: column;
             transform: translateY(20px);
@@ -81,7 +76,7 @@
         }
         
         .modal-header {
-            padding: 15px 20px;
+            padding: 13.5px 18px;
             border-bottom: 1px solid #eee;
             display: flex;
             justify-content: space-between;
@@ -90,13 +85,13 @@
         
         .modal-title {
             margin: 0;
-            font-size: 20px;
+            font-size: 18px;
         }
         
         .close-modal {
             background: none;
             border: none;
-            font-size: 24px;
+            font-size: 21.6px;
             cursor: pointer;
             color: #888;
             transition: color 0.2s;
@@ -114,7 +109,7 @@
         
         .modal-image-container {
             width: 100%;
-            height: 533px; /* 弹窗图片高度 */
+            height: 480px;
             overflow: hidden;
         }
         
@@ -125,38 +120,40 @@
         }
         
         .modal-details {
-            padding: 20px;
+            padding: 18px;
         }
         
         .modal-desc {
-            margin-bottom: 20px;
+            margin-bottom: 18px;
+            font-size: 14.4px;
         }
         
         .container-download-list {
-            margin-bottom: 15px;
+            margin-bottom: 13.5px;
         }
         
         .download-item {
-            padding: 15px;
-            gap: 15px;
+            padding: 13.5px;
+            gap: 13.5px;
         }
         
         .avatar {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
         }
         
         .download-btn {
             background-color: #007BFF;
             color: white;
-            padding: 8px 15px;
-            border-radius: 5px;
+            padding: 7.2px 13.5px;
+            border-radius: 4.5px;
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 4.5px;
             transition: background-color 0.2s;
+            font-size: 14.4px;
         }
         
         .download-btn:hover {
@@ -166,16 +163,14 @@
         /* 移动端适配 */
         @media (max-width: 600px) {
             .modal-image-container {
-                height: 400px;
+                height: 360px;
             }
             
             .precise-position-image-container {
-                width: 20%;
-                max-width: 100px;
-                /* 移动端弹窗与右边界之间的1/3处 */
-                left: calc(50% + 45% + (100vw - (50% + 45%)) / 3);
-                /* 移动端弹窗高度的3/4处 */
-                top: calc(50% - 200px + 300px);
+                width: 18%;
+                max-width: 90px;
+                left: calc(50% + 40.5% + (100vw - (50% + 40.5%)) / 3);
+                top: calc(50% - 180px + 270px);
             }
         }
     </style>
@@ -235,6 +230,28 @@
                 </div>
                 <div class="modal-details">
                     <p class="modal-desc" id="modalDescription">描述信息</p>
+                    
+                    <!-- 新增Steam下载选项 -->
+                    <div class="container-download-list">
+                        <div class="general-card download-item flex-row align-center" data-type="steam" id="steamDownloadItem">
+                            <div>
+                                <img class="avatar" src="./steam.png" alt="Steam图标">
+                                <!-- 请确保有steam.png图片，若无可替换为其他Steam图标路径 -->
+                            </div>
+                            <div style="flex-shrink: 1;min-width: 0;">
+                                <h4>Steam</h4>
+                                <a id="steam-link" class="modal-download-link" style="color: gray; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; width: 100%; max-width: 100%;">
+                                    https://store.steampowered.com/app/3254220/Simple_Cursor_Maker/
+                                </a>
+                            </div>
+                            <div class="flex-row justify-end" style="flex: 1;flex-shrink: 0;">
+                                <a id="steam-btn" href="https://store.steampowered.com/app/3254220/Simple_Cursor_Maker/" class="download-btn" target="_blank" style="white-space: nowrap;">
+                                    <span class="iconfont icon-xiazai"></span>
+                                    <span>下载</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                     
                     <div class="container-download-list">
                         <div class="general-card download-item flex-row align-center" data-type="quark">
@@ -310,6 +327,9 @@
         const modalDescription = document.getElementById('modalDescription');
         const modalImage = document.getElementById('modalImage');
         const closeModal = document.getElementById('closeModal');
+        const steamDownloadItem = document.getElementById('steamDownloadItem'); // 获取Steam下载项
+        const steamLink = document.getElementById('steam-link');
+        const steamBtn = document.getElementById('steam-btn');
 
         // 动态生成卡片
         function renderResourceCards() {
@@ -326,15 +346,15 @@
                     </div>
                 `;
                 
-                // 添加点击事件
-                card.addEventListener('click', () => openModal(resource));
+                // 添加点击事件（传入索引判断是否为第一个资源）
+                card.addEventListener('click', () => openModal(resource, resources.indexOf(resource)));
                 
                 resourceContainer.appendChild(card);
             });
         }
 
-        // 打开弹窗
-        function openModal(resource) {
+        // 打开弹窗（新增index参数判断是否为第一个资源）
+        function openModal(resource, index) {
             modalTitle.textContent = resource.title;
             modalDescription.textContent = resource.description;
             
@@ -357,6 +377,19 @@
                     linkElement.closest('.download-item').style.display = 'none';
                 }
             });
+
+            // 仅在第一个资源弹窗中显示Steam下载选项
+            if (index === 0) {
+                // 检查资源是否有Steam链接，有则使用，无则用默认
+                if (resource.links.steam) {
+                    steamLink.textContent = resource.links.steam;
+                    steamLink.href = resource.links.steam;
+                    steamBtn.href = resource.links.steam;
+                }
+                steamDownloadItem.style.display = 'flex';
+            } else {
+                steamDownloadItem.style.display = 'none';
+            }
             
             // 显示弹窗
             modal.classList.add('active');
