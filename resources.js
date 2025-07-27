@@ -6,7 +6,7 @@ const resources = [
         description: '超级好用的光标编辑器',
         image: './icon/scm宣传.png',
         links: {
-            quark: 'https://pan.quark.cn/s/beecfb268264',
+            quark: 'https://pan.quark.cn/s/2b1a0dbb34e9',
             baidu: 'https://pan.baidu.com/s/1JJs5Jnr3lEtm0SerPfbiFA?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l1y0s2d',
         }
