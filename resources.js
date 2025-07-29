@@ -12,6 +12,17 @@ const resources = [
         }
     },
     {
+        id: 'teto',
+        title: 'teto',
+        description: '红色钻头',
+        image: './icon/teto光标宣传.gif',
+        links: {
+            quark: 'https://pan.quark.cn/s/85d7a87b873f',
+            baidu: 'https://pan.baidu.com/s/15iriKVjJDUD1gDTGXddF8Q?pwd=xkxk ',
+            lanzou: 'https://wwpy.lanzoue.com/b00l23xxod',
+        }
+    },
+    {
         id: 'lingmeng',
         title: '博丽灵梦',
         description: 'good apple',
