@@ -116,9 +116,9 @@ const resources = [
         description: '不敢用怕只能用一次',
         image: './icon/niko1.0光标宣传2.gif',
         links: {
-            quark: 'https://niko-quark-link.com',
-            baidu: 'https://niko-baidu-link.com',
-            lanzou: 'https://niko-lanzou-link.com'
+            quark: 'https://pan.quark.cn/s/42480abfef98',
+            baidu: 'https://pan.baidu.com/s/1D14uQSotg2r7QkitBX2t2Q?pwd=xkxk',
+            lanzou: 'https://wwpy.lanzoue.com/b00l25xnef'
         }
     },
     {
@@ -127,9 +127,9 @@ const resources = [
         description: 'omg是王小桃',
         image: './icon/小桃光标宣传2.gif',
         links: {
-            quark: 'https://pan.quark.cn/s/beecfb268264',
-            baidu: 'https://pan.baidu.com/s/1JJs5Jnr3lEtm0SerPfbiFA?pwd=xkxk',
-            lanzou: 'https://wwpy.lanzoue.com/b00l1y0s2d',
+            quark: 'https://pan.quark.cn/s/56affc620a29',
+            baidu: 'https://pan.baidu.com/s/16l1JBn_gopaqbROpJ7eHYg?pwd=xkxk',
+            lanzou: 'https://wwpy.lanzoue.com/b00l25xn1c',
         }
     },
     {
