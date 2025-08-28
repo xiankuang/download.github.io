@@ -12,13 +12,24 @@ const resources = [
         }
     },
     {
+        id: 'fulil',
+        title: '芙莉莲',
+        description: '=w=',
+        image: './icon/芙莉莲宣传.gif',
+        links: {
+            quark: 'https://pan.quark.cn/s/2ade2b99f8d8',
+            baidu: 'https://pan.baidu.com/s/1YaP7LMT-9vvU0v6qGLlJNw?pwd=xkxk',
+            lanzou: 'https://wwpy.lanzoue.com/b00l26ef7c',
+        }
+    },
+    {
         id: 'teto',
         title: 'teto',
         description: '红色钻头',
         image: './icon/teto光标宣传.gif',
         links: {
             quark: 'https://pan.quark.cn/s/85d7a87b873f',
-            baidu: 'https://pan.baidu.com/s/15iriKVjJDUD1gDTGXddF8Q?pwd=xkxk ',
+            baidu: 'https://pan.baidu.com/s/15iriKVjJDUD1gDTGXddF8Q?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l23xxod',
         }
     },
