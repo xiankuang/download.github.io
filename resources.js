@@ -12,6 +12,17 @@ const resources = [
         }
     },
     {
+        id: 'molis',
+        title: '魔理莎',
+        description: '莎莎',
+        image: './icon/魔理沙宣传.gif',
+        links: {
+            quark: 'https://pan.quark.cn/s/64d83bc83d49',
+            baidu: 'https://pan.baidu.com/s/1xBc9uvzEWn5BDM8UB9SXiA?pwd=xkxk',
+            lanzou: 'https://wwpy.lanzoue.com/b00l28zqkj',
+        }
+    },
+    {
         id: 'fulil',
         title: '芙莉莲',
         description: '=w=',
