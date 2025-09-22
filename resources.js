@@ -11,6 +11,17 @@ const resources = [
             lanzou: 'https://wwpy.lanzoue.com/b00l1y0s2d',
         }
     },
+     {
+        id: 'mumingdijue',
+        title: '古明地觉',
+        description: '小五',
+        image: './icon/古明地觉宣传.png',
+        links: {
+            quark: 'https://pan.quark.cn/s/8411f55ad57b',
+            baidu: 'https://pan.baidu.com/s/1ytrYdeBeyQo1dcoYwWG_LA?pwd=xkxk',
+            lanzou: 'https://wwpy.lanzoue.com/b00l29ycqb',
+        }
+    },
     {
         id: 'molis',
         title: '魔理莎',
