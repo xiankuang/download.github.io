@@ -11,169 +11,7 @@
     <link rel="stylesheet" href="./css/base.css">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/cursor.css">
-    <style>
-        /* 弹窗样式 */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        
-        /* 精确位置图片样式 */
-        .precise-position-image-container {
-            position: absolute;
-            left: calc(50% + 315px + (100vw - (50% + 360px)) / 6);
-            top: calc(50% - 225px + 423px);
-            transform: translateX(-120%);
-            width: 25%;
-            max-width: 162px;
-            z-index: 50;
-            transition: transform 0.5s ease 0.2s;
-        }
-        
-        .precise-position-image {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
-        }
-        
-        .modal-overlay.active .precise-position-image-container {
-            transform: translateX(0);
-        }
-        
-        .modal-content {
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-            width: 81%;
-            max-width: 720px;
-            display: flex;
-            flex-direction: column;
-            transform: translateY(20px);
-            transition: transform 0.4s ease, opacity 0.4s ease;
-            opacity: 0;
-        }
-        
-        .modal-overlay.active .modal-content {
-            transform: translateY(0);
-            opacity: 1;
-        }
-        
-        .modal-header {
-            padding: 13.5px 18px;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .modal-title {
-            margin: 0;
-            font-size: 18px;
-        }
-        
-        .close-modal {
-            background: none;
-            border: none;
-            font-size: 21.6px;
-            cursor: pointer;
-            color: #888;
-            transition: color 0.2s;
-        }
-        
-        .close-modal:hover {
-            color: #333;
-        }
-        
-        .modal-body {
-            display: flex;
-            flex-direction: column;
-            padding: 0;
-        }
-        
-        .modal-image-container {
-            width: 100%;
-            height: 480px;
-            overflow: hidden;
-        }
-        
-        .modal-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .modal-details {
-            padding: 18px;
-        }
-        
-        .modal-desc {
-            margin-bottom: 18px;
-            font-size: 14.4px;
-        }
-        
-        .container-download-list {
-            margin-bottom: 13.5px;
-        }
-        
-        .download-item {
-            padding: 13.5px;
-            gap: 13.5px;
-        }
-        
-        .avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-        }
-        
-        .download-btn {
-            background-color: #007BFF;
-            color: white;
-            padding: 7.2px 13.5px;
-            border-radius: 4.5px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 4.5px;
-            transition: background-color 0.2s;
-            font-size: 14.4px;
-        }
-        
-        .download-btn:hover {
-            background-color: #0056b3;
-        }
-        
-        /* 移动端适配 */
-        @media (max-width: 600px) {
-            .modal-image-container {
-                height: 360px;
-            }
-            
-            .precise-position-image-container {
-                width: 18%;
-                max-width: 90px;
-                left: calc(50% + 40.5% + (100vw - (50% + 40.5%)) / 3);
-                top: calc(50% - 180px + 270px);
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="./css/modal.css">
 </head>
 
 <body>
@@ -182,6 +20,41 @@
         <div class="container-root" style="gap: 1em;">
             <!-- 侧边信息 -->
             <div class="general-card flex-col center" style="gap: 1em;padding: 1em">
+                <a href="https://www.bilibili.com/opus/1116126481146183716?spm_id_from=333.1387.0.0" target="_blank" style="display: block; margin-bottom: 100px;">
+                    <img src="./光标投票.png" style="
+            width: 400px; 
+            height: auto;
+            /* 动画相关样式 */
+            animation: adAnimation 3s ease-in-out infinite;
+            transform-origin: center; /* 以中心为原点进行变换 */
+            cursor: pointer;
+        " alt="光标投票宣传图">
+                    <style>
+                        /* 定义广告动画（已移除阴影效果） */
+                        @keyframes adAnimation {
+                            0% {
+                                transform: translateX(0) scale(1);
+                                /* 已删除 box-shadow */
+                            }
+
+                            25% {
+                                transform: translateX(-10px) scale(1.02);
+                                /* 已删除 box-shadow */
+                            }
+
+                            75% {
+                                transform: translateX(10px) scale(1.02);
+                                /* 已删除 box-shadow */
+                            }
+
+                            100% {
+                                transform: translateX(0) scale(1);
+                                /* 已删除 box-shadow */
+                            }
+                        }
+                    </style>
+                </a>
+                </a>
                 <img class="avatar-large" src="./icon.jpg" alt="">
                 <h2>普通的线框</h2>
                 <div class="flex-row center" style="gap: 0.5em;flex-wrap: wrap;">
@@ -218,7 +91,7 @@
         <div class="precise-position-image-container">
             <img src="222.png" alt="精确位置图片" class="precise-position-image">
         </div>
-        
+
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title" id="modalTitle">资源详情</h3>
@@ -230,29 +103,32 @@
                 </div>
                 <div class="modal-details">
                     <p class="modal-desc" id="modalDescription">描述信息</p>
-                    
+
                     <!-- 新增Steam下载选项 -->
                     <div class="container-download-list">
-                        <div class="general-card download-item flex-row align-center" data-type="steam" id="steamDownloadItem">
+                        <div class="general-card download-item flex-row align-center" data-type="steam"
+                            id="steamDownloadItem">
                             <div>
                                 <img class="avatar" src="./steam.png" alt="Steam图标">
                                 <!-- 请确保有steam.png图片，若无可替换为其他Steam图标路径 -->
                             </div>
                             <div style="flex-shrink: 1;min-width: 0;">
                                 <h4>Steam</h4>
-                                <a id="steam-link" class="modal-download-link" style="color: gray; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; width: 100%; max-width: 100%;">
+                                <a id="steam-link" class="modal-download-link"
+                                    style="color: gray; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; width: 100%; max-width: 100%;">
                                     https://store.steampowered.com/app/3254220/Simple_Cursor_Maker/
                                 </a>
                             </div>
                             <div class="flex-row justify-end" style="flex: 1;flex-shrink: 0;">
-                                <a id="steam-btn" href="https://store.steampowered.com/app/3254220/Simple_Cursor_Maker/" class="download-btn" target="_blank" style="white-space: nowrap;">
+                                <a id="steam-btn" href="https://store.steampowered.com/app/3254220/Simple_Cursor_Maker/"
+                                    class="download-btn" target="_blank" style="white-space: nowrap;">
                                     <span class="iconfont icon-xiazai"></span>
                                     <span>下载</span>
                                 </a>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="container-download-list">
                         <div class="general-card download-item flex-row align-center" data-type="quark">
                             <div>
@@ -260,19 +136,21 @@
                             </div>
                             <div style="flex-shrink: 1;min-width: 0;">
                                 <h4>夸克云盘</h4>
-                                <a id="quark-link" class="modal-download-link" style="color: gray; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; width: 100%; max-width: 100%;">
+                                <a id="quark-link" class="modal-download-link"
+                                    style="color: gray; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; width: 100%; max-width: 100%;">
                                     https://example.com/quark
                                 </a>
                             </div>
                             <div class="flex-row justify-end" style="flex: 1;flex-shrink: 0;">
-                                <a id="quark-btn" href="http://example.com" class="download-btn" target="_blank" style="white-space: nowrap;">
+                                <a id="quark-btn" href="http://example.com" class="download-btn" target="_blank"
+                                    style="white-space: nowrap;">
                                     <span class="iconfont icon-xiazai"></span>
                                     <span>下载</span>
                                 </a>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="container-download-list">
                         <div class="general-card download-item flex-row align-center" data-type="baidu">
                             <div>
@@ -280,19 +158,21 @@
                             </div>
                             <div style="flex-shrink: 1;min-width: 0;">
                                 <h4>百度云盘</h4>
-                                <a id="baidu-link" class="modal-download-link" style="color: gray; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; width: 100%; max-width: 100%;">
+                                <a id="baidu-link" class="modal-download-link"
+                                    style="color: gray; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; width: 100%; max-width: 100%;">
                                     https://example.com/baidu
                                 </a>
                             </div>
                             <div class="flex-row justify-end" style="flex: 1;flex-shrink: 0;">
-                                <a id="baidu-btn" href="http://example.com" class="download-btn" target="_blank" style="white-space: nowrap;">
+                                <a id="baidu-btn" href="http://example.com" class="download-btn" target="_blank"
+                                    style="white-space: nowrap;">
                                     <span class="iconfont icon-xiazai"></span>
                                     <span>下载</span>
                                 </a>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="container-download-list">
                         <div class="general-card download-item flex-row align-center" data-type="lanzou">
                             <div>
@@ -300,12 +180,14 @@
                             </div>
                             <div style="flex-shrink: 1;min-width: 0;">
                                 <h4>蓝奏云</h4>
-                                <a id="lanzou-link" class="modal-download-link" style="color: gray; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; width: 100%; max-width: 100%;">
+                                <a id="lanzou-link" class="modal-download-link"
+                                    style="color: gray; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; width: 100%; max-width: 100%;">
                                     https://example.com/lanzou
                                 </a>
                             </div>
                             <div class="flex-row justify-end" style="flex: 1;flex-shrink: 0;">
-                                <a id="lanzou-btn" href="http://example.com" class="download-btn" target="_blank" style="white-space: nowrap;">
+                                <a id="lanzou-btn" href="http://example.com" class="download-btn" target="_blank"
+                                    style="white-space: nowrap;">
                                     <span class="iconfont icon-xiazai"></span>
                                     <span>下载</span>
                                 </a>
@@ -345,10 +227,10 @@
                         <p class="single-line-ellipsis" style="font-size: 14px;color: #666666">${resource.description}</p>
                     </div>
                 `;
-                
+
                 // 添加点击事件（传入索引判断是否为第一个资源）
                 card.addEventListener('click', () => openModal(resource, resources.indexOf(resource)));
-                
+
                 resourceContainer.appendChild(card);
             });
         }
@@ -357,17 +239,17 @@
         function openModal(resource, index) {
             modalTitle.textContent = resource.title;
             modalDescription.textContent = resource.description;
-            
+
             // 设置弹窗图片
             modalImage.src = resource.image || './111.png';
             modalImage.alt = `${resource.title} 预览图`;
-            
+
             // 处理下载链接
             const platforms = ['quark', 'baidu', 'lanzou'];
             platforms.forEach(platform => {
                 const linkElement = document.getElementById(`${platform}-link`);
                 const btnElement = document.getElementById(`${platform}-btn`);
-                
+
                 if (resource.links[platform]) {
                     linkElement.textContent = resource.links[platform];
                     linkElement.href = resource.links[platform];
@@ -390,7 +272,7 @@
             } else {
                 steamDownloadItem.style.display = 'none';
             }
-            
+
             // 显示弹窗
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';

@@ -1,0 +1,193 @@
+/* 弹窗遮罩层 */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+/* 弹窗遮罩层激活状态（显示弹窗） */
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* 精确位置图片容器（弹窗侧边小图） */
+.precise-position-image-container {
+    position: absolute;
+    left: calc(50% + 315px + (100vw - (50% + 360px)) / 6);
+    top: calc(50% - 225px + 423px);
+    transform: translateX(-120%);
+    width: 25%;
+    max-width: 162px;
+    z-index: 50;
+    transition: transform 0.5s ease 0.2s;
+}
+
+/* 精确位置图片样式 */
+.precise-position-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* 激活弹窗时，精确位置图片的动画 */
+.modal-overlay.active .precise-position-image-container {
+    transform: translateX(0);
+}
+
+/* 弹窗内容容器 */
+.modal-content {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    width: 81%;
+    max-width: 720px;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(20px);
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    opacity: 0;
+}
+
+/* 激活弹窗时，内容容器的动画 */
+.modal-overlay.active .modal-content {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* 弹窗头部（标题+关闭按钮） */
+.modal-header {
+    padding: 13.5px 18px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 弹窗标题 */
+.modal-title {
+    margin: 0;
+    font-size: 18px;
+}
+
+/* 弹窗关闭按钮 */
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 21.6px;
+    cursor: pointer;
+    color: #888;
+    transition: color 0.2s;
+}
+
+/* 关闭按钮hover效果 */
+.close-modal:hover {
+    color: #333;
+}
+
+/* 弹窗主体内容 */
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+
+/* 弹窗图片容器（大图） */
+.modal-image-container {
+    width: 100%;
+    height: 480px;
+    overflow: hidden;
+}
+
+/* 弹窗大图样式 */
+.modal-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 弹窗详情区域（描述+下载列表） */
+.modal-details {
+    padding: 18px;
+}
+
+/* 弹窗描述文本 */
+.modal-desc {
+    margin-bottom: 18px;
+    font-size: 14.4px;
+}
+
+/* 下载列表容器 */
+.container-download-list {
+    margin-bottom: 13.5px;
+}
+
+/* 单个下载项样式 */
+.download-item {
+    padding: 13.5px;
+    gap: 13.5px;
+}
+
+/* 下载项中的图标（Steam/夸克等） */
+.avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+}
+
+/* 下载按钮样式 */
+.download-btn {
+    background-color: #007BFF;
+    color: white;
+    padding: 7.2px 13.5px;
+    border-radius: 4.5px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 4.5px;
+    transition: background-color 0.2s;
+    font-size: 14.4px;
+}
+
+/* 下载按钮hover效果 */
+.download-btn:hover {
+    background-color: #0056b3;
+}
+
+/* 下载链接文本样式（灰色、溢出省略） */
+.modal-download-link {
+    color: gray;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    width: 100%;
+    max-width: 100%;
+}
+
+/* 移动端适配（屏幕宽度≤600px时） */
+@media (max-width: 600px) {
+    /* 移动端弹窗大图高度调整 */
+    .modal-image-container {
+        height: 360px;
+    }
+    
+    /* 移动端精确位置图片尺寸和位置调整 */
+    .precise-position-image-container {
+        width: 18%;
+        max-width: 90px;
+        left: calc(50% + 40.5% + (100vw - (50% + 40.5%)) / 3);
+        top: calc(50% - 180px + 270px);
+    }
+}
