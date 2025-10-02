@@ -164,6 +164,9 @@
 .download-btn:hover {
     background-color: #0056b3;
 }
+.download-item[data-type="baidu"] {
+    opacity: 0.2;
+}
 
 /* 下载链接文本样式（灰色、溢出省略） */
 .modal-download-link {

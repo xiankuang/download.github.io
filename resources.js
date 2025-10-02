@@ -12,10 +12,21 @@ const resources = [
         }
     },
      {
+        id: 'saba',
+        title: '猫鲨saba',
+        description: '可爱捏',
+        image: './icon/saba光标宣传.gif',
+        links: {
+            quark: 'https://pan.quark.cn/s/262c8cb07ec4',
+            baidu: 'https://pan.baidu.com/s/1yknDogS323V27TSaXW5P0Q?pwd=xkxk',
+            lanzou: 'https://wwpy.lanzoue.com/b00l2ay8vi',
+        }
+    },
+     {
         id: 'mumingdijue',
         title: '古明地觉',
         description: '小五',
-        image: './icon/古明地觉宣传.png',
+        image: './icon/古明地觉宣传.gif',
         links: {
             quark: 'https://pan.quark.cn/s/8411f55ad57b',
             baidu: 'https://pan.baidu.com/s/1ytrYdeBeyQo1dcoYwWG_LA?pwd=xkxk',
