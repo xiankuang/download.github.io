@@ -207,6 +207,7 @@ img.background {
         height: calc(100% - 1em);
     }
 }
+
 /* 固定在窗口底部并居中的样式 */
 .fixed-bottom {
     position: fixed;
@@ -216,27 +217,35 @@ img.background {
     width: 90%;
     max-width: 800px;
     z-index: 100;
-    opacity: 0.2; /* 新增：设置透明度为50% */
-    transition: opacity 0.3s ease; /* 可选：添加透明度过渡动画 */
+    opacity: 0.2;
+    /* 新增：设置透明度为50% */
+    transition: opacity 0.3s ease;
+    /* 可选：添加透明度过渡动画 */
 }
 
 /* 鼠标悬停时恢复不透明（可选交互效果） */
 .fixed-bottom:hover {
-    opacity: 1; /* 鼠标移上去时恢复100%透明度 */
+    opacity: 1;
+    /* 鼠标移上去时恢复100%透明度 */
 }
+
 /* 移动端适配 */
 @media screen and (max-width: 768px) {
     .fixed-bottom {
-        width: calc(100% - 2rem); /* 小屏幕下左右各留1rem边距 */
-        bottom: 0.5rem;           /* 底部间距减小 */
+        width: calc(100% - 2rem);
+        /* 小屏幕下左右各留1rem边距 */
+        bottom: 0.5rem;
+        /* 底部间距减小 */
     }
 }
+
 /* 淡入动画效果 */
 @keyframes fadeIn {
     from {
         opacity: 0;
         transform: translateY(10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -249,4 +258,33 @@ img.background {
     animation: fadeIn 0.5s ease-out forwards;
 }
 
+/* 新增：侧边栏左侧图片容器样式 */
+.sidebar-left-img-container {
+    position: relative;
+    /* 作为侧边栏的父容器，用于绝对定位图片 */
+}
 
+/* 侧边栏左侧紧贴图片样式 */
+.sidebar-left-img {
+    position: absolute;
+    left: -90px;
+    /* 紧贴侧边栏左侧（值为图片宽度的负数，可根据实际图片调整） */
+    top: 50%;
+    transform: translateY(-50%);
+    /* 垂直居中 */
+    width: 70px;
+    /* 图片宽度（根据需求调整） */
+    height: auto;
+    /* 保持宽高比 */
+    object-fit: cover;
+    /* 防止图片变形 */
+    z-index: 1;
+    /* 确保图片在侧边栏左侧，不遮挡内容 */
+}
+
+/* 响应式适配：屏幕较小时隐藏左侧图片，避免挤压布局 */
+@media (max-width: 768px) {
+    .sidebar-left-img {
+        display: none;
+    }
+}

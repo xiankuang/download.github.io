@@ -11,6 +11,18 @@ const resources = [
             lanzou: 'https://wwpy.lanzoue.com/b00l1y0s2d',
         }
     },
+    
+    {
+        id: 'fulan',
+        title: '芙兰朵露',
+        description: '可爱捏',
+        image: './icon/芙兰朵露光标宣传.gif',
+        links: {
+            quark: 'https://pan.quark.cn/s/e348395d7225',
+            baidu: 'https://pan.baidu.com/s/1PdahtFMN1wy36G4hzEt2NQ?pwd=xkxk',
+            lanzou: 'https://wwpy.lanzoue.com/b00l2brbxc',
+        }
+    },
      {
         id: 'saba',
         title: '猫鲨saba',

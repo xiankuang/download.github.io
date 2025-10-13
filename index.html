@@ -12,67 +12,89 @@
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/cursor.css">
     <link rel="stylesheet" href="./css/modal.css">
+    <style>
+        /* 侧边栏容器样式：确保能容纳更长的内容 */
+        .sidebar-left-img-container {
+            display: flex;
+            align-items: flex-start; /* 顶部对齐，避免图片被拉长 */
+        }
+        
+        /* 侧边信息卡片样式：加长长度 */
+        .extended-sidebar {
+            min-height: 500px; /* 核心：设置最小高度，加长卡片 */
+            width: 400px; /* 固定宽度，确保内容不挤压 */
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* 左侧图片样式：与卡片等高 */
+        .sidebar-left-img {
+            height: 100px; /* 与卡片高度一致 */
+            width: auto; /* 保持宽高比 */
+            object-fit: cover; /* 确保图片完整显示 */
+        }
+    </style>
 </head>
 
 <body>
     <img class="background" src="./background.png" alt="">
     <div class="flex-col center fill-wh">
         <div class="container-root" style="gap: 1em;">
-            <!-- 侧边信息 -->
-            <div class="general-card flex-col center" style="gap: 1em;padding: 1em">
-                <a href="https://www.bilibili.com/opus/1116126481146183716?spm_id_from=333.1387.0.0" target="_blank" style="display: block; margin-bottom: 100px;">
-                    <img src="./光标投票.png" style="
-            width: 400px; 
-            height: auto;
-            /* 动画相关样式 */
-            animation: adAnimation 3s ease-in-out infinite;
-            transform-origin: center; /* 以中心为原点进行变换 */
-            cursor: pointer;
-        " alt="光标投票宣传图">
-                    <style>
-                        /* 定义广告动画（已移除阴影效果） */
-                        @keyframes adAnimation {
-                            0% {
-                                transform: translateX(0) scale(1);
-                                /* 已删除 box-shadow */
-                            }
+            <!-- 侧边信息：新增外层容器用于定位左侧图片 -->
+            <div class="sidebar-left-img-container">
+                <!-- 侧边栏左侧图片 -->
+                <img class="sidebar-left-img" src="./icon/恋恋黑幕.gif" alt="侧边栏左侧图片">
 
-                            25% {
-                                transform: translateX(-10px) scale(1.02);
-                                /* 已删除 box-shadow */
+                <!-- 侧边信息：添加extended-sidebar类加长长度 -->
+                <div class="general-card flex-col center extended-sidebar" style="gap: 1em;padding: 1em">
+                    <a href="https://www.bilibili.com/opus/1116126481146183716?spm_id_from=333.1387.0.0" target="_blank"
+                        style="display: block; margin-bottom: 100px;">
+                        <img src="./光标投票.png" style="
+                width: 400px; 
+                height: auto;
+                animation: adAnimation 3s ease-in-out infinite;
+                transform-origin: center;
+                cursor: pointer;
+            " alt="光标投票宣传图">
+                        <style>
+                            @keyframes adAnimation {
+                                0% { transform: translateX(0) scale(1); }
+                                25% { transform: translateX(-10px) scale(1.02); }
+                                75% { transform: translateX(10px) scale(1.02); }
+                                100% { transform: translateX(0) scale(1); }
                             }
-
-                            75% {
-                                transform: translateX(10px) scale(1.02);
-                                /* 已删除 box-shadow */
-                            }
-
-                            100% {
-                                transform: translateX(0) scale(1);
-                                /* 已删除 box-shadow */
-                            }
-                        }
-                    </style>
-                </a>
-                </a>
-                <img class="avatar-large" src="./icon.jpg" alt="">
-                <h2>普通的线框</h2>
-                <div class="flex-row center" style="gap: 0.5em;flex-wrap: wrap;">
-                    <a href="https://space.bilibili.com/400839602" class="personal-homepage" style="gap: 0.25em">
-                        <span class="iconfont icon-bilibili-line bilibili-color"></span>
-                        <span style="font-size: 14px">哔哩哔哩</span>
+                        </style>
                     </a>
-                    <a href="https://ko-fi.com/xkxiankuang" class="personal-homepage">
-                        <img style="height: 1em;" src="./ko-fi.png"></img>
-                        <span style="font-size: 14px">ko-fi</span>
-                    </a>
-                    <a href="https://afdian.com/a/xiankuangxk" class="personal-homepage" style="gap: 0.25em">
-                        <img style="height: 1em;" src="./爱发电.png"></img>
-                        <span style="font-size: 14px">爱发电</span>
-                    </a>
-                </div>
-                <div style="text-align: center; color: #666; font-size: 16px;">
-                    如果觉得框框画的很好可以去 ko-fi 或者 爱发电<br>给予线框一些支持，鼓励线框的创作。
+                    
+                    <!-- 增加空白内容填充，进一步加长卡片（可选） -->
+                    <div style="height: 150px;"></div>
+                    
+                    <img class="avatar-large" src="./icon.jpg" alt="">
+                    <h2>普通的线框</h2>
+                    <div class="flex-row center" style="gap: 0.5em;flex-wrap: wrap;">
+                        <a href="https://space.bilibili.com/400839602" class="personal-homepage" style="gap: 0.25em">
+                            <span class="iconfont icon-bilibili-line bilibili-color"></span>
+                            <span style="font-size: 14px">哔哩哔哩</span>
+                        </a>
+                        <a href="https://ko-fi.com/xkxiankuang" class="personal-homepage">
+                            <img style="height: 1em;" src="./ko-fi.png"></img>
+                            <span style="font-size: 14px">ko-fi</span>
+                        </a>
+                        <a href="https://afdian.com/a/xiankuangxk" class="personal-homepage" style="gap: 0.25em">
+                            <img style="height: 1em;" src="./爱发电.png"></img>
+                            <span style="font-size: 14px">爱发电</span>
+                        </a>
+                    </div>
+                    
+                    <!-- 增加空白内容填充，进一步加长卡片（可选） -->
+                    <div style="height: 100px;"></div>
+                    
+                    <div style="text-align: center; color: #666; font-size: 16px;">
+                        如果觉得框框画的很好可以去 ko-fi 或者 爱发电<br>给予线框一些支持，鼓励线框的创作。
+                    </div>
+                    
+                    <!-- 底部额外空白，确保卡片长度足够 -->
+                    <div style="flex-grow: 1;"></div>
                 </div>
             </div>
 
@@ -87,7 +109,6 @@
 
     <!-- 弹窗组件 -->
     <div class="modal-overlay" id="resourceModal">
-        <!-- 精确位置的图片 -->
         <div class="precise-position-image-container">
             <img src="222.png" alt="精确位置图片" class="precise-position-image">
         </div>
@@ -104,13 +125,11 @@
                 <div class="modal-details">
                     <p class="modal-desc" id="modalDescription">描述信息</p>
 
-                    <!-- 新增Steam下载选项 -->
                     <div class="container-download-list">
                         <div class="general-card download-item flex-row align-center" data-type="steam"
                             id="steamDownloadItem">
                             <div>
                                 <img class="avatar" src="./steam.png" alt="Steam图标">
-                                <!-- 请确保有steam.png图片，若无可替换为其他Steam图标路径 -->
                             </div>
                             <div style="flex-shrink: 1;min-width: 0;">
                                 <h4>Steam</h4>
@@ -199,7 +218,6 @@
         </div>
     </div>
 
-    <!-- 引入资源数据文件和交互逻辑 -->
     <script src="resources.js"></script>
     <script>
         // DOM 元素
@@ -209,7 +227,7 @@
         const modalDescription = document.getElementById('modalDescription');
         const modalImage = document.getElementById('modalImage');
         const closeModal = document.getElementById('closeModal');
-        const steamDownloadItem = document.getElementById('steamDownloadItem'); // 获取Steam下载项
+        const steamDownloadItem = document.getElementById('steamDownloadItem');
         const steamLink = document.getElementById('steam-link');
         const steamBtn = document.getElementById('steam-btn');
 
@@ -228,23 +246,18 @@
                     </div>
                 `;
 
-                // 添加点击事件（传入索引判断是否为第一个资源）
                 card.addEventListener('click', () => openModal(resource, resources.indexOf(resource)));
-
                 resourceContainer.appendChild(card);
             });
         }
 
-        // 打开弹窗（新增index参数判断是否为第一个资源）
+        // 打开弹窗
         function openModal(resource, index) {
             modalTitle.textContent = resource.title;
             modalDescription.textContent = resource.description;
-
-            // 设置弹窗图片
             modalImage.src = resource.image || './111.png';
             modalImage.alt = `${resource.title} 预览图`;
 
-            // 处理下载链接
             const platforms = ['quark', 'baidu', 'lanzou'];
             platforms.forEach(platform => {
                 const linkElement = document.getElementById(`${platform}-link`);
@@ -260,9 +273,7 @@
                 }
             });
 
-            // 仅在第一个资源弹窗中显示Steam下载选项
             if (index === 0) {
-                // 检查资源是否有Steam链接，有则使用，无则用默认
                 if (resource.links.steam) {
                     steamLink.textContent = resource.links.steam;
                     steamLink.href = resource.links.steam;
@@ -273,7 +284,6 @@
                 steamDownloadItem.style.display = 'none';
             }
 
-            // 显示弹窗
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
