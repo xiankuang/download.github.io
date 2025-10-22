@@ -11,6 +11,17 @@ const resources = [
             lanzou: 'https://wwpy.lanzoue.com/b00l1y0s2d',
         }
     },
+     {
+        id: 'katixiya',
+        title: '卡缇希娅',
+        description: '可爱捏',
+        image: './icon/卡缇希娅光标宣传.gif',
+        links: {
+            quark: 'https://pan.quark.cn/s/c2812e04fa37',
+            baidu: 'https://pan.baidu.com/s/1PdahtFMN1wy36G4hzEt2NQ?pwd=xkxk',
+            lanzou: 'https://wwpy.lanzoue.com/b00l2cesnc',
+        }
+    },
     
     {
         id: 'fulan',

@@ -267,7 +267,7 @@ img.background {
 /* 侧边栏左侧紧贴图片样式 */
 .sidebar-left-img {
     position: absolute;
-    left: -90px;
+    left: -26px;
     /* 紧贴侧边栏左侧（值为图片宽度的负数，可根据实际图片调整） */
     top: 50%;
     transform: translateY(-50%);
