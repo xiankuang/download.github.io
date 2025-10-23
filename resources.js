@@ -18,7 +18,7 @@ const resources = [
         image: './icon/卡缇希娅光标宣传.gif',
         links: {
             quark: 'https://pan.quark.cn/s/c2812e04fa37',
-            baidu: 'https://pan.baidu.com/s/1PdahtFMN1wy36G4hzEt2NQ?pwd=xkxk',
+            baidu: 'https://pan.baidu.com/s/1r_7rXwv9HvUBUrxUFgAawA?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l2cesnc',
         }
     },
