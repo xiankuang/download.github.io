@@ -12,6 +12,17 @@ const resources = [
         }
     },
      {
+        id: 'tiedaoshuangzi',
+        title: '橘光橘望',
+        description: '可爱捏',
+        image: './icon/橘光橘望光标宣传.gif',
+        links: {
+            quark: 'https://pan.quark.cn/s/2a86f97f589f',
+            baidu: 'https://pan.baidu.com/s/1r_7rXwv9HvUBUrxUFgAawA?pwd=xkxk',
+            lanzou: 'https://wwpy.lanzoue.com/b00l2cuqfi',
+        }
+    },
+     {
         id: 'katixiya',
         title: '卡缇希娅',
         description: '可爱捏',
