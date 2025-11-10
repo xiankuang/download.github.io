@@ -1,0 +1,74 @@
+/* 下载弹窗区域容器 */
+.download-area {
+    margin: 20px 0;
+    display: none;
+    /* 默认隐藏，有链接时才显示 */
+    flex-direction: column;
+    gap: 12px;
+    /* 每个下载项之间的间距 */
+}
+
+/* 单个下载项（图标+按钮） */
+.download-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    /* 元素间间距 */
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    border: 2px solid #e0e0e0;
+    /* 新增：浅灰色边框（可调整颜色和粗细） */
+    transition: border-color 0.2s;
+    /* 可选： hover时边框变色，优化交互 */
+}
+
+/* 下载链接文本样式 */
+.download-link-text {
+    flex: 1;
+    /* 占据中间剩余空间 */
+    white-space: nowrap;
+    /* 不换行 */
+    overflow: hidden;
+    /* 超出隐藏 */
+    text-overflow: ellipsis;
+    /* 过长显示省略号 */
+    font-size: 14px;
+    color: #666;
+    margin: 0 8px;
+    /* 与图标和按钮保持距离 */
+}
+
+/* 下载类型图标 */
+/* 类型图标：圆形边框 + 固定大小 */
+.download-icon {
+    width: 40px; /* 固定宽度 */
+    height: 40px; /* 固定高度 */
+    object-fit: contain; /* 保持图标比例，不拉伸 */
+    border: 1px solid #8d8d8d; /* 浅灰色圆形边框 */
+    border-radius: 50%; /* 关键：变成圆形 */
+    padding: 0px; /* 图标与边框的内边距，避免贴边 */
+    background-color: white; /* 白色背景，让图标更清晰 */
+    flex-shrink: 0; /* 禁止图标被压缩 */
+}
+/* 下载按钮（靠右居中） */
+.download-btn {
+    margin-left: auto;
+    /* 推到右侧 */
+    padding: 8px 20px;
+    background-color: #4285F4;
+    /* 蓝色按钮 */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+    text-decoration: none;
+    /* 核心：去掉链接默认下划线 */
+}
+
+.download-btn:hover {
+    background-color: #3367d6;
+    /*  hover时加深 */
+}

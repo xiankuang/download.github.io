@@ -1,0 +1,38 @@
+/* 弹窗弹出动画 */
+@keyframes popupFadeIn {
+    0% {
+        opacity: 0; /* 初始完全透明 */
+        transform: scale(0.9); /* 初始轻微缩小 */
+    }
+    100% {
+        opacity: 1; /* 最终完全不透明 */
+        transform: scale(1); /* 最终恢复原大小 */
+    }
+}
+
+/* 遮罩层淡入动画 */
+@keyframes overlayFadeIn {
+    0% {
+        opacity: 0; /* 初始完全透明 */
+    }
+    100% {
+        opacity: 1; /* 最终半透明（由background-color控制） */
+    }
+}
+/* 弹窗渐显+上移动画 */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0; /* 完全透明 */
+        transform: translateY(30px) scale(0.95); /* 下方30px + 轻微缩小 */
+    }
+    100% {
+        opacity: 1; /* 完全显示 */
+        transform: translateY(0) scale(1); /* 回到原位+原大小 */
+    }
+}
+
+/* 遮罩层渐显动画（保持） */
+@keyframes overlayFade {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}

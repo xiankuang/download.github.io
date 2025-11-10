@@ -3,309 +3,63 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="./icon.jpg" type="image/x-icon">
-    <title>线框的主页</title>
-    <link rel="stylesheet" href="./css/iconfont.css">
-    <link rel="stylesheet" href="./css/base.css">
-    <link rel="stylesheet" href="./css/style.css">
-    <link rel="stylesheet" href="./css/cursor.css">
-    <link rel="stylesheet" href="./css/modal.css">
-    <style>
-        /* 侧边栏容器样式：确保能容纳更长的内容 */
-        .sidebar-left-img-container {
-            display: flex;
-            align-items: flex-start; /* 顶部对齐，避免图片被拉长 */
-        }
-        
-        /* 侧边信息卡片样式：加长长度 */
-        .extended-sidebar {
-            min-height: 500px; /* 核心：设置最小高度，加长卡片 */
-            width: 400px; /* 固定宽度，确保内容不挤压 */
-            display: flex;
-            flex-direction: column;
-        }
-        
-        /* 左侧图片样式：与卡片等高 */
-        .sidebar-left-img {
-            height: 100px; /* 与卡片高度一致 */
-            width: auto; /* 保持宽高比 */
-            object-fit: cover; /* 确保图片完整显示 */
-        }
-    </style>
+    <title>卡片列表</title>
+    <link rel="stylesheet" href="style.css"> <!-- 保持不变 -->
+    <link rel="stylesheet" href="download.css"> <!-- 保持不变 -->
+    <link rel="stylesheet" href="animation.css"> <!-- 保持不变 -->
 </head>
 
 <body>
-    <img class="background" src="./background.png" alt="">
-    <div class="flex-col center fill-wh">
-        <div class="container-root" style="gap: 1em;">
-            <!-- 侧边信息：新增外层容器用于定位左侧图片 -->
-            <div class="sidebar-left-img-container">
-                <!-- 侧边栏左侧图片 -->
-                <img class="sidebar-left-img" src="./恋恋探头.gif" alt="侧边栏左侧图片">
+    
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="card3" id="card3">
+            <button class="close-btn" id="closeBtn">&times;</button>
+            <h3 class="popup-title" id="popupTitle"></h3>
+            <p class="popup-desc" id="popupDesc"></p>
 
-                <!-- 侧边信息：添加extended-sidebar类加长长度 -->
-                <div class="general-card flex-col center extended-sidebar" style="gap: 1em;padding: 1em">
-                    <a href="https://www.bilibili.com/opus/1116126481146183716?spm_id_from=333.1387.0.0" target="_blank"
-                        style="display: block; margin-bottom: 100px;">
-                        <img src="./光标投票.png" style="
-                width: 400px; 
-                height: auto;
-                animation: adAnimation 3s ease-in-out infinite;
-                transform-origin: center;
-                cursor: pointer;
-            " alt="光标投票宣传图">
-                        <style>
-                            @keyframes adAnimation {
-                                0% { transform: translateX(0) scale(1); }
-                                25% { transform: translateX(-10px) scale(1.02); }
-                                75% { transform: translateX(10px) scale(1.02); }
-                                100% { transform: translateX(0) scale(1); }
-                            }
-                        </style>
+            <!-- 新增下载区域 -->
+            <div class="download-area" id="downloadArea">
+                <!-- 下载项会通过JS动态生成 -->
+            </div>
+        </div>
+    </div>
+    <div class="main-container">
+        <div class="card1">
+            <!-- 卡片1内部容器：垂直居中排列 -->
+            <div class="card1-content">
+                <!-- 圆形包裹的图片 -->
+                <div class="card1-img-container">
+                    <img src="xk.jpg" alt="卡片1主图" class="card1-img">
+                </div>
+                <!-- 文字介绍 -->
+                <p class="card1-desc">普通的线框</p>
+                <!-- 三个跳转按钮组 -->
+                <div class="card1-buttons">
+                    <!-- 哔哩哔哩按钮：引入本地图标 -->
+                    <a href="https://space.bilibili.com/400839602" class="card1-btn" >
+                               <img style="height: 1em;" src="./biliblil.png"></img>
+                        <span style="font-size: 14px">哔哩哔哩</span>
                     </a>
-                    
-                    <!-- 增加空白内容填充，进一步加长卡片（可选） -->
-                    <div style="height: 150px;"></div>
-                    
-                    <img class="avatar-large" src="./icon.jpg" alt="">
-                    <h2>普通的线框</h2>
-                    <div class="flex-row center" style="gap: 0.5em;flex-wrap: wrap;">
-                        <a href="https://space.bilibili.com/400839602" class="personal-homepage" style="gap: 0.25em">
-                            <span class="iconfont icon-bilibili-line bilibili-color"></span>
-                            <span style="font-size: 14px">哔哩哔哩</span>
-                        </a>
-                        <a href="https://ko-fi.com/xkxiankuang" class="personal-homepage">
-                            <img style="height: 1em;" src="./ko-fi.png"></img>
-                            <span style="font-size: 14px">ko-fi</span>
-                        </a>
-                        <a href="https://afdian.com/a/xiankuangxk" class="personal-homepage" style="gap: 0.25em">
-                            <img style="height: 1em;" src="./爱发电.png"></img>
-                            <span style="font-size: 14px">爱发电</span>
-                        </a>
-                    </div>
-                    
-                    <!-- 增加空白内容填充，进一步加长卡片（可选） -->
-                    <div style="height: 100px;"></div>
-                    
-                    <div style="text-align: center; color: #666; font-size: 16px;">
-                        如果觉得框框画的很好可以去 ko-fi 或者 爱发电<br>给予线框一些支持，鼓励线框的创作。
-                    </div>
-                    
-                    <!-- 底部额外空白，确保卡片长度足够 -->
-                    <div style="flex-grow: 1;"></div>
-                </div>
-            </div>
 
-            <!-- 内容容器（动态生成卡片） -->
-            <div style="overflow: hidden auto;">
-                <div class="table" style="gap: 1em;" id="resourceContainer">
-                    <!-- 卡片将通过JS动态生成 -->
+                    <!-- Ko-fi 按钮：引入本地图标 -->
+                    <a href="https://ko-fi.com/xkxiankuang" class="card1-btn">
+                        <img style="height: 1em;" src="./ko-fi.png"></img>
+                        <span style="font-size: 14px">ko-fi</span>
+
+                        <!-- 爱发电按钮：引入本地图标 -->
+                        <a href="https://afdian.com/a/xiankuangxk" class="card1-btn">
+                      <img style="height: 1em;" src="./爱发电.png"></img>
+                            <span style="font-size: 14px"></span><span>爱发电</span>
+                        </a>
                 </div>
             </div>
         </div>
+        <div class="card2-grid"></div>
     </div>
 
-    <!-- 弹窗组件 -->
-    <div class="modal-overlay" id="resourceModal">
-        <div class="precise-position-image-container">
-            <img src="222.png" alt="精确位置图片" class="precise-position-image">
-        </div>
-
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title" id="modalTitle">资源详情</h3>
-                <button class="close-modal" id="closeModal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="modal-image-container">
-                    <img src="./111.png" alt="资源图片" id="modalImage" class="modal-image">
-                </div>
-                <div class="modal-details">
-                    <p class="modal-desc" id="modalDescription">描述信息</p>
-
-                    <div class="container-download-list">
-                        <div class="general-card download-item flex-row align-center" data-type="steam"
-                            id="steamDownloadItem">
-                            <div>
-                                <img class="avatar" src="./steam.png" alt="Steam图标">
-                            </div>
-                            <div style="flex-shrink: 1;min-width: 0;">
-                                <h4>Steam</h4>
-                                <a id="steam-link" class="modal-download-link"
-                                    style="color: gray; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; width: 100%; max-width: 100%;">
-                                    https://store.steampowered.com/app/3254220/Simple_Cursor_Maker/
-                                </a>
-                            </div>
-                            <div class="flex-row justify-end" style="flex: 1;flex-shrink: 0;">
-                                <a id="steam-btn" href="https://store.steampowered.com/app/3254220/Simple_Cursor_Maker/"
-                                    class="download-btn" target="_blank" style="white-space: nowrap;">
-                                    <span class="iconfont icon-xiazai"></span>
-                                    <span>下载</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="container-download-list">
-                        <div class="general-card download-item flex-row align-center" data-type="quark">
-                            <div>
-                                <img class="avatar" src="./夸克.png" alt="夸克网盘图标">
-                            </div>
-                            <div style="flex-shrink: 1;min-width: 0;">
-                                <h4>夸克云盘</h4>
-                                <a id="quark-link" class="modal-download-link"
-                                    style="color: gray; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; width: 100%; max-width: 100%;">
-                                    https://example.com/quark
-                                </a>
-                            </div>
-                            <div class="flex-row justify-end" style="flex: 1;flex-shrink: 0;">
-                                <a id="quark-btn" href="http://example.com" class="download-btn" target="_blank"
-                                    style="white-space: nowrap;">
-                                    <span class="iconfont icon-xiazai"></span>
-                                    <span>下载</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="container-download-list">
-                        <div class="general-card download-item flex-row align-center" data-type="baidu">
-                            <div>
-                                <img class="avatar" src="./百度云.png" alt="百度网盘图标">
-                            </div>
-                            <div style="flex-shrink: 1;min-width: 0;">
-                                <h4>百度云盘</h4>
-                                <a id="baidu-link" class="modal-download-link"
-                                    style="color: gray; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; width: 100%; max-width: 100%;">
-                                    https://example.com/baidu
-                                </a>
-                            </div>
-                            <div class="flex-row justify-end" style="flex: 1;flex-shrink: 0;">
-                                <a id="baidu-btn" href="http://example.com" class="download-btn" target="_blank"
-                                    style="white-space: nowrap;">
-                                    <span class="iconfont icon-xiazai"></span>
-                                    <span>下载</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="container-download-list">
-                        <div class="general-card download-item flex-row align-center" data-type="lanzou">
-                            <div>
-                                <img class="avatar" src="./蓝奏.png" alt="蓝奏云图标">
-                            </div>
-                            <div style="flex-shrink: 1;min-width: 0;">
-                                <h4>蓝奏云</h4>
-                                <a id="lanzou-link" class="modal-download-link"
-                                    style="color: gray; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; width: 100%; max-width: 100%;">
-                                    https://example.com/lanzou
-                                </a>
-                            </div>
-                            <div class="flex-row justify-end" style="flex: 1;flex-shrink: 0;">
-                                <a id="lanzou-btn" href="http://example.com" class="download-btn" target="_blank"
-                                    style="white-space: nowrap;">
-                                    <span class="iconfont icon-xiazai"></span>
-                                    <span>下载</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="resources.js"></script>
-    <script>
-        // DOM 元素
-        const resourceContainer = document.getElementById('resourceContainer');
-        const modal = document.getElementById('resourceModal');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalDescription = document.getElementById('modalDescription');
-        const modalImage = document.getElementById('modalImage');
-        const closeModal = document.getElementById('closeModal');
-        const steamDownloadItem = document.getElementById('steamDownloadItem');
-        const steamLink = document.getElementById('steam-link');
-        const steamBtn = document.getElementById('steam-btn');
-
-        // 动态生成卡片
-        function renderResourceCards() {
-            if (!resourceContainer) return;
-
-            resources.forEach(resource => {
-                const card = document.createElement('div');
-                card.className = 'general-card info-card flex-col fade-in-animation cursor-pointer';
-                card.innerHTML = `
-                    <img class="cover" src="${resource.image}" alt="${resource.title}">
-                    <div class="flex-col" style="gap: 0.2em;padding: 0.75em 1em;border-top: 1px solid var(--border-color);">
-                        <h4 class="single-line-ellipsis">${resource.title}</h4>
-                        <p class="single-line-ellipsis" style="font-size: 14px;color: #666666">${resource.description}</p>
-                    </div>
-                `;
-
-                card.addEventListener('click', () => openModal(resource, resources.indexOf(resource)));
-                resourceContainer.appendChild(card);
-            });
-        }
-
-        // 打开弹窗
-        function openModal(resource, index) {
-            modalTitle.textContent = resource.title;
-            modalDescription.textContent = resource.description;
-            modalImage.src = resource.image || './111.png';
-            modalImage.alt = `${resource.title} 预览图`;
-
-            const platforms = ['quark', 'baidu', 'lanzou'];
-            platforms.forEach(platform => {
-                const linkElement = document.getElementById(`${platform}-link`);
-                const btnElement = document.getElementById(`${platform}-btn`);
-
-                if (resource.links[platform]) {
-                    linkElement.textContent = resource.links[platform];
-                    linkElement.href = resource.links[platform];
-                    btnElement.href = resource.links[platform];
-                    linkElement.closest('.download-item').style.display = 'flex';
-                } else {
-                    linkElement.closest('.download-item').style.display = 'none';
-                }
-            });
-
-            if (index === 0) {
-                if (resource.links.steam) {
-                    steamLink.textContent = resource.links.steam;
-                    steamLink.href = resource.links.steam;
-                    steamBtn.href = resource.links.steam;
-                }
-                steamDownloadItem.style.display = 'flex';
-            } else {
-                steamDownloadItem.style.display = 'none';
-            }
-
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        // 关闭弹窗
-        function closeModalHandler() {
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        // 事件监听
-        closeModal.addEventListener('click', closeModalHandler);
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) closeModalHandler();
-        });
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal.classList.contains('active')) closeModalHandler();
-        });
-
-        // 页面加载后执行
-        window.addEventListener('DOMContentLoaded', renderResourceCards);
-    </script>
+    <!-- 只引入合并后的文件 -->
+    <script src="cards.js"></script>
 </body>
 
 </html>

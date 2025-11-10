@@ -1,0 +1,396 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+     background-image: url('background.png'); /* 本地图片 */
+    background-color: #4285F4;
+    min-height: 100vh;
+    font-family: "等线", "Microsoft YaHei", "PingFang SC", sans-serif;
+    background-repeat: no-repeat;
+
+    /* 图片位置：居中显示 */
+    background-position: center center;
+
+    /* 图片大小：覆盖整个屏幕（保持比例，可能裁剪边缘） */
+    background-size: cover;
+    padding: 20px;
+}
+
+.main-container {
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    /* 卡片1与网格的间距减小（原20px→10px） */
+    width: 100%;
+
+    margin: 0 auto;
+
+}
+
+/* 通用卡片样式 */
+.card {
+
+    background-color: white;
+    padding: 15px;
+    /* 卡片内边距减小（原20px→15px） */
+    border-radius: 6px;
+    /* 圆角略小，更紧凑 */
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    /* 阴影变浅，减少视觉间隔 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card1 {
+
+
+    right: 30vh;
+    width: 300px;
+    flex-shrink: 0;
+    border-radius: 6px;
+    background-color: rgba(255, 255, 255, 0.6);
+    /* 保留原有样式，新增：让内部内容垂直布局 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.card1-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    /* 各元素之间的垂直间距 */
+    text-align: center;
+}
+
+/* 圆形图片容器 */
+.card1-img-container {
+    width: 150px;
+    /* 圆形大小，可调整 */
+    height: 150px;
+    border-radius: 50%;
+    /* 核心：圆形 */
+    border: 4px solid #ffffff;
+    /* 蓝色边框，与背景呼应 */
+    overflow: hidden;
+    /* 裁剪图片，避免超出圆形 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    /* 图片透明时的背景 */
+}
+
+/* 图片自适应圆形 */
+.card1-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* 图片填充圆形，不拉伸 */
+}
+
+/* 文字介绍样式 */
+.card1-desc {
+    margin-bottom: 10px;
+    /* 文字下方增加50px空白，数值越大离底部越远 */
+    font-size: 30px;
+    font-weight: 900;
+    /* 比 bold 更粗 */
+    color: #000000;
+    line-height: 0;
+    padding: 0 20px;
+    /* 左右留白，避免贴边 */
+}
+
+/* 按钮组：水平排列 */
+.card1-buttons {
+    display: flex;
+    gap: 15px;
+    /* 按钮之间的间距 */
+    flex-wrap: wrap;
+    /* 窄屏时自动换行 */
+    justify-content: center;
+    width: 100%;
+    padding: 0 10px;
+}
+
+/* 图标按钮样式 */
+.card1-btn {
+    font-weight: 600;
+    white-space: nowrap;
+    /* 核心：强制不换行，内容在一行显示 */
+    width: 60px;
+    /* 图标宽度（数值越小越窄，建议12-18px） */
+    height: 30px;
+    /* 高度与宽度一致，避免拉伸变形 */
+    align-items: center;
+    /* 垂直居中（图标和文字对齐） */
+    justify-content: center;
+    /* 水平居中（整个内容在按钮内居中） */
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    /* 图标与文字间距 */
+    padding: 10px 40px;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border-radius: 30px;
+    /* 圆角按钮 */
+    text-decoration: none;
+    /* 去掉链接下划线 */
+    font-size: 14px;
+    transition: all 0.3s ease;
+    /* 悬浮过渡效果 */
+    border: none;
+    cursor: pointer;
+}
+
+
+.card1-btn:hover {
+    background-color: #d3d3d3;
+    /* 加深蓝色 */
+    transform: translateY(-2px);
+    /* 轻微上移 */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* 卡片2保持正方形，尺寸更紧凑 */
+.card2 {
+    border-radius: 16px;
+    /* 圆角略小，更紧凑 */
+    aspect-ratio: 1/1;
+    font-size: 14px;
+    /* 文字缩小，适配小卡片 */
+    position: relative;
+    /* 允许内部图片绝对定位 */
+
+    border: 2px solid #fff;
+    /* 厚边框：4px宽度 + 实线 + 白色（可自定义） */
+    max-width: 400px;
+    background-color: rgba(255, 255, 255, 0.6);
+    /* 白色背景+80%不透明 */
+    /* 阴影也同步降低透明度，保持风格统一 */
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    /* 阴影透明度从0.1→0.08 */
+}
+
+/* 卡片2网格：核心紧密排列设置 */
+.card2-grid {
+    height: 100%;
+    /* 必须：固定高度（继承主容器高度） */
+    flex: 1;
+    /* 占满主容器剩余宽度 */
+    max-width: 100%;
+    display: grid;
+    /* 关键：把flex改成grid！之前误写为flex，导致滚动失效 */
+
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    /* 恢复列宽配置 */
+    gap: 15px;
+    padding: 0;
+    align-content: flex-start;
+    /* 内容从顶部开始排列 */
+    overflow-y: auto;
+    /* 核心：内容超出高度时，显示垂直滚动条 */
+    flex-shrink: 0;
+}
+
+.card2 img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 75%;
+    object-fit: cover;
+    /* 图片自适应卡片尺寸，裁剪多余部分（不拉伸） */
+}
+
+
+/* 可选：鼠标悬停时略微提高不透明度（增强交互感） */
+.card2:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+    /* 悬停时更实一点 */
+    transition: background-color 0.3s ease;
+    /* 平滑过渡效果 */
+}
+
+.card2 .card-content {
+    padding: 15px;
+    flex: 1;
+    /* 占剩余高度 */
+    display: flex;
+    flex-direction: column;
+    /* 垂直排列 */
+    gap: 8px;
+    /* 标题和描述的间距 */
+    justify-content: flex-end;
+    /* 关键：内容整体靠下对齐 */
+}
+
+/* 标题和描述保持不变（可选微调） */
+.card2 .card-title {
+    position: absolute;
+    font-size: 15px;
+    font-weight: bold;
+    /* 核心：调整这三个值控制位置 */
+    bottom: 40px;
+    /* 距离卡片底部50px（值越大越靠上） */
+    left: 10px;
+    /* 距离卡片左侧15px（与padding保持一致） */
+    right: 15px;
+    /* 距离卡片右侧15px，确保文字不溢出 */
+    /* 可选：文字居中 */
+    /* text-align: center; */
+}
+
+.card2 .card-desc {
+    position: absolute;
+    /* 让描述也脱离流，跟随标题定位 */
+    font-size: 14px;
+    color: #666;
+    /* 定位在标题下方 */
+    bottom: 15px;
+    /* 距离底部20px（比标题的bottom值小，确保在标题下方） */
+    left: 10px;
+
+}
+
+/* 弹窗背景遮罩（全屏，半透明，模糊背景） */
+.popup-overlay {
+    position: fixed;
+    /* 固定在屏幕上 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* background-color: rgba(255, 255, 255, 0.5); 半透明黑色 */
+    backdrop-filter: blur(5px);
+    /* 模糊背景内容 */
+    z-index: 1000;
+    /* 确保在所有内容上方 */
+    display: none;
+    /* 默认隐藏 */
+    justify-content: center;
+    align-items: center;
+    animation: overlayFadeIn 0.3s ease forwards;
+    /* 遮罩淡入，0.3秒完成 */
+    animation: overlayFade 0.4s ease forwards;
+    /* 遮罩400ms渐显 */
+}
+
+/* 应用动画到弹窗和遮罩 */
+
+/* 卡片3弹窗样式 */
+.card3 {
+    background-color: white;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+    /* 用于关闭按钮定位 */
+    z-index: 1001;
+    /* 在遮罩上方 */
+    animation: popupFadeIn 0.3s ease forwards;
+    /* 弹窗缩放+淡入，0.3秒完成 */
+    animation: fadeInUp 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+/* 关闭按钮 */
+.card3 .close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #666;
+}
+
+/* 弹窗内容样式（按需调整） */
+.card3 .popup-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.card3 .popup-desc {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+
+@media (max-aspect-ratio: 1/1) {
+    .card1 {
+        width: 100%;
+        height: 260px;
+
+    }
+
+    .card2 {
+        max-width: 280px;
+        min-width: 180px;
+    }
+
+    .card2-grid {
+        height: calc(100% - 190px);
+        gap: 12px;
+        /* 竖屏用更小的固定间距，适配紧凑布局 */
+    }
+
+    .card2 .card-title {
+        bottom: 25px;
+        left: 10px;
+    }
+
+    .card2 .card-desc {
+        bottom: 6px;
+        left: 10px;
+    }
+}
+
+/* 宽屏适配（去掉vw，统一固定间距） */
+@media (min-aspect-ratio: 1/1) {
+    .card1 {
+        margin-left: 10vh;
+        /* 距离屏幕左边30px，数值越大距离越远 */
+        height: auto;
+
+    }
+
+    .card2 {
+        max-width: 300px;
+        min-width: 180px;
+        border-radius: 16px;
+        aspect-ratio: 8/10;
+        font-size: 14px;
+    }
+
+    .card2-grid {
+        max-height: 95vh;
+    }
+}
+
+/* 更宽屏适配（仅调整列宽，间距保持固定） */
+@media (min-aspect-ratio: 1.2/1) {
+
+    .card2-grid {
+
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+        /* 更宽屏可适当加大固定间距 */
+        /* 列宽调整为最小260px，适配大卡片 */
+
+    }
+}
