@@ -5,7 +5,8 @@
 }
 
 body {
-     background-image: url('background.png'); /* 本地图片 */
+    background-image: url('background.png');
+    /* 本地图片 */
     background-color: #4285F4;
     min-height: 100vh;
     font-family: "等线", "Microsoft YaHei", "PingFang SC", sans-serif;
@@ -112,10 +113,11 @@ body {
 
 /* 按钮组：水平排列 */
 .card1-buttons {
+    white-space: nowrap;
     display: flex;
     gap: 15px;
     /* 按钮之间的间距 */
-    flex-wrap: wrap;
+
     /* 窄屏时自动换行 */
     justify-content: center;
     width: 100%;
@@ -338,15 +340,17 @@ body {
 
     }
 
-    .card2 {
-        max-width: 280px;
-        min-width: 180px;
-    }
+
 
     .card2-grid {
-        height: calc(100% - 190px);
-        gap: 12px;
-        /* 竖屏用更小的固定间距，适配紧凑布局 */
+      
+        display: grid;
+        /* 核心：切换为Grid布局（替代flex） */
+        grid-template-columns: repeat(2, 1fr);
+        /* 关键：设置2列，每列等宽 */
+
+ 
+
     }
 
     .card2 .card-title {
