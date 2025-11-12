@@ -21,7 +21,7 @@ body {
 }
 
 .main-container {
-
+ position: relative;
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
@@ -46,22 +46,37 @@ body {
     align-items: center;
     justify-content: center;
 }
-
 .card1 {
-
-
-    right: 30vh;
+    /* 原有样式保留 */
+    
     width: 300px;
     flex-shrink: 0;
     border-radius: 6px;
     background-color: rgba(255, 255, 255, 0.6);
-    /* 保留原有样式，新增：让内部内容垂直布局 */
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 20px;
+    /* 新增：作为图片的定位参考 */
+    position: relative; 
 }
+    
 
+
+/* 侧边栏左侧紧贴图片样式 */
+.sidebar-left-img {
+    /* 先解决大小问题：正确设置宽度和单位 */
+    width: 80px; /* 图片宽度（可自定义，如30px、60px） */
+    height: auto; /* 保持比例不变 */
+    object-fit: cover;
+
+    /* 核心：以.card1为参考定位 */
+    position: absolute; /* 绝对定位，脱离文档流 */
+    top: 80%; /* 垂直方向居中 */
+    left: -30px; /* 向右超出卡片1的右侧边缘（值为图片宽度的一半，刚好贴紧） */
+    transform: translateY(-50%); /* 配合top:50%实现垂直居中 */
+    z-index: 10; /* 显示在卡片1上方，不被遮挡 */
+}
 .card1-content {
     width: 100%;
     display: flex;
