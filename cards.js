@@ -13,6 +13,15 @@ const resources = [
         }
     },
      {
+        id: 'quancifang',
+        title: '泉此方',
+        description: '幸运星',
+        image: './icon/泉此方光标宣传.gif',
+        links: {
+            quark: 'https://pan.quark.cn/s/1f548ba2ee6e',
+            lanzou: 'https://wwpy.lanzoue.com/b00l2e7bah',
+        }
+    }, {
         id: 'tiedaoshuangzi',
         title: '橘光橘望',
         description: '可爱捏',
