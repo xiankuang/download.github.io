@@ -13,6 +13,16 @@ const resources = [
         }
     },
      {
+        id: 'xiaosan',
+        title: '多多良小伞',
+        description: '小伞',
+        image: './icon/小伞光标宣传.gif',
+        links: {
+            quark: 'https://pan.quark.cn/s/6be825387d35',
+            lanzou: 'https://wwbny.lanzoue.com/b00l2gztaf',
+        }
+    }, 
+    {
         id: 'quancifang',
         title: '泉此方',
         description: '幸运星',
@@ -21,7 +31,7 @@ const resources = [
             quark: 'https://pan.quark.cn/s/1f548ba2ee6e',
             lanzou: 'https://wwpy.lanzoue.com/b00l2e7bah',
         }
-    }, {
+    },{
         id: 'tiedaoshuangzi',
         title: '橘光橘望',
         description: '可爱捏',
