@@ -12,6 +12,16 @@ const resources = [
             steam:'https://store.steampowered.com/app/3254220/Simple_Cursor_Maker/'
         }
     },
+    {
+        id: 'chenqianyu',
+        title: '陈千语',
+        description: '啥子',
+        image: './icon/陈千语光标宣传.gif',
+        links: {
+            quark: 'https://pan.quark.cn/s/6e659ce89a58',
+            lanzou: 'https://wwbny.lanzoue.com/b00l2m0wba',
+        }
+    }, 
      {
         id: 'xiaosan',
         title: '多多良小伞',
@@ -22,6 +32,7 @@ const resources = [
             lanzou: 'https://wwbny.lanzoue.com/b00l2gztaf',
         }
     }, 
+    
     {
         id: 'quancifang',
         title: '泉此方',
