@@ -12,6 +12,20 @@ const resources = [
             steam:'https://store.steampowered.com/app/3254220/Simple_Cursor_Maker/'
         }
     },
+
+{
+        id: 'chenqianyu',
+        title: '早苗',
+        description: '早苗',
+        image: './icon/早苗光标宣传.gif',
+        links: {
+            quark: 'https://pan.quark.cn/s/f91991d26afd',
+            lanzou: 'https://wwbny.lanzoue.com/b00l2o49bi',
+        }
+    }, 
+
+
+
     {
         id: 'chenqianyu',
         title: '陈千语',
