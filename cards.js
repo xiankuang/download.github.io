@@ -13,6 +13,17 @@ const resources = [
         }
     },
 
+    {
+        id: 'chenqianyu',
+        title: '菲比',
+        description: '菲比丘比',
+        image: './icon/菲比光标宣传.gif',
+        links: {
+            quark: 'https://pan.quark.cn/s/8c4e21383e38',
+            lanzou: 'https://wwbny.lanzoue.com/b00l2o49eb',
+        }
+    }, 
+
 {
         id: 'chenqianyu',
         title: '早苗',
