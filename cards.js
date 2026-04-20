@@ -13,8 +13,18 @@ const resources = [
         }
     },
 
+  {
+        id: 'liyefu',
+        title: '绿虫虫',
+        description: '莉耶芙',
+        image: './icon/绿虫虫挂件宣传.gif',
+        links: {
+            quark: 'https://pan.quark.cn/s/86f81db4e97c',
+            lanzou: 'https://wwbny.lanzoue.com/b00l2o49da',
+        }
+    }, 
     {
-        id: 'chenqianyu',
+        id: 'feibi',
         title: '菲比',
         description: '菲比丘比',
         image: './icon/菲比光标宣传.gif',
@@ -25,7 +35,7 @@ const resources = [
     }, 
 
 {
-        id: 'chenqianyu',
+        id: 'zaomiao',
         title: '早苗',
         description: '早苗',
         image: './icon/早苗光标宣传.gif',
