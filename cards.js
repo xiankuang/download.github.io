@@ -13,6 +13,17 @@ const resources = [
         }
     },
 
+     {
+        id: 'zhuzhu',
+        title: '猪猪挂件',
+        description: '猪猪',
+        image: './icon/猪猪挂件.png',
+        links: {
+            quark: 'https://pan.quark.cn/s/c4ed8013684c',
+            lanzou: 'https://wwbny.lanzoue.com/b00l2o49gd',
+        }
+    }, 
+
   {
         id: 'liyefu',
         title: '绿虫虫',
