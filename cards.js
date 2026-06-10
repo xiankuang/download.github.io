@@ -12,7 +12,16 @@ const resources = [
             steam:'https://store.steampowered.com/app/3254220/Simple_Cursor_Maker/'
         }
     },
-
+ {
+        id: 'miku3.0',
+        title: '初音未来',
+        description: '初音未来',
+        image: './icon/初音未来挂件.png',
+        links: {
+            quark: 'https://pan.quark.cn/s/d45d1c79ef01',
+            lanzou: 'https://wwbny.lanzoue.com/b00l2o49he',
+        }
+    }, 
      {
         id: 'zhuzhu',
         title: '猪猪挂件',
