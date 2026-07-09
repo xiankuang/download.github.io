@@ -620,15 +620,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    const openHiddenFromHash = () => {
+    const getHiddenTarget = () => {
         const queryTarget = new URLSearchParams(window.location.search).get('hidden');
         const hashTarget = window.location.hash.replace(/^#/, '').trim();
-        const target = decodeURIComponent((queryTarget || hashTarget || '').trim());
+        const hrefHashTarget = window.location.href.includes('#')
+            ? window.location.href.split('#').pop().trim()
+            : '';
+
+        return decodeURIComponent((queryTarget || hashTarget || hrefHashTarget || '').trim());
+    };
+
+    let lastHiddenTarget = '';
+
+    const openHiddenFromHash = () => {
+        const queryTarget = new URLSearchParams(window.location.search).get('hidden');
+        const target = getHiddenTarget();
 
         if (!target) {
             return;
         }
 
+        if (target === lastHiddenTarget && hiddenOverlay.style.display === 'flex') {
+            return;
+        }
+
+        lastHiddenTarget = target;
         openHiddenOverlay(target === 'secret' ? '' : target);
 
         try {
@@ -640,6 +656,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     openHiddenFromHash();
+    window.setTimeout(openHiddenFromHash, 0);
+    window.addEventListener('load', openHiddenFromHash);
     window.addEventListener('hashchange', openHiddenFromHash);
 
     // 无图片占位符样式
