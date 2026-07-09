@@ -518,7 +518,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const markerEnd = '<!--XK_HIDDEN_CARDS_END-->';
         const encoder = new TextEncoder();
         const decoder = new TextDecoder('utf-8');
-        const response = await fetch('./xk.jpg', { cache: 'no-store' });
+        const response = await fetch(`./xk.jpg?t=${Date.now()}`, { cache: 'no-store' });
         const imageBytes = new Uint8Array(await response.arrayBuffer());
         const startBytes = encoder.encode(markerStart);
         const endBytes = encoder.encode(markerEnd);
@@ -621,7 +621,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const openHiddenFromHash = () => {
-        const target = decodeURIComponent(window.location.hash.replace(/^#/, '').trim());
+        const queryTarget = new URLSearchParams(window.location.search).get('hidden');
+        const hashTarget = window.location.hash.replace(/^#/, '').trim();
+        const target = decodeURIComponent((queryTarget || hashTarget || '').trim());
 
         if (!target) {
             return;
@@ -630,7 +632,8 @@ document.addEventListener('DOMContentLoaded', () => {
         openHiddenOverlay(target === 'secret' ? '' : target);
 
         try {
-            window.history.replaceState(null, '', window.location.pathname + window.location.search);
+            const cleanUrl = queryTarget ? window.location.pathname : window.location.pathname + window.location.search;
+            window.history.replaceState(null, '', cleanUrl);
         } catch (error) {
             window.location.hash = '';
         }
