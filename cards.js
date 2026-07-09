@@ -330,6 +330,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const popupDesc = document.getElementById('popupDesc');
     const closeBtn = document.getElementById('closeBtn');
     const downloadArea = document.getElementById('downloadArea');
+    const hiddenOverlay = document.getElementById('hiddenOverlay');
+    const hiddenCloseBtn = document.getElementById('hiddenCloseBtn');
+    const hiddenPopupTitle = document.getElementById('hiddenPopupTitle');
+    const hiddenStatus = document.getElementById('hiddenStatus');
+    const hiddenCardGrid = document.getElementById('hiddenCardGrid');
 
     // 更新卡片数量显示
     if (cardCountEl) {
@@ -488,6 +493,151 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.style.overflow = 'auto';
         }
     });
+
+    const findBytes = (source, target, startIndex = 0) => {
+        for (let index = startIndex; index <= source.length - target.length; index++) {
+            let matched = true;
+
+            for (let offset = 0; offset < target.length; offset++) {
+                if (source[index + offset] !== target[offset]) {
+                    matched = false;
+                    break;
+                }
+            }
+
+            if (matched) {
+                return index;
+            }
+        }
+
+        return -1;
+    };
+
+    const readHiddenCardsFromImage = async () => {
+        const markerStart = '<!--XK_HIDDEN_CARDS_START-->';
+        const markerEnd = '<!--XK_HIDDEN_CARDS_END-->';
+        const encoder = new TextEncoder();
+        const decoder = new TextDecoder('utf-8');
+        const response = await fetch('./xk.jpg', { cache: 'no-store' });
+        const imageBytes = new Uint8Array(await response.arrayBuffer());
+        const startBytes = encoder.encode(markerStart);
+        const endBytes = encoder.encode(markerEnd);
+        const startIndex = findBytes(imageBytes, startBytes);
+
+        if (startIndex === -1) {
+            throw new Error('没有找到隐藏卡片开始标记');
+        }
+
+        const contentStart = startIndex + startBytes.length;
+        const endIndex = findBytes(imageBytes, endBytes, contentStart);
+
+        if (endIndex === -1) {
+            throw new Error('没有找到隐藏卡片结束标记');
+        }
+
+        const jsonText = decoder.decode(imageBytes.slice(contentStart, endIndex)).trim();
+        return JSON.parse(jsonText);
+    };
+
+    const renderHiddenCards = (hiddenCards) => {
+        hiddenCardGrid.innerHTML = '';
+        hiddenCardGrid.classList.toggle('is-single', hiddenCards.length === 1);
+
+        hiddenCards.forEach((item) => {
+            const card = document.createElement('div');
+            const linkEntries = item.links && typeof item.links === 'object' ? Object.entries(item.links) : [];
+            const linksHtml = linkEntries.map(([type, url]) => {
+                const iconPath = `./downloadicon/${type}.png`;
+
+                return `
+                    <div class="download-item">
+                        <img
+                            src="${iconPath}"
+                            alt="${type}图标"
+                            class="download-icon"
+                            loading="lazy"
+                            decoding="async"
+                            onerror="this.style.visibility='hidden'"
+                        >
+                        <span class="download-link-text">${url}</span>
+                        <a href="${url}" class="download-btn" target="_blank" rel="noopener noreferrer">下载</a>
+                    </div>
+                `;
+            }).join('');
+
+            card.className = 'hidden-card-item';
+            card.innerHTML = `
+                <img class="hidden-card-image" src="${item.image || './xk.jpg'}" alt="${item.title || '隐藏卡片'}" loading="lazy" decoding="async">
+                <div class="hidden-card-content">
+                    <h4 class="hidden-card-title">${item.title || '隐藏卡片'}</h4>
+                    <p class="hidden-card-desc">${item.description || ''}</p>
+                    <div class="hidden-card-links">${linksHtml}</div>
+                </div>
+            `;
+
+            hiddenCardGrid.appendChild(card);
+        });
+    };
+
+    const openHiddenOverlay = async (targetId = '') => {
+        hiddenOverlay.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        hiddenPopupTitle.textContent = '隐藏卡片';
+        hiddenStatus.textContent = '正在读取隐藏内容...';
+
+        try {
+            const hiddenCards = await readHiddenCardsFromImage();
+            const visibleCards = targetId
+                ? hiddenCards.filter((item) => item.id === targetId)
+                : hiddenCards;
+
+            renderHiddenCards(visibleCards);
+            hiddenPopupTitle.textContent = visibleCards.length === 1
+                ? (visibleCards[0].title || '隐藏卡片')
+                : '隐藏卡片';
+            hiddenStatus.textContent = targetId
+                ? `已读取 ${visibleCards.length} 张隐藏卡片：${targetId}`
+                : `已读取 ${visibleCards.length} 张隐藏卡片`;
+
+            if (targetId && visibleCards.length === 0) {
+                hiddenStatus.textContent = `没有找到隐藏卡片：${targetId}`;
+            }
+        } catch (error) {
+            hiddenCardGrid.innerHTML = '';
+            hiddenStatus.textContent = error.message || '隐藏内容读取失败';
+        }
+    };
+
+    const closeHiddenOverlay = () => {
+        hiddenOverlay.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    };
+
+    hiddenCloseBtn.addEventListener('click', closeHiddenOverlay);
+    hiddenOverlay.addEventListener('click', (e) => {
+        if (e.target === hiddenOverlay) {
+            closeHiddenOverlay();
+        }
+    });
+
+    const openHiddenFromHash = () => {
+        const target = decodeURIComponent(window.location.hash.replace(/^#/, '').trim());
+
+        if (!target) {
+            return;
+        }
+
+        openHiddenOverlay(target === 'secret' ? '' : target);
+
+        try {
+            window.history.replaceState(null, '', window.location.pathname + window.location.search);
+        } catch (error) {
+            window.location.hash = '';
+        }
+    };
+
+    openHiddenFromHash();
+    window.addEventListener('hashchange', openHiddenFromHash);
 
     // 无图片占位符样式
     const style = document.createElement('style');
