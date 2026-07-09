@@ -583,6 +583,7 @@ document.addEventListener('DOMContentLoaded', () => {
         hiddenOverlay.style.display = 'flex';
         document.body.style.overflow = 'hidden';
         hiddenPopupTitle.textContent = '隐藏卡片';
+        hiddenStatus.style.display = 'block';
         hiddenStatus.textContent = '正在读取隐藏内容...';
 
         try {
@@ -595,15 +596,16 @@ document.addEventListener('DOMContentLoaded', () => {
             hiddenPopupTitle.textContent = visibleCards.length === 1
                 ? (visibleCards[0].title || '隐藏卡片')
                 : '隐藏卡片';
-            hiddenStatus.textContent = targetId
-                ? `已读取 ${visibleCards.length} 张隐藏卡片：${targetId}`
-                : `已读取 ${visibleCards.length} 张隐藏卡片`;
+            hiddenStatus.style.display = 'none';
+            hiddenStatus.textContent = '';
 
             if (targetId && visibleCards.length === 0) {
+                hiddenStatus.style.display = 'block';
                 hiddenStatus.textContent = `没有找到隐藏卡片：${targetId}`;
             }
         } catch (error) {
             hiddenCardGrid.innerHTML = '';
+            hiddenStatus.style.display = 'block';
             hiddenStatus.textContent = error.message || '隐藏内容读取失败';
         }
     };
