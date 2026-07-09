@@ -431,6 +431,7 @@ body {
     border-radius: 8px;
     overflow: hidden;
     background: #fff;
+    min-width: 0;
 }
 
 .hidden-card-grid.is-single .hidden-card-item {
@@ -448,6 +449,7 @@ body {
 
 .hidden-card-content {
     padding: 12px;
+    min-width: 0;
 }
 
 .hidden-card-grid.is-single .hidden-card-content {
@@ -473,6 +475,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    min-width: 0;
 }
 
 .hidden-card-grid.is-single .hidden-card-links {
