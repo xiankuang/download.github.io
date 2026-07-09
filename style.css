@@ -130,7 +130,7 @@ body {
     font-weight: 900;
     /* 比 bold 更粗 */
     color: #000000;
-    line-height: 0;
+    line-height: 1.1;
     padding: 0 20px;
     /* 左右留白，避免贴边 */
 }
@@ -257,6 +257,8 @@ body {
     border: 2px solid #fff;
     /* 厚边框：4px宽度 + 实线 + 白色（可自定义） */
     max-width: 400px;
+    content-visibility: auto;
+    contain-intrinsic-size: 220px 275px;
     background-color: rgba(255, 255, 255, 0.6);
     /* 白色背景+80%不透明 */
     /* 阴影也同步降低透明度，保持风格统一 */
@@ -362,8 +364,6 @@ body {
     /* 默认隐藏 */
     justify-content: center;
     align-items: center;
-    animation: overlayFadeIn 0.3s ease forwards;
-    /* 遮罩淡入，0.3秒完成 */
     animation: overlayFade 0.4s ease forwards;
     /* 遮罩400ms渐显 */
 }
@@ -382,8 +382,6 @@ body {
     /* 用于关闭按钮定位 */
     z-index: 1001;
     /* 在遮罩上方 */
-    animation: popupFadeIn 0.3s ease forwards;
-    /* 弹窗缩放+淡入，0.3秒完成 */
     animation: fadeInUp 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
 }
 

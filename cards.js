@@ -326,7 +326,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const cardGrid = document.querySelector('.card2-grid');
     const cardCountEl = document.getElementById('cardCount');
     const popupOverlay = document.getElementById('popupOverlay');
-    const card3 = document.getElementById('card3');
     const popupTitle = document.getElementById('popupTitle');
     const popupDesc = document.getElementById('popupDesc');
     const closeBtn = document.getElementById('closeBtn');
@@ -337,8 +336,26 @@ document.addEventListener('DOMContentLoaded', () => {
         cardCountEl.textContent = resources.length;
     }
 
-    // 生成卡片2
-    resources.forEach((item, index) => {
+    const getGridMetrics = () => {
+        const gridStyle = window.getComputedStyle(cardGrid);
+        const columns = gridStyle.gridTemplateColumns.split(' ').filter(Boolean).length || 1;
+        const gap = parseFloat(gridStyle.rowGap) || 0;
+        const gridHeight = cardGrid.clientHeight || Math.max(window.innerHeight - cardGrid.getBoundingClientRect().top, 0);
+        const cardWidth = (cardGrid.clientWidth - gap * (columns - 1)) / columns;
+        const heightRatio = window.matchMedia('(min-aspect-ratio: 1/1)').matches ? 10 / 8 : 1;
+        const cardHeight = cardGrid.firstElementChild?.getBoundingClientRect().height || cardWidth * heightRatio;
+        const visibleRows = Math.max(Math.ceil(gridHeight / (cardHeight + gap)), 1);
+
+        return {
+            columns,
+            visibleRows,
+            rowSize: columns,
+            preloadCount: (visibleRows + 1) * columns,
+            nextRowThreshold: cardHeight + gap
+        };
+    };
+
+    const createCard = (item, index) => {
         const card = document.createElement('div');
         card.className = 'card card2';
         card.dataset.id = item.id;
@@ -347,7 +364,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 处理图片显示（有图显示图片，无图显示占位符）
         const hasImage = item.image && item.image.trim() !== '';
         const imageContent = hasImage
-            ? `<img src="${item.image}" alt="${item.title}">`
+            ? `<img src="${item.image}" alt="${item.title}" loading="lazy" decoding="async">`
             : `<div class="no-image-placeholder">无图片</div>`;
 
         // 卡片内容结构
@@ -387,14 +404,16 @@ document.addEventListener('DOMContentLoaded', () => {
             src="${iconPath}" 
             alt="${type}图标" 
             class="download-icon"
-            onerror="this.src='./icon/default.png'"
+            loading="lazy"
+            decoding="async"
+            onerror="this.style.visibility='hidden'"
         >
         
         <!-- 新增：下载链接文本（过长显示省略号） -->
         <span class="download-link-text">${url}</span>
         
         <!-- 下载按钮 -->
-        <a href="${url}" class="download-btn" target="_blank">${displayName}</a>
+        <a href="${url}" class="download-btn" target="_blank" rel="noopener noreferrer">${displayName}</a>
     `;
 
                     downloadArea.appendChild(downloadItem);
@@ -406,8 +425,54 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.style.overflow = 'hidden';
         });
 
-        // 添加卡片到网格
-        cardGrid.appendChild(card);
+        return card;
+    };
+
+    let renderedCount = 0;
+
+    const renderUntil = (targetCount) => {
+        const nextCount = Math.min(targetCount, resources.length);
+
+        if (nextCount <= renderedCount) {
+            return;
+        }
+
+        const fragment = document.createDocumentFragment();
+
+        for (let index = renderedCount; index < nextCount; index++) {
+            fragment.appendChild(createCard(resources[index], index));
+        }
+
+        cardGrid.appendChild(fragment);
+        renderedCount = nextCount;
+    };
+
+    const renderInitialPage = () => {
+        renderUntil(getGridMetrics().preloadCount);
+    };
+
+    const renderNextRowIfNeeded = () => {
+        if (renderedCount >= resources.length) {
+            return;
+        }
+
+        const metrics = getGridMetrics();
+        const hasGridScroll = cardGrid.scrollHeight > cardGrid.clientHeight + 1;
+        const remainingScroll = hasGridScroll
+            ? cardGrid.scrollHeight - cardGrid.scrollTop - cardGrid.clientHeight
+            : cardGrid.getBoundingClientRect().bottom - window.innerHeight;
+
+        if (remainingScroll <= metrics.nextRowThreshold) {
+            renderUntil(renderedCount + metrics.rowSize);
+        }
+    };
+
+    renderInitialPage();
+    cardGrid.addEventListener('scroll', renderNextRowIfNeeded, { passive: true });
+    window.addEventListener('scroll', renderNextRowIfNeeded, { passive: true });
+    window.addEventListener('resize', () => {
+        renderUntil(getGridMetrics().preloadCount);
+        renderNextRowIfNeeded();
     });
 
     // 关闭弹窗（点击关闭按钮）
