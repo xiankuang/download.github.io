@@ -447,6 +447,15 @@ body {
     background: #f5f5f5;
 }
 
+.hidden-card-grid.is-single .hidden-card-image {
+    width: 100%;
+    max-width: 220px;
+    max-height: 220px;
+    object-fit: contain;
+    align-self: center;
+    justify-self: center;
+}
+
 .hidden-card-content {
     padding: 12px;
     min-width: 0;
