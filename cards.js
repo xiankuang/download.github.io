@@ -12,6 +12,16 @@ const resources = [
             steam:'https://store.steampowered.com/app/3254220/Simple_Cursor_Maker/'
         }
     },
+     {
+        id: 'niko3.0',
+        title: 'Niko',
+        description: 'Oneshot',
+        image: './icon/niko挂件宣传.gif',
+        links: {
+            quark: 'https://pan.quark.cn/s/091edbe43c0d',
+    
+        }
+    }, 
  {
         id: 'miku3.0',
         title: '初音未来',
