@@ -1,6 +1,6 @@
 // 卡片数据（包含下载链接）
 const resources = [
-     {
+    {
         id: 'scm',
         title: '简易光标制作器scm',
         description: '超级好用的光标编辑器',
@@ -9,20 +9,31 @@ const resources = [
             quark: 'https://pan.quark.cn/s/2b1a0dbb34e9',
             baidu: 'https://pan.baidu.com/s/1JJs5Jnr3lEtm0SerPfbiFA?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l1y0s2d',
-            steam:'https://store.steampowered.com/app/3254220/Simple_Cursor_Maker/'
+            steam: 'https://store.steampowered.com/app/3254220/Simple_Cursor_Maker/'
         }
     },
-     {
+    {
+        id: 'teto3.0',
+        title: 'teto',
+        description: 'teto',
+        image: './icon/teto挂件宣传.png',
+        links: {
+            quark: ' https://pan.quark.cn/s/606e427622ae',
+            lanzou: 'https://wwbny.lanzoue.com/b00l312i7e密码:9tba',
+        }
+    },
+
+    {
         id: 'niko3.0',
         title: 'Niko',
         description: 'Oneshot',
         image: './icon/niko挂件宣传.gif',
         links: {
             quark: 'https://pan.quark.cn/s/091edbe43c0d',
-    
+
         }
-    }, 
- {
+    },
+    {
         id: 'miku3.0',
         title: '初音未来',
         description: '初音未来',
@@ -31,8 +42,8 @@ const resources = [
             quark: 'https://pan.quark.cn/s/d45d1c79ef01',
             lanzou: 'https://wwbny.lanzoue.com/b00l2o49he',
         }
-    }, 
-     {
+    },
+    {
         id: 'zhuzhu',
         title: '猪猪挂件',
         description: '猪猪',
@@ -41,9 +52,9 @@ const resources = [
             quark: 'https://pan.quark.cn/s/c4ed8013684c',
             lanzou: 'https://wwbny.lanzoue.com/b00l2o49gd',
         }
-    }, 
+    },
 
-  {
+    {
         id: 'liyefu',
         title: '绿虫虫',
         description: '莉耶芙',
@@ -52,7 +63,7 @@ const resources = [
             quark: 'https://pan.quark.cn/s/86f81db4e97c',
             lanzou: 'https://wwbny.lanzoue.com/b00l2o49da',
         }
-    }, 
+    },
     {
         id: 'feibi',
         title: '菲比',
@@ -62,9 +73,9 @@ const resources = [
             quark: 'https://pan.quark.cn/s/8c4e21383e38',
             lanzou: 'https://wwbny.lanzoue.com/b00l2o49eb',
         }
-    }, 
+    },
 
-{
+    {
         id: 'zaomiao',
         title: '早苗',
         description: '早苗',
@@ -73,7 +84,7 @@ const resources = [
             quark: 'https://pan.quark.cn/s/f91991d26afd',
             lanzou: 'https://wwbny.lanzoue.com/b00l2o49bi',
         }
-    }, 
+    },
 
 
 
@@ -86,8 +97,8 @@ const resources = [
             quark: 'https://pan.quark.cn/s/6e659ce89a58',
             lanzou: 'https://wwbny.lanzoue.com/b00l2m0wba',
         }
-    }, 
-     {
+    },
+    {
         id: 'xiaosan',
         title: '多多良小伞',
         description: '小伞',
@@ -96,8 +107,8 @@ const resources = [
             quark: 'https://pan.quark.cn/s/6be825387d35',
             lanzou: 'https://wwbny.lanzoue.com/b00l2gztaf',
         }
-    }, 
-    
+    },
+
     {
         id: 'quancifang',
         title: '泉此方',
@@ -107,7 +118,7 @@ const resources = [
             quark: 'https://pan.quark.cn/s/1f548ba2ee6e',
             lanzou: 'https://wwpy.lanzoue.com/b00l2e7bah',
         }
-    },{
+    }, {
         id: 'tiedaoshuangzi',
         title: '橘光橘望',
         description: '可爱捏',
@@ -118,7 +129,7 @@ const resources = [
             lanzou: 'https://wwpy.lanzoue.com/b00l2cuqfi',
         }
     },
-     {
+    {
         id: 'katixiya',
         title: '卡缇希娅',
         description: '可爱捏',
@@ -129,7 +140,7 @@ const resources = [
             lanzou: 'https://wwpy.lanzoue.com/b00l2cesnc',
         }
     },
-    
+
     {
         id: 'fulan',
         title: '芙兰朵露',
@@ -141,7 +152,7 @@ const resources = [
             lanzou: 'https://wwpy.lanzoue.com/b00l2brbxc',
         }
     },
-     {
+    {
         id: 'saba',
         title: '猫鲨saba',
         description: '可爱捏',
@@ -152,7 +163,7 @@ const resources = [
             lanzou: 'https://wwpy.lanzoue.com/b00l2ay8vi',
         }
     },
-     {
+    {
         id: 'mumingdijue',
         title: '古明地觉',
         description: '小五',
