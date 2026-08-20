@@ -12,13 +12,23 @@ const resources = [
             steam: 'https://store.steampowered.com/app/3254220/Simple_Cursor_Maker/'
         }
     },
+     {
+        id: 'deekseek',
+        title: '大肥鱼',
+        description: '吃白饭',
+        image: './icon/大肥鱼挂件宣传.gif',
+        links: {
+            quark: 'https://pan.quark.cn/s/11c9ff0630c7',
+            lanzou: 'https://wwbny.lanzoue.com/b00l31hzih密码:6h9h',
+        }
+    },
     {
         id: 'teto3.0',
         title: 'teto',
         description: 'teto',
         image: './icon/teto挂件宣传.png',
         links: {
-            quark: ' https://pan.quark.cn/s/606e427622ae',
+            quark: 'https://pan.quark.cn/s/606e427622ae',
             lanzou: 'https://wwbny.lanzoue.com/b00l312i7e密码:9tba',
         }
     },
