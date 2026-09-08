@@ -12,6 +12,16 @@ const resources = [
             steam: 'https://store.steampowered.com/app/3254220/Simple_Cursor_Maker/'
         }
     },
+    {
+        id: 'quancifang',
+        title: '泉此方',
+        description: '幸运星',
+        image: './icon/泉此方光标宣传.gif',
+        links: {
+            quark: 'https://pan.quark.cn/s/1f548ba2ee6e',
+            lanzou: 'https://wwpy.lanzoue.com/b00l2e7bah',
+        }
+    }, 
      {
         id: 'deekseek',
         title: '大肥鱼',
@@ -118,17 +128,7 @@ const resources = [
             lanzou: 'https://wwbny.lanzoue.com/b00l2gztaf',
         }
     },
-
-    {
-        id: 'quancifang',
-        title: '泉此方',
-        description: '幸运星',
-        image: './icon/泉此方光标宣传.gif',
-        links: {
-            quark: 'https://pan.quark.cn/s/1f548ba2ee6e',
-            lanzou: 'https://wwpy.lanzoue.com/b00l2e7bah',
-        }
-    }, {
+{
         id: 'tiedaoshuangzi',
         title: '橘光橘望',
         description: '可爱捏',
