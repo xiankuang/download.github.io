@@ -14,6 +14,26 @@ const resources = [
     },
     {
         id: 'quancifang',
+        title: '洛茜',
+        description: '小红帽',
+        image: './icon/洛茜挂件宣传.gif',
+        links: {
+            quark: 'https://pan.quark.cn/s/7a8d82d9d58e',
+            lanzou: 'https://wwbny.lanzoue.com/b00l33k7fg',
+        }
+    }, 
+    {
+        id: 'quancifang',
+        title: '伊雷娜',
+        description: '伊雷娜',
+        image: './icon/伊雷娜悬浮挂件宣传a.gif',
+        links: {
+            quark: 'https://pan.quark.cn/s/0e72d673eaea',
+            lanzou: 'https://wwbny.lanzoue.com/b00l33g4xc',
+        }
+    }, 
+    {
+        id: 'quancifang',
         title: '泉此方',
         description: '幸运星',
         image: './icon/泉此方光标宣传.gif',
