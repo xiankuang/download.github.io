@@ -13,6 +13,16 @@ const resources = [
         }
     },
     {
+        id: 'maodie',
+        title: '哈气耄耋',
+        description: '哈',
+        image: './icon/哈气耄耋.png',
+        links: {
+            quark: 'https://pan.quark.cn/s/dc9ea1a3431a',
+            lanzou: 'https://wwbny.lanzoue.com/b00l32nc3g',
+        }
+    },
+    {
         id: 'quancifang',
         title: '洛茜',
         description: '小红帽',
