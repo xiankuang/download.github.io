@@ -23,7 +23,7 @@ const resources = [
         }
     },
     {
-        id: 'quancifang',
+        id: 'luoxi',
         title: '洛茜',
         description: '小红帽',
         image: './icon/洛茜挂件宣传.gif',
@@ -33,7 +33,7 @@ const resources = [
         }
     }, 
     {
-        id: 'quancifang',
+        id: 'yileina-p',
         title: '伊雷娜',
         description: '伊雷娜',
         image: './icon/伊雷娜悬浮挂件宣传a.gif',
