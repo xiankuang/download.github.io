@@ -9,7 +9,7 @@ const resources = [
             quark: 'https://pan.quark.cn/s/2b1a0dbb34e9',
             baidu: 'https://pan.baidu.com/s/1JJs5Jnr3lEtm0SerPfbiFA?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l1y0s2d',
-            steam: 'https://store.steampowered.com/app/3254220/Simple_Cursor_Maker/'
+            steam: 'https://store.steampowered.com/app/3254220/Simple_Cursor_Maker/',
         }
     },
     {
@@ -18,9 +18,9 @@ const resources = [
         description: '哈',
         image: './icon/哈气耄耋.png',
         links: {
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/sticker/maodie-s_main.exe',
             quark: 'https://pan.quark.cn/s/dc9ea1a3431a',
             lanzou: 'https://wwbny.lanzoue.com/b00l32nc3g',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/sticker/maodie-s_main.exe',
         }
     },
     {
@@ -29,9 +29,9 @@ const resources = [
         description: '小红帽',
         image: './icon/洛茜挂件宣传.gif',
         links: {
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/pendant/luoxi-p_main.exe',
             quark: 'https://pan.quark.cn/s/7a8d82d9d58e',
             lanzou: 'https://wwbny.lanzoue.com/b00l33k7fg',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/pendant/luoxi-p_main.exe',
         }
     }, 
     {
@@ -40,9 +40,9 @@ const resources = [
         description: '伊雷娜',
         image: './icon/伊雷娜悬浮挂件宣传a.gif',
         links: {
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/follow/yileina-f_main.zip',
             quark: 'https://pan.quark.cn/s/0e72d673eaea',
             lanzou: 'https://wwbny.lanzoue.com/b00l33g4xc',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/follow/yileina-f_main.zip',
         }
     }, 
     {
@@ -51,9 +51,9 @@ const resources = [
         description: '幸运星',
         image: './icon/泉此方光标宣传.gif',
         links: {
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/konata_main.exe',
             quark: 'https://pan.quark.cn/s/1f548ba2ee6e',
             lanzou: 'https://wwpy.lanzoue.com/b00l2e7bah',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/konata_main.exe',
         }
     }, 
      {
@@ -62,9 +62,9 @@ const resources = [
         description: '吃白饭',
         image: './icon/大肥鱼挂件宣传.gif',
         links: {
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/pendant/bigfish-p_main.exe',
             quark: 'https://pan.quark.cn/s/11c9ff0630c7',
             lanzou: 'https://wwbny.lanzoue.com/b00l31hzih密码:6h9h',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/pendant/bigfish-p_main.exe',
         }
     },
     {
@@ -85,7 +85,6 @@ const resources = [
         image: './icon/niko挂件宣传.gif',
         links: {
             quark: 'https://pan.quark.cn/s/091edbe43c0d',
-
         }
     },
     {
@@ -94,9 +93,9 @@ const resources = [
         description: '初音未来',
         image: './icon/初音未来挂件.png',
         links: {
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/pendant/miku-p_main.exe',
             quark: 'https://pan.quark.cn/s/d45d1c79ef01',
             lanzou: 'https://wwbny.lanzoue.com/b00l2o49he',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/pendant/miku-p_main.exe',
         }
     },
     {
@@ -126,9 +125,9 @@ const resources = [
         description: '菲比丘比',
         image: './icon/菲比光标宣传.gif',
         links: {
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/feibi_bat.zip',
             quark: 'https://pan.quark.cn/s/8c4e21383e38',
             lanzou: 'https://wwbny.lanzoue.com/b00l2o49eb',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/feibi_bat.zip',
         }
     },
 
@@ -138,9 +137,9 @@ const resources = [
         description: '早苗',
         image: './icon/早苗光标宣传.gif',
         links: {
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/zaomiao_bat.zip',
             quark: 'https://pan.quark.cn/s/f91991d26afd',
             lanzou: 'https://wwbny.lanzoue.com/b00l2o49bi',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/zaomiao_bat.zip',
         }
     },
 
@@ -152,9 +151,9 @@ const resources = [
         description: '啥子',
         image: './icon/陈千语光标宣传.gif',
         links: {
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/chenqianyu_bat.zip',
             quark: 'https://pan.quark.cn/s/6e659ce89a58',
             lanzou: 'https://wwbny.lanzoue.com/b00l2m0wba',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/chenqianyu_bat.zip',
         }
     },
     {
@@ -163,9 +162,9 @@ const resources = [
         description: '小伞',
         image: './icon/小伞光标宣传.gif',
         links: {
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/kogasa_pack.zip',
             quark: 'https://pan.quark.cn/s/6be825387d35',
             lanzou: 'https://wwbny.lanzoue.com/b00l2gztaf',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/kogasa_pack.zip',
         }
     },
 {
@@ -174,10 +173,10 @@ const resources = [
         description: '可爱捏',
         image: './icon/橘光橘望光标宣传.gif',
         links: {
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/tachibana_bat.zip',
             quark: 'https://pan.quark.cn/s/2a86f97f589f',
             baidu: 'https://pan.baidu.com/s/1r_7rXwv9HvUBUrxUFgAawA?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l2cuqfi',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/tachibana_bat.zip',
         }
     },
     {
@@ -186,10 +185,10 @@ const resources = [
         description: '可爱捏',
         image: './icon/卡缇希娅光标宣传.gif',
         links: {
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/katixiya_bat.zip',
             quark: 'https://pan.quark.cn/s/c2812e04fa37',
             baidu: 'https://pan.baidu.com/s/1r_7rXwv9HvUBUrxUFgAawA?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l2cesnc',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/katixiya_bat.zip',
         }
     },
 
@@ -199,10 +198,10 @@ const resources = [
         description: '可爱捏',
         image: './icon/芙兰朵露光标宣传.gif',
         links: {
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/flandre_bat.zip',
             quark: 'https://pan.quark.cn/s/e348395d7225',
             baidu: 'https://pan.baidu.com/s/1PdahtFMN1wy36G4hzEt2NQ?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l2brbxc',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/flandre_bat.zip',
         }
     },
     {
@@ -211,10 +210,10 @@ const resources = [
         description: '可爱捏',
         image: './icon/saba光标宣传.gif',
         links: {
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/saba_bat.zip',
             quark: 'https://pan.quark.cn/s/262c8cb07ec4',
             baidu: 'https://pan.baidu.com/s/1yknDogS323V27TSaXW5P0Q?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l2ay8vi',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/saba_bat.zip',
         }
     },
     {
@@ -223,10 +222,10 @@ const resources = [
         description: '小五',
         image: './icon/古明地觉宣传.gif',
         links: {
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/satori_bat.zip',
             quark: 'https://pan.quark.cn/s/8411f55ad57b',
             baidu: 'https://pan.baidu.com/s/1ytrYdeBeyQo1dcoYwWG_LA?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l29ycqb',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/satori_bat.zip',
         }
     },
     {
@@ -235,10 +234,10 @@ const resources = [
         description: '莎莎',
         image: './icon/魔理沙宣传.gif',
         links: {
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/marisa_pack.zip',
             quark: 'https://pan.quark.cn/s/64d83bc83d49',
             baidu: 'https://pan.baidu.com/s/1xBc9uvzEWn5BDM8UB9SXiA?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l28zqkj',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/marisa_pack.zip',
         }
     },
     {
@@ -247,10 +246,10 @@ const resources = [
         description: '=w=',
         image: './icon/芙莉莲宣传.gif',
         links: {
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/frieren_pack.zip',
             quark: 'https://pan.quark.cn/s/2ade2b99f8d8',
             baidu: 'https://pan.baidu.com/s/1YaP7LMT-9vvU0v6qGLlJNw?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l26ef7c',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/frieren_pack.zip',
         }
     },
     {
@@ -259,10 +258,10 @@ const resources = [
         description: '红色钻头',
         image: './icon/teto光标宣传.gif',
         links: {
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/teto_bat.zip',
             quark: 'https://pan.quark.cn/s/85d7a87b873f',
             baidu: 'https://pan.baidu.com/s/15iriKVjJDUD1gDTGXddF8Q?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l23xxod',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/teto_bat.zip',
         }
     },
     {
@@ -271,10 +270,10 @@ const resources = [
         description: 'good apple',
         image: './icon/灵梦宣传aa2.gif',
         links: {
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/reimu_bat.zip',
             quark: 'https://pan.quark.cn/s/5e61d07a2cf5',
             baidu: 'https://pan.baidu.com/s/1zz4IaEfU_bmqHP7tOHO6ow?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l2378pi',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/reimu_bat.zip',
         }
     },
     {
@@ -283,10 +282,10 @@ const resources = [
         description: '可爱',
         image: './icon/伊蕾娜光标宣传a2.gif',
         links: {
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/yileina_pack.zip',
             quark: 'https://pan.quark.cn/s/0b9aeb8ba9ed',
             baidu: 'https://pan.baidu.com/s/1B27QOHyN2Fzc6hFvymchmg?pwd=xkxk',
-            lanzou: 'https://wwpy.lanzoue.com/b00l2116qj'
+            lanzou: 'https://wwpy.lanzoue.com/b00l2116qj',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/yileina_pack.zip',
         }
     },
     {
@@ -295,10 +294,10 @@ const resources = [
         description: '可爱',
         image: './icon/波奇酱宣传a2.gif',
         links: {
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/bocchi_bat.zip',
             quark: 'https://pan.quark.cn/s/7b4b1bd17cb1',
             baidu: 'https://pan.baidu.com/s/1TGmpGpNkmu4OU2kUPMvhig?pwd=xkxk',
-            lanzou: 'https://wwpy.lanzoue.com/b00l20d4he'
+            lanzou: 'https://wwpy.lanzoue.com/b00l20d4he',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/bocchi_bat.zip',
         }
     },
     {
@@ -307,10 +306,10 @@ const resources = [
         description: '可爱星野',
         image: './icon/小鸟游星野光标宣传2.gif',
         links: {
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/hoshino_pack.zip',
             quark: 'https://pan.quark.cn/s/b605be6adac5',
             baidu: 'https://pan.baidu.com/s/1VM88_hZAVGLIVr6y2wmSIw?pwd=xkxk',
-            lanzou: 'https://wwpy.lanzoue.com/b00l203cmh'
+            lanzou: 'https://wwpy.lanzoue.com/b00l203cmh',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/hoshino_pack.zip',
         }
     },
     {
@@ -319,10 +318,10 @@ const resources = [
         description: '超级可爱！',
         image: './icon/三角符文小羊光标宣传2.gif',
         links: {
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/ralsei_bat.zip',
             quark: 'https://pan.quark.cn/s/fdd616816133',
             baidu: 'https://pan.baidu.com/s/1PuVAmVSNcccaH3P_UzdgaQ?pwd=xkxk',
-            lanzou: 'https://wwpy.lanzoue.com/b00l1zb6ub'
+            lanzou: 'https://wwpy.lanzoue.com/b00l1zb6ub',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/ralsei_bat.zip',
         }
     },
     {
@@ -331,10 +330,10 @@ const resources = [
         description: '超级可爱！',
         image: './icon/初音未来光标宣传2.gif',
         links: {
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/miku_bat.zip',
             quark: 'https://pan.quark.cn/s/aa5d3badc6ac',
             baidu: 'https://pan.baidu.com/s/1-IFShF99Dnm65_wkrQUcYA?pwd=xkxk',
-            lanzou: 'https://wwpy.lanzoue.com/b00l1xwemf'
+            lanzou: 'https://wwpy.lanzoue.com/b00l1xwemf',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/miku_bat.zip',
         }
     },
     {
@@ -343,10 +342,10 @@ const resources = [
         description: '用着用着就消失了',
         image: './icon/恋恋光标宣传2.gif',
         links: {
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/koishi_pack.zip',
             quark: 'https://pan.quark.cn/s/c952fa6b39fb',
             baidu: 'https://pan.baidu.com/s/1ccQnlAOTsJdO1jgdQiPaMA?pwd=xkxk',
-            lanzou: 'https://wwpy.lanzoue.com/b00l1y20gb'
+            lanzou: 'https://wwpy.lanzoue.com/b00l1y20gb',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/koishi_pack.zip',
         }
     },
     {
@@ -355,10 +354,10 @@ const resources = [
         description: '不敢用怕只能用一次',
         image: './icon/niko光标宣传2.gif',
         links: {
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/niko_pack.zip',
             quark: 'https://pan.quark.cn/s/a4e0d941bf2d',
             baidu: 'https://pan.baidu.com/s/14w7K0B46__oL1hnw2ck0yw?pwd=xkxk',
-            lanzou: 'https://wwpy.lanzoue.com/b00l1y19mf'
+            lanzou: 'https://wwpy.lanzoue.com/b00l1y19mf',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/niko_pack.zip',
         }
     },
     {
@@ -367,10 +366,10 @@ const resources = [
         description: '不敢用怕只能用一次',
         image: './icon/niko1.0光标宣传2.gif',
         links: {
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/niko_pack.zip',
             quark: 'https://pan.quark.cn/s/42480abfef98',
             baidu: 'https://pan.baidu.com/s/1D14uQSotg2r7QkitBX2t2Q?pwd=xkxk',
-            lanzou: 'https://wwpy.lanzoue.com/b00l25xnef'
+            lanzou: 'https://wwpy.lanzoue.com/b00l25xnef',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/niko_pack.zip',
         }
     },
     {
@@ -379,10 +378,10 @@ const resources = [
         description: 'omg是王小桃',
         image: './icon/小桃光标宣传2.gif',
         links: {
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/momoi_pack.zip',
             quark: 'https://pan.quark.cn/s/56affc620a29',
             baidu: 'https://pan.baidu.com/s/16l1JBn_gopaqbROpJ7eHYg?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l25xn1c',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/momoi_pack.zip',
         }
     },
     {
@@ -391,10 +390,10 @@ const resources = [
         description: '最经典的光标',
         image: './icon/动态简单像素光标宣传.gif',
         links: {
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/pixelanim_pack.zip',
             quark: 'https://pan.quark.cn/s/fccb7ad0e841',
             baidu: 'https://pan.baidu.com/s/1PdahtFMN1wy36G4hzEt2NQ?pwd=xkxk',
-            lanzou: 'https://wwpy.lanzoue.com/b00l1y2wsf'
+            lanzou: 'https://wwpy.lanzoue.com/b00l1y2wsf',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/pixelanim_pack.zip',
         }
     },
     {
@@ -403,10 +402,10 @@ const resources = [
         description: '最经典的光标的反色',
         image: './icon/反色动态简单像素光标.gif',
         links: {
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/invcolor_bat.zip',
             quark: 'https://pan.quark.cn/s/623d5e5a5728',
             baidu: 'https://pan.baidu.com/s/1N60sFEjWX4NH1CL6fA-mWg?pwd=xkxk',
-            lanzou: 'https://wwpy.lanzoue.com/b00l1ywr3a'
+            lanzou: 'https://wwpy.lanzoue.com/b00l1ywr3a',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/invcolor_bat.zip',
         }
     }
 ];
