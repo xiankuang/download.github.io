@@ -13,7 +13,7 @@ const resources = [
         }
     },
     {
-        id: 'xingjianya2',
+        id: 'xingjianya2.1',
         title: '星见雅光标',
         description: '可爱镍',
         image: './icon/xingjianya2_光标_宣传.gif',
