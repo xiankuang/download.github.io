@@ -14,8 +14,8 @@ const resources = [
     },
     {
         id: 'xingjianya2',
-        title: 'xingjianya2',
-        description: '',
+        title: '星见雅光标',
+        description: '可爱镍',
         image: './icon/xingjianya2_光标_宣传.gif',
         links: {
             quark: 'https://pan.quark.cn/s/2f459d07c4f1',
