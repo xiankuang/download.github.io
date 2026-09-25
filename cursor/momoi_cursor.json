@@ -1,0 +1,15 @@
+{
+  "width": 48,
+  "height": 48,
+  "hotspot": [
+    3,
+    2
+  ],
+  "frameCount": 6,
+  "frameMs": 100,
+  "loop": true,
+  "originalWidth": 32,
+  "originalHeight": 32,
+  "scaledWith": "nearest",
+  "source": "小桃光标.zip (Normal.ani)"
+}

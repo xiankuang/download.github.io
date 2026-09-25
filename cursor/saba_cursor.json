@@ -1,0 +1,12 @@
+{
+  "width": 48,
+  "height": 48,
+  "hotspot": [
+    5,
+    3
+  ],
+  "frameCount": 10,
+  "frameMs": 100,
+  "loop": true,
+  "source": "saba光标.zip (Normal.ani)"
+}

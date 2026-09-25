@@ -1,5 +1,13 @@
-// 卡片数据（包含下载链接）
+// 卡片数据（包含下载链接）| __ghostCursorInstalled
 const resources = [
+    {
+        id: '测试',
+        title: '测试',
+        description: '',
+        image: '',
+        links: {
+        }
+    },
     {
         id: 'scm',
         title: '简易光标制作器scm',
@@ -31,7 +39,7 @@ const resources = [
         links: {
             quark: 'https://pan.quark.cn/s/dc9ea1a3431a',
             lanzou: 'https://wwbny.lanzoue.com/b00l32nc3g',
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/sticker/maodie-s_main.exe',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/sticker/maodie-s_5.exe',
         }
     },
     {
@@ -42,7 +50,7 @@ const resources = [
         links: {
             quark: 'https://pan.quark.cn/s/7a8d82d9d58e',
             lanzou: 'https://wwbny.lanzoue.com/b00l33k7fg',
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/pendant/luoxi-p_main.exe',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/pendant/luoxi-p_main_2.exe',
         }
     }, 
     {
@@ -53,7 +61,7 @@ const resources = [
         links: {
             quark: 'https://pan.quark.cn/s/0e72d673eaea',
             lanzou: 'https://wwbny.lanzoue.com/b00l33g4xc',
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/follow/yileina-f_main.zip',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/follow/yileina-f_main_2.exe',
         }
     }, 
     {
@@ -64,7 +72,7 @@ const resources = [
         links: {
             quark: 'https://pan.quark.cn/s/1f548ba2ee6e',
             lanzou: 'https://wwpy.lanzoue.com/b00l2e7bah',
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/konata_main.exe',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/konata_6.exe',
         }
     }, 
      {
@@ -96,6 +104,7 @@ const resources = [
         image: './icon/niko挂件宣传.gif',
         links: {
             quark: 'https://pan.quark.cn/s/091edbe43c0d',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/pendant/niko-p_niko30.exe',
         }
     },
     {
@@ -106,7 +115,7 @@ const resources = [
         links: {
             quark: 'https://pan.quark.cn/s/d45d1c79ef01',
             lanzou: 'https://wwbny.lanzoue.com/b00l2o49he',
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/pendant/miku-p_main.exe',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/pendant/miku-p_3911.exe',
         }
     },
     {
@@ -117,6 +126,7 @@ const resources = [
         links: {
             quark: 'https://pan.quark.cn/s/c4ed8013684c',
             lanzou: 'https://wwbny.lanzoue.com/b00l2o49gd',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/pendant/zhuzhu-p_main.exe',
         }
     },
 
@@ -128,6 +138,7 @@ const resources = [
         links: {
             quark: 'https://pan.quark.cn/s/86f81db4e97c',
             lanzou: 'https://wwbny.lanzoue.com/b00l2o49da',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/pendant/liyefu-p_30.exe',
         }
     },
     {
@@ -138,7 +149,7 @@ const resources = [
         links: {
             quark: 'https://pan.quark.cn/s/8c4e21383e38',
             lanzou: 'https://wwbny.lanzoue.com/b00l2o49eb',
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/feibi_bat.zip',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/feibi_main.exe',
         }
     },
 
@@ -150,7 +161,7 @@ const resources = [
         links: {
             quark: 'https://pan.quark.cn/s/f91991d26afd',
             lanzou: 'https://wwbny.lanzoue.com/b00l2o49bi',
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/zaomiao_bat.zip',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/zaomiao_main.exe',
         }
     },
 
@@ -164,7 +175,7 @@ const resources = [
         links: {
             quark: 'https://pan.quark.cn/s/6e659ce89a58',
             lanzou: 'https://wwbny.lanzoue.com/b00l2m0wba',
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/chenqianyu_bat.zip',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/chenqianyu_main.exe',
         }
     },
     {
@@ -175,7 +186,7 @@ const resources = [
         links: {
             quark: 'https://pan.quark.cn/s/6be825387d35',
             lanzou: 'https://wwbny.lanzoue.com/b00l2gztaf',
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/kogasa_pack.zip',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/kogasa_main.exe',
         }
     },
 {
@@ -187,7 +198,7 @@ const resources = [
             quark: 'https://pan.quark.cn/s/2a86f97f589f',
             baidu: 'https://pan.baidu.com/s/1r_7rXwv9HvUBUrxUFgAawA?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l2cuqfi',
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/tachibana_bat.zip',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/tachibana_main.exe',
         }
     },
     {
@@ -199,7 +210,7 @@ const resources = [
             quark: 'https://pan.quark.cn/s/c2812e04fa37',
             baidu: 'https://pan.baidu.com/s/1r_7rXwv9HvUBUrxUFgAawA?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l2cesnc',
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/katixiya_bat.zip',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/katixiya_main.exe',
         }
     },
 
@@ -212,7 +223,7 @@ const resources = [
             quark: 'https://pan.quark.cn/s/e348395d7225',
             baidu: 'https://pan.baidu.com/s/1PdahtFMN1wy36G4hzEt2NQ?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l2brbxc',
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/flandre_bat.zip',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/flandre_main.exe',
         }
     },
     {
@@ -224,7 +235,7 @@ const resources = [
             quark: 'https://pan.quark.cn/s/262c8cb07ec4',
             baidu: 'https://pan.baidu.com/s/1yknDogS323V27TSaXW5P0Q?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l2ay8vi',
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/saba_bat.zip',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/saba_saba.exe',
         }
     },
     {
@@ -236,7 +247,7 @@ const resources = [
             quark: 'https://pan.quark.cn/s/8411f55ad57b',
             baidu: 'https://pan.baidu.com/s/1ytrYdeBeyQo1dcoYwWG_LA?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l29ycqb',
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/satori_bat.zip',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/satori_main.exe',
         }
     },
     {
@@ -248,7 +259,7 @@ const resources = [
             quark: 'https://pan.quark.cn/s/64d83bc83d49',
             baidu: 'https://pan.baidu.com/s/1xBc9uvzEWn5BDM8UB9SXiA?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l28zqkj',
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/marisa_pack.zip',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/marisa_main.exe',
         }
     },
     {
@@ -260,7 +271,7 @@ const resources = [
             quark: 'https://pan.quark.cn/s/2ade2b99f8d8',
             baidu: 'https://pan.baidu.com/s/1YaP7LMT-9vvU0v6qGLlJNw?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l26ef7c',
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/frieren_pack.zip',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/frieren_main.exe',
         }
     },
     {
@@ -272,7 +283,7 @@ const resources = [
             quark: 'https://pan.quark.cn/s/85d7a87b873f',
             baidu: 'https://pan.baidu.com/s/15iriKVjJDUD1gDTGXddF8Q?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l23xxod',
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/teto_bat.zip',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/teto_teto.exe',
         }
     },
     {
@@ -284,7 +295,7 @@ const resources = [
             quark: 'https://pan.quark.cn/s/5e61d07a2cf5',
             baidu: 'https://pan.baidu.com/s/1zz4IaEfU_bmqHP7tOHO6ow?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l2378pi',
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/reimu_bat.zip',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/reimu_main.exe',
         }
     },
     {
@@ -296,7 +307,7 @@ const resources = [
             quark: 'https://pan.quark.cn/s/0b9aeb8ba9ed',
             baidu: 'https://pan.baidu.com/s/1B27QOHyN2Fzc6hFvymchmg?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l2116qj',
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/yileina_pack.zip',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/yileina_main.exe',
         }
     },
     {
@@ -308,7 +319,7 @@ const resources = [
             quark: 'https://pan.quark.cn/s/7b4b1bd17cb1',
             baidu: 'https://pan.baidu.com/s/1TGmpGpNkmu4OU2kUPMvhig?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l20d4he',
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/bocchi_bat.zip',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/bocchi_main.exe',
         }
     },
     {
@@ -320,7 +331,7 @@ const resources = [
             quark: 'https://pan.quark.cn/s/b605be6adac5',
             baidu: 'https://pan.baidu.com/s/1VM88_hZAVGLIVr6y2wmSIw?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l203cmh',
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/hoshino_pack.zip',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/hoshino_main.exe',
         }
     },
     {
@@ -332,7 +343,7 @@ const resources = [
             quark: 'https://pan.quark.cn/s/fdd616816133',
             baidu: 'https://pan.baidu.com/s/1PuVAmVSNcccaH3P_UzdgaQ?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l1zb6ub',
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/ralsei_bat.zip',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/ralsei_relsei.exe',
         }
     },
     {
@@ -344,7 +355,7 @@ const resources = [
             quark: 'https://pan.quark.cn/s/aa5d3badc6ac',
             baidu: 'https://pan.baidu.com/s/1-IFShF99Dnm65_wkrQUcYA?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l1xwemf',
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/miku_bat.zip',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/miku_main.exe',
         }
     },
     {
@@ -356,7 +367,7 @@ const resources = [
             quark: 'https://pan.quark.cn/s/c952fa6b39fb',
             baidu: 'https://pan.baidu.com/s/1ccQnlAOTsJdO1jgdQiPaMA?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l1y20gb',
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/koishi_pack.zip',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/koishi_main.exe',
         }
     },
     {
@@ -368,7 +379,7 @@ const resources = [
             quark: 'https://pan.quark.cn/s/a4e0d941bf2d',
             baidu: 'https://pan.baidu.com/s/14w7K0B46__oL1hnw2ck0yw?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l1y19mf',
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/niko_pack.zip',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/niko_niko20.exe',
         }
     },
     {
@@ -380,7 +391,7 @@ const resources = [
             quark: 'https://pan.quark.cn/s/42480abfef98',
             baidu: 'https://pan.baidu.com/s/1D14uQSotg2r7QkitBX2t2Q?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l25xnef',
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/niko_pack.zip',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/niko_niko10.exe',
         }
     },
     {
@@ -404,7 +415,7 @@ const resources = [
             quark: 'https://pan.quark.cn/s/fccb7ad0e841',
             baidu: 'https://pan.baidu.com/s/1PdahtFMN1wy36G4hzEt2NQ?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l1y2wsf',
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/pixelanim_pack.zip',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/pixelanim_main.exe',
         }
     },
     {
@@ -416,7 +427,7 @@ const resources = [
             quark: 'https://pan.quark.cn/s/623d5e5a5728',
             baidu: 'https://pan.baidu.com/s/1N60sFEjWX4NH1CL6fA-mWg?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l1ywr3a',
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/invcolor_bat.zip',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/invcolor_main.exe',
         }
     }
 ];
@@ -482,6 +493,35 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
 
+        // 悬停时用「假光标」：隐藏真光标，让一个 <img> 播放该作品的光标动画。
+        // 没配 cursor / 文件不存在 → 什么都不做，保持系统默认光标。
+        if (item.cursor && String(item.cursor).trim() !== '') {
+            const curPath = String(item.cursor).trim();
+            const metaPath = curPath.replace(/\.[^./]+$/, '.json');
+            const gifUrl = new URL(curPath, location.href).href;
+            let hotspot = [0, 0];
+            let ready = false;
+
+            // 预取热区；取不到就用 (0,0)，不影响显示
+            fetch(new URL(metaPath, location.href).href)
+                .then(r => (r.ok ? r.json() : null))
+                .then(m => { if (m && Array.isArray(m.hotspot)) hotspot = m.hotspot; })
+                .catch(() => {});
+
+            // 预加载 GIF：加载成功才启用，失败就永不启用（不改光标）
+            const probe = new Image();
+            probe.onload = () => { ready = true; };
+            probe.onerror = () => { card.dataset.cursorMissing = '1'; };
+            probe.src = gifUrl;
+
+            card.addEventListener('mouseenter', () => {
+                if (!ready) return;              // 图没加载好 → 不隐藏真光标
+                window.ghostCursorShow(gifUrl, hotspot, card);
+            });
+            card.addEventListener('mouseleave', () => {
+                window.ghostCursorHide(card);
+            });
+        }
         // 点击卡片2显示弹窗（卡片3）
         card.addEventListener('click', () => {
             // 填充弹窗标题和描述
@@ -788,3 +828,78 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     document.head.appendChild(style);
 });
+/* ===== 悬停假光标（全局工具）=====
+   为什么用假光标：实测 CSS cursor: url(x.gif) 只渲染第一帧，动画不会播；
+   而页面里的 <img> 是正常图片，GIF 会照常播放。
+   代价是真光标被隐藏（cursor:none），所以每一步都做了兜底恢复。 */
+(function () {
+    let ghost = null;
+    let activeEl = null;
+    let mx = 0, my = 0, raf = null;
+
+    function ensureGhost() {
+        if (ghost) return ghost;
+        ghost = document.createElement('img');
+        ghost.id = 'ghost-cursor';
+        ghost.alt = '';
+        ghost.setAttribute('aria-hidden', 'true');
+        ghost.style.cssText = [
+            'position:fixed', 'left:0', 'top:0',
+            'pointer-events:none',
+            'z-index:2147483647',
+            'display:none',
+            'image-rendering:pixelated',
+            'will-change:transform'
+        ].join(';');
+        document.body.appendChild(ghost);
+        return ghost;
+    }
+
+    function place() {
+        raf = null;
+        if (!ghost) return;
+        const hx = ghost.dataset.hx | 0, hy = ghost.dataset.hy | 0;
+        ghost.style.transform = 'translate(' + (mx - hx) + 'px,' + (my - hy) + 'px)';
+    }
+
+    function schedule() {
+        if (activeEl && !raf) raf = requestAnimationFrame(place);
+    }
+
+    window.addEventListener('mousemove', function (e) {
+        mx = e.clientX; my = e.clientY;
+        schedule();
+    }, { passive: true });
+
+    // 兜底 1：鼠标移出文档（切标签页 / 移出窗口）→ 恢复真光标
+    document.addEventListener('mouseleave', function () {
+        if (activeEl) window.ghostCursorHide(activeEl);
+    });
+    // 兜底 2：窗口失焦 → 恢复
+    window.addEventListener('blur', function () {
+        if (activeEl) window.ghostCursorHide(activeEl);
+    });
+    // 兜底 3：滚动时位置要跟着刷新
+    window.addEventListener('scroll', schedule, { passive: true });
+
+    window.ghostCursorShow = function (url, hotspot, el) {
+        const g = ensureGhost();
+        if (activeEl && activeEl !== el) activeEl.style.cursor = '';
+        activeEl = el;
+        // 尺寸就用 GIF 自身大小：不设 width/height，浏览器按原尺寸显示
+        g.style.width = '';
+        g.style.height = '';
+        g.dataset.hx = hotspot[0] | 0;
+        g.dataset.hy = hotspot[1] | 0;
+        if (g.getAttribute('src') !== url) g.src = url;
+        g.style.display = 'block';
+        el.style.cursor = 'none';
+        place();
+    };
+
+    window.ghostCursorHide = function (el) {
+        if (ghost) ghost.style.display = 'none';
+        if (el) el.style.cursor = '';
+        if (activeEl === el) activeEl = null;
+    };
+})();
