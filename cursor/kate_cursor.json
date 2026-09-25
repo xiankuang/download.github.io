@@ -1,6 +1,8 @@
 {
   "width": 48,
   "height": 48,
+  "nativeWidth": 48,
+  "nativeHeight": 48,
   "hotspot": [
     4,
     3
@@ -8,5 +10,6 @@
   "frameCount": 8,
   "frameMs": 100,
   "loop": true,
+  "scaled": false,
   "source": "凯特光标.zip (Normal.ani)"
 }

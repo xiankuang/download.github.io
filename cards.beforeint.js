@@ -17,7 +17,6 @@ const resources = [
         title: '星见雅光标',
         description: '可爱镍',
         image: './icon/xingjianya2_光标_宣传.gif',
-        cursor: './cursor/miyabi_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/2f459d07c4f1',
             lanzou: 'https://wwbny.lanzoue.com/b00l32nc4h',
@@ -62,7 +61,6 @@ const resources = [
         title: '泉此方',
         description: '幸运星',
         image: './icon/泉此方光标宣传.gif',
-        cursor: './cursor/konata_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/1f548ba2ee6e',
             lanzou: 'https://wwpy.lanzoue.com/b00l2e7bah',
@@ -141,7 +139,6 @@ const resources = [
         title: '菲比',
         description: '菲比丘比',
         image: './icon/菲比光标宣传.gif',
-        cursor: './cursor/feibi_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/8c4e21383e38',
             lanzou: 'https://wwbny.lanzoue.com/b00l2o49eb',
@@ -154,7 +151,6 @@ const resources = [
         title: '早苗',
         description: '早苗',
         image: './icon/早苗光标宣传.gif',
-        cursor: './cursor/zaomiao_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/f91991d26afd',
             lanzou: 'https://wwbny.lanzoue.com/b00l2o49bi',
@@ -169,7 +165,6 @@ const resources = [
         title: '陈千语',
         description: '啥子',
         image: './icon/陈千语光标宣传.gif',
-        cursor: './cursor/chenqianyu_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/6e659ce89a58',
             lanzou: 'https://wwbny.lanzoue.com/b00l2m0wba',
@@ -181,7 +176,6 @@ const resources = [
         title: '多多良小伞',
         description: '小伞',
         image: './icon/小伞光标宣传.gif',
-        cursor: './cursor/kogasa_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/6be825387d35',
             lanzou: 'https://wwbny.lanzoue.com/b00l2gztaf',
@@ -193,7 +187,6 @@ const resources = [
         title: '橘光橘望',
         description: '可爱捏',
         image: './icon/橘光橘望光标宣传.gif',
-        cursor: './cursor/tachibana_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/2a86f97f589f',
             baidu: 'https://pan.baidu.com/s/1r_7rXwv9HvUBUrxUFgAawA?pwd=xkxk',
@@ -206,7 +199,6 @@ const resources = [
         title: '卡缇希娅',
         description: '可爱捏',
         image: './icon/卡缇希娅光标宣传.gif',
-        cursor: './cursor/katixiya_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/c2812e04fa37',
             baidu: 'https://pan.baidu.com/s/1r_7rXwv9HvUBUrxUFgAawA?pwd=xkxk',
@@ -220,7 +212,6 @@ const resources = [
         title: '芙兰朵露',
         description: '可爱捏',
         image: './icon/芙兰朵露光标宣传.gif',
-        cursor: './cursor/flandre_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/e348395d7225',
             baidu: 'https://pan.baidu.com/s/1PdahtFMN1wy36G4hzEt2NQ?pwd=xkxk',
@@ -233,7 +224,6 @@ const resources = [
         title: '猫鲨saba',
         description: '可爱捏',
         image: './icon/saba光标宣传.gif',
-        cursor: './cursor/saba_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/262c8cb07ec4',
             baidu: 'https://pan.baidu.com/s/1yknDogS323V27TSaXW5P0Q?pwd=xkxk',
@@ -246,7 +236,6 @@ const resources = [
         title: '古明地觉',
         description: '小五',
         image: './icon/古明地觉宣传.gif',
-        cursor: './cursor/satori_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/8411f55ad57b',
             baidu: 'https://pan.baidu.com/s/1ytrYdeBeyQo1dcoYwWG_LA?pwd=xkxk',
@@ -259,7 +248,6 @@ const resources = [
         title: '魔理莎',
         description: '莎莎',
         image: './icon/魔理沙宣传.gif',
-        cursor: './cursor/marisa_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/64d83bc83d49',
             baidu: 'https://pan.baidu.com/s/1xBc9uvzEWn5BDM8UB9SXiA?pwd=xkxk',
@@ -272,7 +260,6 @@ const resources = [
         title: '芙莉莲',
         description: '=w=',
         image: './icon/芙莉莲宣传.gif',
-        cursor: './cursor/frieren_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/2ade2b99f8d8',
             baidu: 'https://pan.baidu.com/s/1YaP7LMT-9vvU0v6qGLlJNw?pwd=xkxk',
@@ -285,7 +272,6 @@ const resources = [
         title: 'teto',
         description: '红色钻头',
         image: './icon/teto光标宣传.gif',
-        cursor: './cursor/teto_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/85d7a87b873f',
             baidu: 'https://pan.baidu.com/s/15iriKVjJDUD1gDTGXddF8Q?pwd=xkxk',
@@ -298,7 +284,6 @@ const resources = [
         title: '博丽灵梦',
         description: 'good apple',
         image: './icon/灵梦宣传aa2.gif',
-        cursor: './cursor/reimu_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/5e61d07a2cf5',
             baidu: 'https://pan.baidu.com/s/1zz4IaEfU_bmqHP7tOHO6ow?pwd=xkxk',
@@ -311,7 +296,6 @@ const resources = [
         title: '伊蕾娜',
         description: '可爱',
         image: './icon/伊蕾娜光标宣传a2.gif',
-        cursor: './cursor/yileina_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/0b9aeb8ba9ed',
             baidu: 'https://pan.baidu.com/s/1B27QOHyN2Fzc6hFvymchmg?pwd=xkxk',
@@ -324,7 +308,6 @@ const resources = [
         title: '可爱波奇',
         description: '可爱',
         image: './icon/波奇酱宣传a2.gif',
-        cursor: './cursor/bocchi_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/7b4b1bd17cb1',
             baidu: 'https://pan.baidu.com/s/1TGmpGpNkmu4OU2kUPMvhig?pwd=xkxk',
@@ -337,7 +320,6 @@ const resources = [
         title: '可爱星野',
         description: '可爱星野',
         image: './icon/小鸟游星野光标宣传2.gif',
-        cursor: './cursor/hoshino_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/b605be6adac5',
             baidu: 'https://pan.baidu.com/s/1VM88_hZAVGLIVr6y2wmSIw?pwd=xkxk',
@@ -350,7 +332,6 @@ const resources = [
         title: 'ralsei',
         description: '超级可爱！',
         image: './icon/三角符文小羊光标宣传2.gif',
-        cursor: './cursor/ralsei_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/fdd616816133',
             baidu: 'https://pan.baidu.com/s/1PuVAmVSNcccaH3P_UzdgaQ?pwd=xkxk',
@@ -375,7 +356,6 @@ const resources = [
         title: '恋恋光标',
         description: '用着用着就消失了',
         image: './icon/恋恋光标宣传2.gif',
-        cursor: './cursor/koishi_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/c952fa6b39fb',
             baidu: 'https://pan.baidu.com/s/1ccQnlAOTsJdO1jgdQiPaMA?pwd=xkxk',
@@ -412,7 +392,6 @@ const resources = [
         title: '碧蓝档案小桃光标',
         description: 'omg是王小桃',
         image: './icon/小桃光标宣传2.gif',
-        cursor: './cursor/momoi_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/56affc620a29',
             baidu: 'https://pan.baidu.com/s/16l1JBn_gopaqbROpJ7eHYg?pwd=xkxk',
@@ -842,170 +821,78 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     document.head.appendChild(style);
 });
-        /* ===== 悬停假光标（全局工具）=====
-           为什么用假光标：实测 CSS cursor: url(x.gif) 只渲染第一帧，动画不会播；
-           而页面里的 <img> 是正常图片，GIF 会照常播放。
-           代价是真光标被隐藏（cursor:none），所以每一步都做了兜底恢复。
+/* ===== 悬停假光标（全局工具）=====
+   为什么用假光标：实测 CSS cursor: url(x.gif) 只渲染第一帧，动画不会播；
+   而页面里的 <img> 是正常图片，GIF 会照常播放。
+   代价是真光标被隐藏（cursor:none），所以每一步都做了兜底恢复。 */
+(function () {
+    let ghost = null;
+    let activeEl = null;
+    let mx = 0, my = 0, raf = null;
 
-           ── 像素锐利与屏幕缩放 ──
-           实测这些 .ani 就是「原生像素」导出（N=1 完全还原，没有预缩放），
-           所以只要显示尺寸是源尺寸的整数倍，像素就完全锐利、不会宽窄不一。
-           非整数倍（如 48→64 是 1.333 倍）会让部分像素占 2 格、部分占 1 格。
+    function ensureGhost() {
+        if (ghost) return ghost;
+        ghost = document.createElement('img');
+        ghost.id = 'ghost-cursor';
+        ghost.alt = '';
+        ghost.setAttribute('aria-hidden', 'true');
+        ghost.style.cssText = [
+            'position:fixed', 'left:0', 'top:0',
+            'pointer-events:none',
+            'z-index:2147483647',
+            'display:none',
+            'image-rendering:pixelated',
+            'will-change:transform'
+        ].join(';');
+        document.body.appendChild(ghost);
+        return ghost;
+    }
 
-           显示规则（参照 SCM 加载器读 SM_CXCURSOR 的思路，
-           浏览器端用 devicePixelRatio 等效替代）：
-             物理尺寸 = 源尺寸 × 整数N，且 ≥ 48px，取最接近 32×dpr 的档
-           于是所有档位都是整数倍，像素始终锐利。
-           实际取值：
-             源48 → dpr1:48(1x) dpr1.5:48(1x) dpr2:96(2x) dpr3:96(2x)
-             源32 → dpr1:64(2x) dpr1.5:64(2x) dpr2:64(2x) dpr3:96(3x)
-           CSS 宽度 = 物理尺寸 / dpr，浏览器再按 dpr 放大回去。 */
-        (function () {
-            // 与系统光标观感对齐的期望物理尺寸基准（Windows 100% 下光标为 32px）
-            var TARGET_BASE = 32;
-            // 物理尺寸下限：低于此值在高分屏上会显得过小
-            var MIN_PHYS = 48;
+    function place() {
+        raf = null;
+        if (!ghost) return;
+        const hx = ghost.dataset.hx | 0, hy = ghost.dataset.hy | 0;
+        ghost.style.transform = 'translate(' + (mx - hx) + 'px,' + (my - hy) + 'px)';
+    }
 
-            var ghost = null;
-            var activeEl = null;
-            var mx = 0, my = 0, raf = null;
+    function schedule() {
+        if (activeEl && !raf) raf = requestAnimationFrame(place);
+    }
 
-            function readDpr() {
-                var d = window.devicePixelRatio;
-                if (!d || !isFinite(d) || d <= 0) d = 1;
-                if (d < 1) d = 1;
-                return d;
-            }
+    window.addEventListener('mousemove', function (e) {
+        mx = e.clientX; my = e.clientY;
+        schedule();
+    }, { passive: true });
 
-            // 核心：算「源尺寸 × 整数」的档位
-            function pickPhysical(nativeSize, dpr) {
-                var want = TARGET_BASE * dpr;
-                var best = null;
-                for (var n = 1; n <= 8; n++) {
-                    var phys = nativeSize * n;
-                    if (phys < MIN_PHYS) continue;
-                    if (best === null ||
-                        Math.abs(phys - want) < Math.abs(best.phys - want) ||
-                        (Math.abs(phys - want) === Math.abs(best.phys - want) && phys > best.phys)) {
-                        best = { n: n, phys: phys };
-                    }
-                }
-                // 兜底：万一 nativeSize 很小导致一档都没有，就退到最小整数倍
-                if (best === null) best = { n: 1, phys: nativeSize };
-                return best;
-            }
+    // 兜底 1：鼠标移出文档（切标签页 / 移出窗口）→ 恢复真光标
+    document.addEventListener('mouseleave', function () {
+        if (activeEl) window.ghostCursorHide(activeEl);
+    });
+    // 兜底 2：窗口失焦 → 恢复
+    window.addEventListener('blur', function () {
+        if (activeEl) window.ghostCursorHide(activeEl);
+    });
+    // 兜底 3：滚动时位置要跟着刷新
+    window.addEventListener('scroll', schedule, { passive: true });
 
-            function ensureGhost() {
-                if (ghost) return ghost;
-                ghost = document.createElement('img');
-                ghost.id = 'ghost-cursor';
-                ghost.alt = '';
-                ghost.setAttribute('aria-hidden', 'true');
-                ghost.style.cssText = [
-                    'position:fixed', 'left:0', 'top:0',
-                    'pointer-events:none',
-                    'z-index:2147483647',
-                    'display:none',
-                    // 像素画放大必须用 pixelated，否则会被浏览器插值糊掉
-                    'image-rendering:pixelated',
-                    'will-change:transform'
-                ].join(';');
-                document.body.appendChild(ghost);
-                return ghost;
-            }
+    window.ghostCursorShow = function (url, hotspot, el) {
+        const g = ensureGhost();
+        if (activeEl && activeEl !== el) activeEl.style.cursor = '';
+        activeEl = el;
+        // 尺寸就用 GIF 自身大小：不设 width/height，浏览器按原尺寸显示
+        g.style.width = '';
+        g.style.height = '';
+        g.dataset.hx = hotspot[0] | 0;
+        g.dataset.hy = hotspot[1] | 0;
+        if (g.getAttribute('src') !== url) g.src = url;
+        g.style.display = 'block';
+        el.style.cursor = 'none';
+        place();
+    };
 
-            // 按原生尺寸 + dpr 设定显示尺寸，并算出热区换算比例
-            function applySize(g) {
-                var natW = g.naturalWidth || 0, natH = g.naturalHeight || 0;
-                if (!natW || !natH) { g.dataset.k = 1; return; }
-
-                var dpr = readDpr();
-                var pick = pickPhysical(natW, dpr);
-                var cssW = pick.phys / dpr;              // 物理 → CSS
-                var cssH = cssW * natH / natW;
-
-                g.style.width = cssW + 'px';
-                g.style.height = cssH + 'px';
-                // 热区换算：CSS 尺寸 / 源尺寸
-                g.dataset.k = cssW / natW;
-                g.dataset.n = pick.n;
-                g.dataset.phys = pick.phys;
-            }
-
-            function place() {
-                raf = null;
-                if (!ghost) return;
-                var k = parseFloat(ghost.dataset.k) || 1;
-                var hx = (ghost.dataset.hx | 0) * k;
-                var hy = (ghost.dataset.hy | 0) * k;
-                var tx = Math.round((mx - hx) * 1000) / 1000;
-                var ty = Math.round((my - hy) * 1000) / 1000;
-                ghost.style.transform = 'translate(' + tx + 'px,' + ty + 'px)';
-            }
-
-            function schedule() {
-                if (activeEl && !raf) raf = requestAnimationFrame(place);
-            }
-
-            window.addEventListener('mousemove', function (e) {
-                mx = e.clientX; my = e.clientY;
-                schedule();
-            }, { passive: true });
-
-            // 屏幕缩放变化（拖到另一台显示器 / 改系统缩放）→ 重算档位
-            function onScaleChange() {
-                if (activeEl && ghost) { applySize(ghost); place(); }
-            }
-            window.addEventListener('resize', onScaleChange);
-            if (window.matchMedia) {
-                try {
-                    var mq = window.matchMedia('(resolution: ' + window.devicePixelRatio + 'dppx)');
-                    if (mq && mq.addEventListener) mq.addEventListener('change', onScaleChange);
-                } catch (e) {}
-            }
-
-            // 兜底 1：鼠标移出文档（切标签页 / 移出窗口）→ 恢复真光标
-            document.addEventListener('mouseleave', function () {
-                if (activeEl) window.ghostCursorHide(activeEl);
-            });
-            // 兜底 2：窗口失焦 → 恢复
-            window.addEventListener('blur', function () {
-                if (activeEl) window.ghostCursorHide(activeEl);
-            });
-            // 兜底 3：滚动时位置要跟着刷新
-            window.addEventListener('scroll', schedule, { passive: true });
-
-            window.ghostCursorShow = function (url, hotspot, el) {
-                var g = ensureGhost();
-                if (activeEl && activeEl !== el) activeEl.style.cursor = '';
-                activeEl = el;
-                g.dataset.hx = hotspot[0] | 0;
-                g.dataset.hy = hotspot[1] | 0;
-                if (g.getAttribute('src') !== url) {
-                    g.src = url;
-                    g.onload = function () { applySize(g); if (activeEl === el) place(); };
-                }
-                applySize(g);
-                g.style.display = 'block';
-                el.style.cursor = 'none';
-                place();
-            };
-
-            window.ghostCursorHide = function (el) {
-                if (ghost) ghost.style.display = 'none';
-                if (el) el.style.cursor = '';
-                if (activeEl === el) activeEl = null;
-            };
-
-            // 诊断用
-            window.__ghostCursorInfo = function () {
-                return {
-                    dpr: readDpr(),
-                    native: ghost ? [ghost.naturalWidth, ghost.naturalHeight] : null,
-                    cssSize: ghost ? [ghost.style.width, ghost.style.height] : null,
-                    integerN: ghost ? ghost.dataset.n : null,
-                    physical: ghost ? ghost.dataset.phys : null,
-                    hotScale: ghost ? ghost.dataset.k : null,
-                };
-            };
-        })();
+    window.ghostCursorHide = function (el) {
+        if (ghost) ghost.style.display = 'none';
+        if (el) el.style.cursor = '';
+        if (activeEl === el) activeEl = null;
+    };
+})();

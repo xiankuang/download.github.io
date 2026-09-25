@@ -1,15 +1,15 @@
 {
-  "width": 48,
-  "height": 48,
+  "width": 32,
+  "height": 32,
+  "nativeWidth": 32,
+  "nativeHeight": 32,
   "hotspot": [
-    3,
-    2
+    2,
+    1
   ],
   "frameCount": 6,
   "frameMs": 100,
   "loop": true,
-  "originalWidth": 32,
-  "originalHeight": 32,
-  "scaledWith": "nearest",
+  "scaled": false,
   "source": "小桃光标.zip (Normal.ani)"
 }

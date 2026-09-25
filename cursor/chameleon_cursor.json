@@ -1,15 +1,15 @@
 {
-  "width": 48,
-  "height": 48,
+  "width": 32,
+  "height": 32,
+  "nativeWidth": 32,
+  "nativeHeight": 32,
   "hotspot": [
-    3,
-    5
+    2,
+    3
   ],
   "frameCount": 9,
   "frameMs": 100,
   "loop": true,
-  "originalWidth": 32,
-  "originalHeight": 32,
-  "scaledWith": "nearest",
+  "scaled": false,
   "source": "变色龙光标部分.zip (Normal.ani)"
 }

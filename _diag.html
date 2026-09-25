@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>diag</title></head>
+<body>
+<div id="out" style="font:13px monospace;white-space:pre;padding:10px"></div>
+<script>
+window.__errs = [];
+window.onerror = function (msg, url, line, col, err) {
+  window.__errs.push('onerror: ' + msg + ' @' + line + ':' + col);
+};
+window.addEventListener('unhandledrejection', e => {
+  window.__errs.push('unhandled: ' + (e.reason && e.reason.message ? e.reason.message : e.reason));
+});
+const origErr = console.error;
+console.error = function (...a) { window.__errs.push('console.error: ' + a.map(String).join(' ')); origErr.apply(console, a); };
+</script>
+<script src="cards.js"></script>
+<script>
+(async function () {
+  const wait = ms => new Promise(x => setTimeout(x, ms));
+  const R = {};
+  R.hasShow = typeof window.ghostCursorShow;
+  R.hasHide = typeof window.ghostCursorHide;
+  R.hasInfo = typeof window.__ghostCursorInfo;
+  R.resourcesLen = (window.resources || []).length;
+  R.hasCards = Array.isArray(window.cards);
+  R.errs = window.__errs;
+
+  // 等卡片渲染
+  const grid = document.querySelector('.card2-grid');
+  for (let i = 0; i < 50; i++) {
+    if (grid) { grid.scrollTop = grid.scrollHeight; grid.dispatchEvent(new Event('scroll')); }
+    window.dispatchEvent(new Event('scroll'));
+    await wait(150);
+    if (document.querySelectorAll('.card2').length >= 36) break;
+  }
+  await wait(2500);
+  R.cardCount = document.querySelectorAll('.card2').length;
+  R.errsAfter = window.__errs.slice();
+
+  const card = document.querySelector('.card2[data-id="feibi"]');
+  R.cardFound = !!card;
+  if (card) {
+    card.dispatchEvent(new MouseEvent('mouseenter', { bubbles: false }));
+    await wait(1500);
+    const g = document.getElementById('ghost-cursor');
+    R.ghostExists = !!g;
+    if (g) {
+      R.natural = [g.naturalWidth, g.naturalHeight];
+      R.display = getComputedStyle(g).display;
+      R.src = (g.getAttribute('src')||'').split('/').pop();
+      R.cssSize = [g.style.width, g.style.height];
+      R.n = g.dataset.n; R.phys = g.dataset.phys; R.k = g.dataset.k;
+    }
+    R.readyFlag = card.dataset.cursorMissing;
+    R.dpr = window.devicePixelRatio;
+    R.info = window.__ghostCursorInfo ? window.__ghostCursorInfo() : null;
+  }
+  R.errsFinal = window.__errs;
+  document.getElementById('out').textContent = JSON.stringify(R, null, 2);
+  try { await fetch('/result', { method:'POST', body: JSON.stringify(R) }); } catch(e){}
+})();
+</script>
+</body></html>
