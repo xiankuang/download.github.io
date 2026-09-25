@@ -1,14 +1,6 @@
 // 卡片数据（包含下载链接）| __ghostCursorInstalled
 const resources = [
     {
-        id: '测试',
-        title: '测试',
-        description: '',
-        image: '',
-        links: {
-        }
-    },
-    {
         id: 'scm',
         title: '简易光标制作器scm',
         description: '超级好用的光标编辑器',
@@ -104,6 +96,7 @@ const resources = [
         image: './icon/niko挂件宣传.gif',
         links: {
             quark: 'https://pan.quark.cn/s/091edbe43c0d',
+            lanzou: 'https://wwbny.lanzoue.com/b00l32nc9c',
             github: 'https://github.com/xiankuang/all-cursor-install/releases/download/pendant/niko-p_niko30.exe',
         }
     },
