@@ -854,17 +854,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
            显示规则（参照 SCM 加载器读 SM_CXCURSOR 的思路，
            浏览器端用 devicePixelRatio 等效替代）：
-             物理尺寸 = 源尺寸 × 整数N，且 ≥ 48px，取最接近 32×dpr 的档
+             物理尺寸 = 源尺寸 × 整数N，且 ≥ 96px，取最接近 64×dpr 的档
            于是所有档位都是整数倍，像素始终锐利。
            实际取值：
-             源48 → dpr1:48(1x) dpr1.5:48(1x) dpr2:96(2x) dpr3:96(2x)
-             源32 → dpr1:64(2x) dpr1.5:64(2x) dpr2:64(2x) dpr3:96(3x)
+             源48 → dpr1:96(2x)  dpr1.5:96(2x)  dpr2:96(2x)  dpr3:96(2x)
+             源32 → dpr1:96(3x)  dpr1.5:96(3x)  dpr2:96(3x)  dpr3:96(3x)
            CSS 宽度 = 物理尺寸 / dpr，浏览器再按 dpr 放大回去。 */
         (function () {
-            // 与系统光标观感对齐的期望物理尺寸基准（Windows 100% 下光标为 32px）
-            var TARGET_BASE = 32;
-            // 物理尺寸下限：低于此值在高分屏上会显得过小
-            var MIN_PHYS = 48;
+            // 期望物理尺寸基准：64 × dpr。dpr=1.5（Windows 150%）= 96px，即用户指定的观感。
+            var TARGET_BASE = 64;
+            // 物理尺寸下限。设 96 让 48px 与 32px 两种源在常见 dpr 下都统一到 96px。
+            var MIN_PHYS = 96;
 
             var ghost = null;
             var activeEl = null;
@@ -878,16 +878,23 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // 核心：算「源尺寸 × 整数」的档位
+            // 为了让 48px 与 32px 两种源在所有 dpr 下都取到同一个物理尺寸，
+            // 档位吸附到 96 的公倍数上（96 是 48 与 32 的最小公倍数）。
+            // 于是：96(2x/3x)、192(4x/6x)、288(6x/9x)……全都是整数倍，
+            // 且各作品大小完全一致。
+            var UNIFY = 96;
             function pickPhysical(nativeSize, dpr) {
                 var want = TARGET_BASE * dpr;
+                // 源尺寸能整除 96 就按 96 的倍数取档，否则退回自身整数倍（兼容未来别的尺寸）
+                var step = (UNIFY % nativeSize === 0) ? UNIFY : nativeSize;
                 var best = null;
                 for (var n = 1; n <= 8; n++) {
-                    var phys = nativeSize * n;
+                    var phys = step * n;
                     if (phys < MIN_PHYS) continue;
                     if (best === null ||
                         Math.abs(phys - want) < Math.abs(best.phys - want) ||
                         (Math.abs(phys - want) === Math.abs(best.phys - want) && phys > best.phys)) {
-                        best = { n: n, phys: phys };
+                        best = { n: phys / nativeSize, phys: phys };
                     }
                 }
                 // 兜底：万一 nativeSize 很小导致一档都没有，就退到最小整数倍
