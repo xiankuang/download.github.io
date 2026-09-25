@@ -82,7 +82,7 @@ const resources = [
         id: 'teto3.0',
         title: 'teto',
         description: 'teto',
-        image: './icon/teto挂件宣传.png',
+        image: './icon/teto_挂件_宣传.gif',
         links: {
             quark: 'https://pan.quark.cn/s/606e427622ae',
             lanzou: 'https://wwbny.lanzoue.com/b00l312i7e密码:9tba',
@@ -104,7 +104,7 @@ const resources = [
         id: 'miku3.0',
         title: '初音未来',
         description: '初音未来',
-        image: './icon/初音未来挂件.png',
+        image: './icon/初音未来_挂件_宣传.gif',
         links: {
             quark: 'https://pan.quark.cn/s/d45d1c79ef01',
             lanzou: 'https://wwbny.lanzoue.com/b00l2o49he',
