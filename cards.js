@@ -535,6 +535,10 @@ document.addEventListener('DOMContentLoaded', () => {
             card.addEventListener('mouseleave', () => {
                 window.ghostCursorHide(card);
             });
+
+            // 记在卡片上，供「点开弹窗后持续显示」使用。
+            // hotspot 是同一个数组引用，fetch 回来后自动是最新的。
+            card._cursorInfo = { url: gifUrl, hotspot: hotspot };
         }
         // 点击卡片2显示弹窗（卡片3）
         card.addEventListener('click', () => {
@@ -583,6 +587,13 @@ document.addEventListener('DOMContentLoaded', () => {
             // 显示弹窗并禁止背景滚动
             popupOverlay.style.display = 'flex';
             document.body.style.overflow = 'hidden';
+
+            // 弹窗打开后，整个弹窗界面持续显示该作品的光标（直到关闭弹窗）。
+            // 遮罩层设成 cursor:none，鼠标在弹窗任何位置看到的都是这个假光标。
+            if (card._cursorInfo && window.ghostCursorPin) {
+                window.ghostCursorPin(card._cursorInfo.url, card._cursorInfo.hotspot,
+                                      popupOverlay, popupOverlay);
+            }
         });
 
         return card;
@@ -635,17 +646,27 @@ document.addEventListener('DOMContentLoaded', () => {
         renderNextRowIfNeeded();
     });
 
-    // 关闭弹窗（点击关闭按钮）
-    closeBtn.addEventListener('click', () => {
+    // 统一关闭：隐藏弹窗 + 恢复滚动 + 解除光标钉住
+    const closePopup = () => {
         popupOverlay.style.display = 'none';
-        document.body.style.overflow = 'auto'; // 恢复滚动
-    });
+        document.body.style.overflow = 'auto';
+        if (window.ghostCursorUnpin) window.ghostCursorUnpin();
+    };
+
+    // 关闭弹窗（点击关闭按钮）
+    closeBtn.addEventListener('click', closePopup);
 
     // 关闭弹窗（点击遮罩层空白处）
     popupOverlay.addEventListener('click', (e) => {
         if (e.target === popupOverlay) {
-            popupOverlay.style.display = 'none';
-            document.body.style.overflow = 'auto';
+            closePopup();
+        }
+    });
+
+    // 关闭弹窗（按 Escape）—— 少了这条会有「真光标不回来」的风险
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && popupOverlay.style.display === 'flex') {
+            closePopup();
         }
     });
 
@@ -998,7 +1019,72 @@ document.addEventListener('DOMContentLoaded', () => {
                 place();
             };
 
+            /* ── 钉住模式（弹窗打开时用）──
+               悬停卡片只是「路过」，离开就恢复真光标；但弹窗打开后，
+               用户希望浏览弹窗时一直是这个作品的光标，直到关掉弹窗。
+               所以加 pinned 状态：
+                 · pin 期间忽略 mouseleave 的自动隐藏
+                 · 光标持续跟随鼠标，位置由全局 mousemove 更新
+                 · 只有 unpin / 弹窗关闭才恢复
+               安全网：用 MutationObserver 盯住弹窗的 style，
+               一旦弹窗被任何路径关掉（包括我没想到的），立刻自动解除，
+               避免「真光标消失且无法恢复」。 */
+            var pinned = false;
+            var pinObserver = null;
+
+            window.ghostCursorPin = function (url, hotspot, el, guard) {
+                var g = ensureGhost();
+                if (activeEl && activeEl !== el) activeEl.style.cursor = '';
+                pinned = true;
+                activeEl = el;
+                // 给 body 加标记，配合下面的 CSS 压掉弹窗内的 cursor:pointer
+                document.body.classList.add('ghost-cursor-pinning');
+                g.dataset.hx = hotspot[0] | 0;
+                g.dataset.hy = hotspot[1] | 0;
+                if (g.getAttribute('src') !== url) {
+                    g.src = url;
+                    g.onload = function () { applySize(g); if (pinned) place(); };
+                }
+                applySize(g);
+                g.style.display = 'block';
+                if (el) el.style.cursor = 'none';
+                place();
+
+                // 弹窗内的按钮/链接自带 cursor:pointer，优先级高于 inline 样式，
+                // 会把假光标「戳破」。这里用 !important 在 pin 期间统一压掉。
+                // 只注入一次。
+                if (!document.getElementById('ghost-cursor-pin-css')) {
+                    var st = document.createElement('style');
+                    st.id = 'ghost-cursor-pin-css';
+                    st.textContent =
+                        'body.ghost-cursor-pinning, ' +
+                        'body.ghost-cursor-pinning * { cursor: none !important; }';
+                    document.head.appendChild(st);
+                }
+
+                if (pinObserver) { try { pinObserver.disconnect(); } catch (e) {} pinObserver = null; }
+                if (guard && window.MutationObserver) {
+                    try {
+                        pinObserver = new MutationObserver(function () {
+                            if (guard.style.display === 'none') window.ghostCursorUnpin();
+                        });
+                        pinObserver.observe(guard, { attributes: true, attributeFilter: ['style'] });
+                    } catch (e) {}
+                }
+            };
+
+            window.ghostCursorUnpin = function () {
+                pinned = false;
+                if (pinObserver) { try { pinObserver.disconnect(); } catch (e) {} pinObserver = null; }
+                document.body.classList.remove('ghost-cursor-pinning');
+                if (ghost) ghost.style.display = 'none';
+                if (activeEl) { activeEl.style.cursor = ''; activeEl = null; }
+            };
+
             window.ghostCursorHide = function (el) {
+                // 钉住期间不响应普通隐藏请求（鼠标滑出卡片等）
+                if (pinned) return;
+                document.body.classList.remove('ghost-cursor-pinning');
                 if (ghost) ghost.style.display = 'none';
                 if (el) el.style.cursor = '';
                 if (activeEl === el) activeEl = null;
@@ -1008,6 +1094,7 @@ document.addEventListener('DOMContentLoaded', () => {
             window.__ghostCursorInfo = function () {
                 return {
                     dpr: readDpr(),
+                    pinned: pinned,
                     native: ghost ? [ghost.naturalWidth, ghost.naturalHeight] : null,
                     cssSize: ghost ? [ghost.style.width, ghost.style.height] : null,
                     integerN: ghost ? ghost.dataset.n : null,
