@@ -13,6 +13,17 @@ const resources = [
         }
     },
     {
+        id: 'xingjianya2',
+        title: 'xingjianya2',
+        description: '',
+        image: './icon/xingjianya2_光标_宣传.gif',
+        links: {
+            quark: 'https://pan.quark.cn/s/2f459d07c4f1',
+            lanzou: 'https://wwbny.lanzoue.com/b00l32nc4h',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/xingjianya2_6.exe',
+        }
+    },
+    {
         id: 'maodie',
         title: '哈气耄耋',
         description: '哈',
