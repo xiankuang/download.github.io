@@ -1492,6 +1492,132 @@ document.addEventListener('DOMContentLoaded', () => {
         this._freeze();
         return true;
     };
+/* ===== 贴纸 / 悬浮挂件 / 挂件 三种物理（按 exe 分开实现）=====
+
+   exe 的分派（Form1.ModeMotion.cs:86-117）：
+     Follow（悬浮挂件）→ UpdateFollowMotion  ：无绳子，以光标为圆心、绳长为半径弹性跟随
+     Sticker（贴纸）   → UpdateStickerPosition：无物理，直接贴住光标
+     Pendant（挂件）   → AdvancePhysics      ：Verlet 绳子（见上面的 PendantPhysics）
+
+   三者共用「挂点 = 光标 + 偏移」和「挂件图按锚点对齐挂点」这两个约定。 */
+
+/* ── 悬浮挂件（Follow）─────────────────────────────────────────
+   exe 的关键公式（Form1.ModeMotion.cs:200-245）：
+     方向 = normalize(挂件位置 - 光标)
+     目标 = 光标 + 方向 × 绳长            ← 始终趋向「以光标为圆心的圆周」
+     接近速度 = min(500, 误差 × 2.5)
+     速度用指数响应平滑：v += (期望v - v) × (1 - e^(-8·dt))
+     位置积分：pos += v × dt
+   视觉（FollowVisualState.cs）：
+     移动时按横向速度倾斜 ±15°（π/12），用 (1 - e^(-14·dt)) 平滑
+     朝向按光标在挂件左侧/右侧决定，ScaleX 翻转（-1 = 朝右） */
+window.PendantFollow = function (opts) {
+    this.restLen = opts.restLen;
+    this.maxSpeed = 500;          // FollowMaximumSpeed
+    this.velocityResponse = 8;    // FollowVelocityResponse
+    this.tiltResponse = 14;       // FollowVisualState 的 14f
+    this.tiltAngle = Math.PI / 12; // ±15°
+
+    this.x = 0; this.y = 0;
+    this.vx = 0; this.vy = 0;
+    this.angle = 0;
+    this.scaleX = 1;
+    this.anchorX = 0; this.anchorY = 0;
+};
+
+// exe: InitializeFollowPosition —— 初始放在光标右下 45°、距离 = 绳长
+window.PendantFollow.prototype.reset = function (ax, ay) {
+    var d = this.restLen * 0.7071068;
+    this.anchorX = ax; this.anchorY = ay;
+    this.x = ax + d;
+    this.y = ay + d;
+    this.vx = 0; this.vy = 0;
+    this.angle = 0;
+    this.scaleX = 1;
+};
+
+window.PendantFollow.prototype.setAnchor = function (ax, ay) {
+    this.anchorX = ax; this.anchorY = ay;
+};
+
+window.PendantFollow.prototype.advance = function (dt) {
+    if (!(dt > 0)) return;
+    // 用与 exe 相同的上限，避免切标签页回来时瞬移
+    if (dt > 0.033) dt = 0.033;
+
+    var ax = this.anchorX, ay = this.anchorY;
+    var fromX = this.x - ax, fromY = this.y - ay;
+    var dist = Math.sqrt(fromX * fromX + fromY * fromY);
+
+    var dirX = 0.7071068, dirY = 0.7071068;
+    if (dist > 0.001) { dirX = fromX / dist; dirY = fromY / dist; }
+
+    // 目标：圆周上离当前位置最近的点
+    var tx = ax + dirX * this.restLen;
+    var ty = ay + dirY * this.restLen;
+    var errX = tx - this.x, errY = ty - this.y;
+    var err = Math.sqrt(errX * errX + errY * errY);
+
+    var wantVX = 0, wantVY = 0;
+    if (err > 0.001) {
+        var speed = Math.min(this.maxSpeed, err * 2.5);
+        wantVX = errX / err * speed;
+        wantVY = errY / err * speed;
+    }
+
+    var resp = 1 - Math.exp(-this.velocityResponse * dt);
+    this.vx += (wantVX - this.vx) * resp;
+    this.vy += (wantVY - this.vy) * resp;
+    this.x += this.vx * dt;
+    this.y += this.vy * dt;
+
+    if (!isFinite(this.x) || !isFinite(this.y)) { this.reset(ax, ay); return; }
+
+    // 视觉：倾斜按横向速度，朝向按光标左右
+    var targetAngle = 0;
+    if (this.vx < -1) targetAngle = -this.tiltAngle;
+    else if (this.vx > 1) targetAngle = this.tiltAngle;
+
+    var faceRight = ax > this.x;
+    var vresp = 1 - Math.exp(-this.tiltResponse * dt);
+    this.angle += (targetAngle - this.angle) * vresp;
+    this.scaleX += ((faceRight ? -1 : 1) - this.scaleX) * vresp;
+};
+
+window.PendantFollow.prototype.pose = function () {
+    return { x: this.x, y: this.y, angle: this.angle, scaleX: this.scaleX };
+};
+
+
+/* ── 贴纸（Sticker）────────────────────────────────────────────
+   exe: UpdateStickerPosition() { ballX = targetAnchorX; ballY = targetAnchorY; }
+   没有任何物理 —— 贴纸就是钉在光标上。 */
+window.PendantSticker = function (opts) {
+    this.restLen = 0;
+    this.x = 0; this.y = 0;
+    this.anchorX = 0; this.anchorY = 0;
+};
+
+window.PendantSticker.prototype.reset = function (ax, ay) {
+    this.anchorX = ax; this.anchorY = ay;
+    this.x = ax; this.y = ay;
+};
+
+window.PendantSticker.prototype.setAnchor = function (ax, ay) {
+    this.anchorX = ax; this.anchorY = ay;
+    this.x = ax; this.y = ay;
+};
+
+window.PendantSticker.prototype.advance = function (dt) {
+    // 无物理，但保持接口一致
+    this.x = this.anchorX;
+    this.y = this.anchorY;
+};
+
+window.PendantSticker.prototype.pose = function () {
+    return { x: this.x, y: this.y, angle: 0, scaleX: 1 };
+};
+
 })();
 
 
@@ -1588,25 +1714,64 @@ document.addEventListener('DOMContentLoaded', () => {
         r.offX = (meta.cursorAnchorX == null ? 0.594 : meta.cursorAnchorX) * window.PENDANT_BASE_CURSOR_SIZE;
         r.offY = (meta.cursorAnchorY == null ? 0.813 : meta.cursorAnchorY) * window.PENDANT_BASE_CURSOR_SIZE;
 
-        if (!r.phys) {
-            r.phys = new window.PendantPhysics({
-                imageSize: meta.imageSize || BASE_IMAGE_SIZE,
-                // 绳长与重力同时按 shapeScale 换算，摆动周期与形状和 exe 保持一致
-                restLen: meta.ropeLength * shapeScale,
-                gravity: meta.gravity * shapeScale,
-                ropeSegments: meta.ropeSegments,
-            });
-            r.phys.setAnchor(mx + r.offX, my + r.offY, true);
-        } else {
-            r.phys.restLen = meta.ropeLength * shapeScale;
+        // exe 按项目类型用完全不同的物理（Form1.ModeMotion.cs:86-117）：
+        //   Follow  悬浮挂件 → 无绳子，以光标为圆心、绳长为半径弹性跟随
+        //   Sticker 贴纸     → 无物理，直接贴住光标
+        //   Pendant 挂件     → Verlet 绳子
+        var type = (meta.projectType || 'Pendant');
+        var mode = (type === 'Follow') ? 'follow'
+                 : (type === 'Sticker') ? 'sticker'
+                 : 'pendant';
+        var restLen = meta.ropeLength * shapeScale;
+
+        // 换作品或换模式时重建物理对象
+        if (r.mode !== mode || r.url !== url || !r.phys) {
+            r.mode = mode;
+            r.wantAction = 'idle';        // 换作品时复位动作状态，避免沿用上一个卡片
+            r.shownFile = null;
+            if (mode === 'follow') {
+                r.phys = new window.PendantFollow({ restLen: restLen });
+                r.phys.reset(mx + r.offX, my + r.offY);
+            } else if (mode === 'sticker') {
+                r.phys = new window.PendantSticker({});
+                r.phys.reset(mx + r.offX, my + r.offY);
+            } else {
+                r.phys = new window.PendantPhysics({
+                    imageSize: meta.imageSize || BASE_IMAGE_SIZE,
+                    restLen: restLen,
+                    gravity: meta.gravity * shapeScale,
+                    ropeSegments: meta.ropeSegments,
+                });
+                r.phys.setAnchor(mx + r.offX, my + r.offY, true);
+            }
+        } else if (mode === 'pendant') {
+            r.phys.restLen = restLen;
             r.phys.gravity = meta.gravity * shapeScale;
             r.phys.segLen = r.phys.restLen / r.phys.segments;
+        } else {
+            r.phys.restLen = restLen;
         }
+
+        // 动作图：贴纸按住 / 悬浮移动 时换图
+        applyActionImage(r, meta, mode);
 
         resizeCanvas();
         r.img.style.display = 'block';
         activeEl = el;
         if (!raf) { lastTime = performance.now(); raf = requestAnimationFrame(loop); }
+    }
+
+    // 选当前该显示哪张图（主图 or 动作图）
+    function applyActionImage(r, meta, mode) {
+        var file = meta.file;
+        var imgs = meta.images || {};
+        // 悬浮挂件移动中用 follow 图；贴纸按住用 sticker_hold
+        if (mode === 'follow' && r.wantAction === 'move' && imgs.follow) file = imgs.follow.file;
+        else if (mode === 'sticker' && r.wantAction === 'hold' && imgs.sticker_hold) file = imgs.sticker_hold.file;
+        if (r.shownFile !== file) {
+            r.shownFile = file;
+            r.img.src = 'pendant/' + file;
+        }
     }
 
     function loop(now) {
@@ -1619,21 +1784,39 @@ document.addEventListener('DOMContentLoaded', () => {
         rig.phys.advance(dt);
 
         var meta = rig.meta;
-        var pose = rig.phys.pendantPose();
+        var pose = rig.phys.pendantPose ? rig.phys.pendantPose() : rig.phys.pose();
+        var scaleX = pose.scaleX == null ? 1 : pose.scaleX;
+
+        // 悬浮挂件：移动中换成 follow 动作图（exe 用 followIdleSeconds 判定）
+        if (rig.mode === 'follow') {
+            var moving = Math.abs(rig.phys.vx) > 2 || Math.abs(rig.phys.vy) > 2;
+            var want = moving ? 'move' : 'idle';
+            if (rig.wantAction !== want) { rig.wantAction = want; applyActionImage(rig, meta, 'follow'); }
+        }
 
         // 挂件：先把锚点比例对应的那个点移到绳末端，再按绳末端角度旋转
         //   exe: Translate(pendantX,pendantY) → Rotate(angle) → DrawImage(-w/2-ax*w, -h/2-ay*h)
         //   等价于 translate(x,y) rotate(a) translate(-ax*w, -ay*h)
         var ax = (meta.anchorX == null ? 0.5 : meta.anchorX) * rig.cssW;
         var ay = (meta.anchorY == null ? 0.5 : meta.anchorY) * rig.cssH;
+        // scaleX 用于悬浮挂件的左右朝向翻转（exe 的 FlipPendantHorizontally）
         rig.img.style.transform =
             'translate(' + pose.x + 'px,' + pose.y + 'px) ' +
             'rotate(' + pose.angle + 'rad) ' +
+            'scale(' + scaleX + ',1) ' +
             'translate(' + (-ax) + 'px,' + (-ay) + 'px)';
 
-        // 绳子
+        // 绳子：只有挂件（Pendant）有；悬浮挂件和贴纸在 exe 里都没有绳子
+        if (rig.mode !== 'pendant') {
+            rig.ctx.clearRect(0, 0, rig.cv.width, rig.cv.height);
+            rig.ropeFrames = 0;      // 非挂件模式：绳绘制次数归零
+            raf = requestAnimationFrame(loop);
+            return;
+        }
+
         var ctx = rig.ctx, nodes = rig.phys.nodes();
         ctx.clearRect(0, 0, rig.cv.width, rig.cv.height);
+        rig.ropeFrames = (rig.ropeFrames || 0) + 1;   // 诊断：绳子实际绘制次数
         ctx.strokeStyle = (meta.ropeColor || '#464646');
         ctx.lineWidth = Math.max(1, 3 * rig.shapeScale);   // exe: Pen(color, 3)
         ctx.lineCap = 'round';
@@ -1662,6 +1845,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (rig) {
             rig.img.style.display = 'none';
             rig.ctx.clearRect(0, 0, rig.cv.width, rig.cv.height);
+            rig.ropeFrames = 0;
         }
         activeEl = null;
     }
@@ -1669,6 +1853,20 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('mousemove', function (e) {
         mx = e.clientX; my = e.clientY;
     }, { passive: true });
+
+    // 贴纸按住时切换到 sticker_hold 图（exe: _isStickerHoldActive）
+    window.addEventListener('mousedown', function () {
+        if (rig && rig.mode === 'sticker' && rig.wantAction !== 'hold') {
+            rig.wantAction = 'hold';
+            applyActionImage(rig, rig.meta, 'sticker');
+        }
+    });
+    window.addEventListener('mouseup', function () {
+        if (rig && rig.mode === 'sticker' && rig.wantAction !== 'idle') {
+            rig.wantAction = 'idle';
+            applyActionImage(rig, rig.meta, 'sticker');
+        }
+    });
 
     window.pendantShow = function (url, el) {
         if (!window.PendantPhysics) return;
@@ -1712,21 +1910,33 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('blur', function () { if (!pinned) stop(); });
 
     window.__pendantInfo = function () {
-        var pose = rig && rig.phys ? rig.phys.pendantPose() : null;
+        // 三种模式的取姿态方法名不同：挂件是 pendantPose()，悬浮/贴纸是 pose()
+        var pose = null;
+        if (rig && rig.phys) {
+            try {
+                pose = rig.phys.pendantPose ? rig.phys.pendantPose() : rig.phys.pose();
+            } catch (e) { pose = null; }
+        }
         return {
             active: !!activeEl,
             pinned: pinned,
+            // 只在真正激活时回报 mode/图，避免刚 stop() 后仍读到上一次的残留值
+            mode: activeEl && rig ? rig.mode : null,
+            action: activeEl && rig ? rig.wantAction : null,
+            shownFile: activeEl && rig ? rig.shownFile : null,
             url: rig ? rig.url : null,
-            display: rig ? getComputedStyle(rig.img).display : null,
+            display: rig && rig.img ? getComputedStyle(rig.img).display : null,
             restLen: rig && rig.phys ? rig.phys.restLen : null,
             segments: rig && rig.phys ? rig.phys.segments : null,
             points: rig && rig.phys ? rig.phys.points : null,
             shapeScale: rig ? rig.shapeScale : null,
             offset: rig ? [Math.round(rig.offX), Math.round(rig.offY)] : null,
             pose: pose ? { x: Math.round(pose.x), y: Math.round(pose.y),
-                           angleDeg: +(pose.angle * 180 / Math.PI).toFixed(1) } : null,
+                           angleDeg: +(pose.angle * 180 / Math.PI).toFixed(1),
+                           scaleX: pose.scaleX == null ? 1 : +pose.scaleX.toFixed(3) } : null,
             frozen: rig && rig.phys ? rig.phys.frozenAtRest : null,
-            imgLoaded: rig ? rig.img.naturalWidth > 0 : false,
+            ropeFrames: rig ? (rig.ropeFrames || 0) : 0,
+            imgLoaded: rig && rig.img ? rig.img.naturalWidth > 0 : false,
         };
     };
 })();

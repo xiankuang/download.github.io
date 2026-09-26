@@ -19,5 +19,18 @@
   "ropeLengthManifest": 100,
   "ropeLengthSource": "manifest",
   "pendulumSegments": 7,
-  "imageSize": 48
+  "imageSize": 48,
+  "images": {
+    "_1": {
+      "file": "maodie-p_pendant.png",
+      "width": 89,
+      "height": 77
+    },
+    "sticker_hold": {
+      "file": "maodie-p_sticker_hold.png",
+      "width": 89,
+      "height": 77
+    }
+  },
+  "uniformScale": 0.297674
 }
