@@ -1,0 +1,19 @@
+{
+  "width": 110,
+  "height": 110,
+  "contentWidth": 78,
+  "contentHeight": 64,
+  "originalWidth": 96,
+  "originalHeight": 96,
+  "projectType": "Pendant",
+  "ropeLength": 100,
+  "ropeSegments": 4,
+  "ropeColor": "#464646",
+  "gravity": 11000,
+  "anchorX": 0.5,
+  "anchorY": 0.5,
+  "cursorAnchorX": 0.5,
+  "cursorAnchorY": 0.96875,
+  "source": "初音未来挂件3.91_1.scpm",
+  "file": "miku-p_pendant.gif"
+}

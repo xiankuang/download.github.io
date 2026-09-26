@@ -1,0 +1,19 @@
+{
+  "width": 96,
+  "height": 96,
+  "contentWidth": 64,
+  "contentHeight": 64,
+  "originalWidth": 96,
+  "originalHeight": 96,
+  "projectType": "Pendant",
+  "ropeLength": 100,
+  "ropeSegments": 4,
+  "ropeColor": "#464646",
+  "gravity": 11000,
+  "anchorX": 0.5,
+  "anchorY": 0.5,
+  "cursorAnchorX": 0.34375,
+  "cursorAnchorY": 0.75,
+  "source": "绿虫虫挂件3.0.scpm",
+  "file": "liyefu-p_pendant.gif"
+}

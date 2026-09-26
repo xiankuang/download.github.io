@@ -1,0 +1,19 @@
+{
+  "width": 83,
+  "height": 83,
+  "contentWidth": 52,
+  "contentHeight": 64,
+  "originalWidth": 48,
+  "originalHeight": 48,
+  "projectType": "Pendant",
+  "ropeLength": 100,
+  "ropeSegments": 6,
+  "ropeColor": "#464646",
+  "gravity": 11000,
+  "anchorX": 0.5,
+  "anchorY": 0.5,
+  "cursorAnchorX": 0.59375,
+  "cursorAnchorY": 0.8125,
+  "source": "洛茜挂件_2.scpm",
+  "file": "luoxi-p_pendant.gif"
+}

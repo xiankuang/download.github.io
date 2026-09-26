@@ -540,6 +540,36 @@ document.addEventListener('DOMContentLoaded', () => {
             // hotspot 是同一个数组引用，fetch 回来后自动是最新的。
             card._cursorInfo = { url: gifUrl, hotspot: hotspot };
         }
+
+        // 挂件类作品（pendant/follow/sticker）：悬停时挂件从鼠标吊下来摆动。
+        // 与光标类互斥 —— 光标类把鼠标本身换掉，挂件类保留真光标、只加挂件。
+        else if (item.links && item.links.github) {
+            const gh = String(item.links.github);
+            const mm = gh.match(/releases\/download\/([^/]+)\/([^/]+)$/);
+            const tag = mm ? mm[1] : '';
+            if (tag === 'pendant' || tag === 'follow' || tag === 'sticker') {
+                // 从下载文件名推挂件资源名：bigfish-p_main.exe → bigfish-p
+                // 贴纸是 maodie-s → 资源名 maodie-p
+                let base = mm[2].split('_')[0];
+                base = base.replace(/-(p|s|f)$/i, '');
+                const assetKey = base + '-p';
+                const metaUrl = './pendant/' + assetKey + '_pendant.json';
+
+                // 先探一次，资源不存在就什么都不做（不影响卡片）
+                fetch(metaUrl, { method: 'HEAD' })
+                    .then(r => { if (!r.ok) throw new Error('no pendant'); return true; })
+                    .then(() => {
+                        card._pendantUrl = metaUrl;
+                        card.addEventListener('mouseenter', () => {
+                            window.pendantShow(metaUrl, card);
+                        });
+                        card.addEventListener('mouseleave', () => {
+                            window.pendantHide(card);
+                        });
+                    })
+                    .catch(() => {});
+            }
+        }
         // 点击卡片2显示弹窗（卡片3）
         card.addEventListener('click', () => {
             // 填充弹窗标题和描述
@@ -594,6 +624,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.ghostCursorPin(card._cursorInfo.url, card._cursorInfo.hotspot,
                                       popupOverlay, popupOverlay);
             }
+                // 挂件类：弹窗打开后挂件持续吊着
+                if (card._pendantUrl && window.pendantPin) {
+                    window.pendantPin(card._pendantUrl, popupOverlay, popupOverlay);
+                }
         });
 
         return card;
@@ -651,6 +685,7 @@ document.addEventListener('DOMContentLoaded', () => {
         popupOverlay.style.display = 'none';
         document.body.style.overflow = 'auto';
         if (window.ghostCursorUnpin) window.ghostCursorUnpin();
+        if (window.pendantUnpin) window.pendantUnpin();
     };
 
     // 关闭弹窗（点击关闭按钮）
@@ -1103,3 +1138,533 @@ document.addEventListener('DOMContentLoaded', () => {
                 };
             };
         })();
+
+
+/* ====================================================================
+   挂件悬停效果：绳子物理 + 渲染
+   物理部分从 exe 的 Form1.PhysicsEngine3.cs 移植（Verlet + 距离约束）
+   ==================================================================== */
+/* ===== 挂件绳子物理（从 exe 的 Verlet 实现移植）=====
+   原实现在 Form1.PhysicsEngine3.cs，这里 1:1 复刻其积分与约束，
+   保证网页上的摆动和 exe 里一致。
+
+   单位说明：
+     exe 里 ImageSize=48 是基准，绳子长 100 表示「图片 48px 时长 100px」。
+     网页上挂件图按同一比例显示，所以所有长度都乘 scale = 显示尺寸 / 48。
+     物理本身在 CSS 像素下算（与 exe 的物理像素在 100% DPI 下等价）。
+
+   固定步长很关键：exe 用 1/240 秒定步长 + 累加器，这样摆动速度与帧率无关。
+   如果直接用 rAF 的 dt，120Hz 屏和 60Hz 屏的摆动会不一样。 */
+(function () {
+    // ── 与原实现一致的常量 ──
+    var FIXED_STEP = 1 / 240;          // FixedPhysicsStep
+    var MAX_FRAME_DELTA = 0.033;       // MaxFrameDelta
+    var MAX_STEPS_PER_TICK = 8;        // MaxPhysicsStepsPerTick
+    var MAX_ANCHOR_MOVE_PER_STEP = 48; // MaxAnchorMovePerPhysicsStep
+    var MAX_ANCHOR_STEPS = 18;         // MaxAnchorPhysicsStepsPerTick
+
+    var VELOCITY_DAMPING = 0.993;      // Engine3VelocityDamping
+    var AIR_DAMPING = 0.960;           // Engine3AirDamping
+    var GRAVITY_SCALE = 0.864;         // Engine3GravityScale
+    var ANCHOR_VELOCITY_TRANSFER = 0.225; // Engine3AnchorVelocityTransfer
+    var CONSTRAINT_VELOCITY_PRESERVE = 0.88; // Engine3ConstraintVelocityPreserve
+    var STRETCH_GUARD_RATIO = 1.18;    // Engine3StretchGuardRatio
+    var ABSOLUTE_STRETCH_RATIO = 1.32; // Engine3AbsoluteStretchRatio
+    var LONG_SEGMENT_REF = 18;         // Engine3LongSegmentReferenceLength
+    var LONG_SEGMENT_TIGHT = 1.10;     // Engine3LongSegmentTightStretchGuardRatio
+    var MAX_POINT_DELTA = 28;          // Engine3MaxPointDelta
+    var MAX_PENDANT_DELTA = 38;        // Engine3MaxPendantDelta
+    var MIN_CONSTRAINT_ITER = 5;       // Engine3MinimumConstraintIterations
+    var STRETCH_GUARD_ITER = 2;        // Engine3StretchGuardIterations
+
+    // 创建一个绳+挂件的模拟器
+    // opts: { imageSize, ropeLength, ropeSegments, gravity, anchorX, anchorY }
+    //   imageSize  挂件图的显示边长（CSS px）
+    //   ropeLength 原始绳长（以 48 为基准的单位）
+    //   anchorX/Y  挂件图内的挂点比例
+    window.PendantPhysics = function (opts) {
+        var self = this;
+
+        // 把 exe 的单位换算到网页
+        var baseSize = 48;
+        var scale = opts.imageSize / baseSize;
+
+        this.imageSize = opts.imageSize;
+        // 绳长换算：exe 里 ropeLength 配 ImageSize=48 使用，比例是 2.08 倍图高，
+        // 那在桌面挂件上合适，但网页悬停场景太长（96px 图会有 200px 绳子，
+        // 挂件垂到鼠标下方很远）。这里改成「ropeLength/100 × 图高」，
+        // 使绳长 ≈ 图高的 1.0~1.4 倍，紧凑且仍能摆动。
+        this.restLen = (opts.ropeLength || 100) / 100 * opts.imageSize;
+        this.segmentCount = Math.max(1, opts.ropeSegments || 6);
+        this.gravity = opts.gravity || 11000;
+        this.anchorRX = opts.anchorX == null ? 0.5 : opts.anchorX;
+        this.anchorRY = opts.anchorY == null ? 0.5 : opts.anchorY;
+
+        this.segmentLength = this.restLen / this.segmentCount;
+
+        // sizeMassScale：越大的挂件惯性越大（原实现用 sqrt(imageSize/48)）
+        var sizeRatio = Math.max(0.25, opts.imageSize / baseSize);
+        this.sizeMassScale = Math.min(2.2, Math.max(0.75, Math.sqrt(sizeRatio)));
+
+        var n = this.segmentCount + 1;
+        this.ropeX = new Float64Array(n);
+        this.ropeY = new Float64Array(n);
+        this.ropeOldX = new Float64Array(n);
+        this.ropeOldY = new Float64Array(n);
+
+        this.anchorX = 0; this.anchorY = 0;
+        this.targetAnchorX = 0; this.targetAnchorY = 0;
+        this.prevAnchorX = 0; this.prevAnchorY = 0;
+        this.accumulator = 0;
+
+        this.reset();
+    };
+
+    // 重置到「绳子竖直垂下」的静止状态
+    window.PendantPhysics.prototype.reset = function () {
+        var n = this.ropeX.length;
+        for (var i = 0; i < n; i++) {
+            this.ropeX[i] = this.anchorX;
+            this.ropeY[i] = this.anchorY + this.segmentLength * i;
+            this.ropeOldX[i] = this.ropeX[i];
+            this.ropeOldY[i] = this.ropeY[i];
+        }
+        this.prevAnchorX = this.anchorX;
+        this.prevAnchorY = this.anchorY;
+        this.accumulator = 0;
+    };
+
+    // 设定挂点（鼠标位置）——立即对齐还是平滑跟随由 advance 处理
+    window.PendantPhysics.prototype.setAnchor = function (x, y, instant) {
+        if (instant) {
+            var dx = x - this.anchorX, dy = y - this.anchorY;
+            this.anchorX = x; this.anchorY = y;
+            this.targetAnchorX = x; this.targetAnchorY = y;
+            this.prevAnchorX = x; this.prevAnchorY = y;
+            for (var i = 0; i < this.ropeX.length; i++) {
+                this.ropeX[i] += dx; this.ropeY[i] += dy;
+                this.ropeOldX[i] += dx; this.ropeOldY[i] += dy;
+            }
+        } else {
+            this.targetAnchorX = x; this.targetAnchorY = y;
+        }
+    };
+
+    // 挂件中心位置（绳子末端）
+    window.PendantPhysics.prototype.pendantPos = function () {
+        var last = this.ropeX.length - 1;
+        return { x: this.ropeX[last], y: this.ropeY[last] };
+    };
+
+    // 绳子的各个节点（用于绘制）
+    window.PendantPhysics.prototype.nodes = function () {
+        var out = [];
+        for (var i = 0; i < this.ropeX.length; i++) out.push({ x: this.ropeX[i], y: this.ropeY[i] });
+        return out;
+    };
+
+    window.PendantPhysics.prototype.advance = function (dt) {
+        if (dt <= 0) return;
+        this.accumulator += Math.min(dt, MAX_FRAME_DELTA);
+
+        var steps = Math.min(MAX_STEPS_PER_TICK, Math.floor(this.accumulator / FIXED_STEP));
+        if (steps <= 0) return;
+
+        // 挂点在帧内平滑移动（原实现：把这一帧的位移拆到各物理步里）
+        var startX = this.anchorX, startY = this.anchorY;
+        var endX = isFinite(this.targetAnchorX) ? this.targetAnchorX : this.anchorX;
+        var endY = isFinite(this.targetAnchorY) ? this.targetAnchorY : this.anchorY;
+
+        // 单帧位移过大时再细分（原实现 MaxAnchorMovePerPhysicsStep）
+        var mdx = endX - startX, mdy = endY - startY;
+        var moveDist = Math.sqrt(mdx * mdx + mdy * mdy);
+        var extra = Math.max(1, Math.min(MAX_ANCHOR_STEPS, Math.ceil(moveDist / MAX_ANCHOR_MOVE_PER_STEP)));
+        var totalSteps = steps * extra;
+
+        for (var step = 1; step <= totalSteps; step++) {
+            var progress = step / totalSteps;
+            this.anchorX = startX + (endX - startX) * progress;
+            this.anchorY = startY + (endY - startY) * progress;
+            // 每个子步用更小的时间步，保持物理稳定
+            this._update(FIXED_STEP / extra);
+        }
+
+        this.accumulator -= steps * FIXED_STEP;
+        if (this.accumulator >= FIXED_STEP) this.accumulator = 0;
+    };
+
+    window.PendantPhysics.prototype._update = function (dt) {
+        var n = this.ropeX.length;
+        var last = n - 1;
+
+        var anchorMoveX = this.anchorX - this.prevAnchorX;
+        var anchorMoveY = this.anchorY - this.prevAnchorY;
+
+        // 锚点
+        this.ropeX[0] = this.anchorX;
+        this.ropeY[0] = this.anchorY;
+        // 锚点的位移按比例传给首端，模拟「手带动绳子」
+        this.ropeOldX[0] = this.anchorX - anchorMoveX * ANCHOR_VELOCITY_TRANSFER;
+        this.ropeOldY[0] = this.anchorY - anchorMoveY * ANCHOR_VELOCITY_TRANSFER;
+        this.prevAnchorX = this.anchorX;
+        this.prevAnchorY = this.anchorY;
+
+        this._integrate(last, dt);
+        this._solveConstraints(this._constraintIterations(anchorMoveX, anchorMoveY));
+        this._stretchGuard();
+        this._pinAnchor();
+        this._clampExtent(last);
+    };
+
+    window.PendantPhysics.prototype._integrate = function (pendantIndex, dt) {
+        var effectiveDamping = Math.min(0.997, Math.max(0.94, VELOCITY_DAMPING * AIR_DAMPING));
+        var gravityStep = this.gravity * GRAVITY_SCALE * dt * dt;
+
+        var inertiaBoost = Math.max(0, this.sizeMassScale - 1) * 0.035;
+        var smallDrag = Math.max(0, 1 - this.sizeMassScale) * 0.008;
+        var pendantDamping = Math.min(0.997, Math.max(0.94, effectiveDamping + inertiaBoost - smallDrag));
+
+        var n = this.ropeX.length;
+        for (var i = 1; i < n; i++) {
+            var isPendant = i >= pendantIndex;
+            var damping = isPendant ? pendantDamping : effectiveDamping;
+            var grav = isPendant ? gravityStep * this.sizeMassScale : gravityStep;
+
+            var vx = (this.ropeX[i] - this.ropeOldX[i]) * damping;
+            var vy = (this.ropeY[i] - this.ropeOldY[i]) * damping;
+
+            this.ropeOldX[i] = this.ropeX[i];
+            this.ropeOldY[i] = this.ropeY[i];
+            this.ropeX[i] += vx;
+            this.ropeY[i] += vy + grav;
+
+            this._clampVelocity(i, pendantIndex);
+        }
+    };
+
+    window.PendantPhysics.prototype._clampVelocity = function (i, pendantIndex) {
+        var vx = this.ropeX[i] - this.ropeOldX[i];
+        var vy = this.ropeY[i] - this.ropeOldY[i];
+        var maxDelta = i >= pendantIndex ? MAX_PENDANT_DELTA : MAX_POINT_DELTA;
+        var len = Math.sqrt(vx * vx + vy * vy);
+        if (len <= maxDelta || len <= 0.0001) return;
+        var k = maxDelta / len;
+        this.ropeOldX[i] = this.ropeX[i] - vx * k;
+        this.ropeOldY[i] = this.ropeY[i] - vy * k;
+    };
+
+    window.PendantPhysics.prototype._constraintIterations = function (mx, my) {
+        var it = MIN_CONSTRAINT_ITER;
+        var move = Math.sqrt(mx * mx + my * my);
+        if (move > 24) it += Math.min(8, Math.ceil((move - 24) / 26));
+        // 段很长时多迭代几次，避免拉伸
+        if (this.segmentLength > LONG_SEGMENT_REF) {
+            var s = (this.segmentLength - LONG_SEGMENT_REF) / LONG_SEGMENT_REF;
+            it += Math.min(8, Math.ceil(s * 4));
+        }
+        return it;
+    };
+
+    window.PendantPhysics.prototype._solveConstraints = function (iterations) {
+        var n = this.ropeX.length;
+        for (var iter = 0; iter < iterations; iter++) {
+            this.ropeX[0] = this.anchorX;
+            this.ropeY[0] = this.anchorY;
+            for (var i = 0; i < n - 1; i++) {
+                this._distanceConstraint(i, i + 1, this.segmentLength, CONSTRAINT_VELOCITY_PRESERVE);
+            }
+        }
+    };
+
+    window.PendantPhysics.prototype._distanceConstraint = function (a, b, target, preserve) {
+        var dx = this.ropeX[b] - this.ropeX[a];
+        var dy = this.ropeY[b] - this.ropeY[a];
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist <= 0.0001) return;
+
+        var correction = (dist - target) / dist;
+        // 首端是锚点不参与移动，其余平均分摊
+        var aWeight = a === 0 ? 0 : 0.5;
+        var bWeight = a === 0 ? 1 : 0.5;
+
+        var offX = dx * correction, offY = dy * correction;
+
+        if (a !== 0) {
+            var ax = offX * aWeight, ay = offY * aWeight;
+            this.ropeX[a] += ax; this.ropeY[a] += ay;
+            this.ropeOldX[a] += ax * preserve; this.ropeOldY[a] += ay * preserve;
+        }
+        var bx = -offX * bWeight, by = -offY * bWeight;
+        this.ropeX[b] += bx; this.ropeY[b] += by;
+        this.ropeOldX[b] += bx * preserve; this.ropeOldY[b] += by * preserve;
+    };
+
+    window.PendantPhysics.prototype._stretchGuardRatio = function () {
+        if (this.segmentLength <= LONG_SEGMENT_REF) return STRETCH_GUARD_RATIO;
+        var s = (this.segmentLength - LONG_SEGMENT_REF) / LONG_SEGMENT_REF;
+        var drop = Math.min(STRETCH_GUARD_RATIO - LONG_SEGMENT_TIGHT, s * 0.05);
+        return STRETCH_GUARD_RATIO - drop;
+    };
+
+    window.PendantPhysics.prototype._stretchGuard = function () {
+        var n = this.ropeX.length;
+        var maxSeg = this.segmentLength * this._stretchGuardRatio();
+
+        for (var iter = 0; iter < STRETCH_GUARD_ITER; iter++) {
+            var adjusted = false;
+            this.ropeX[0] = this.anchorX;
+            this.ropeY[0] = this.anchorY;
+            for (var i = 0; i < n - 1; i++) {
+                var dx = this.ropeX[i + 1] - this.ropeX[i];
+                var dy = this.ropeY[i + 1] - this.ropeY[i];
+                if (dx * dx + dy * dy > maxSeg * maxSeg) {
+                    this._distanceConstraint(i, i + 1, maxSeg, 1);
+                    adjusted = true;
+                }
+            }
+            if (!adjusted) break;
+        }
+    };
+
+    window.PendantPhysics.prototype._pinAnchor = function () {
+        this.ropeX[0] = this.anchorX;
+        this.ropeY[0] = this.anchorY;
+        this.ropeOldX[0] = this.anchorX;
+        this.ropeOldY[0] = this.anchorY;
+    };
+
+    window.PendantPhysics.prototype._clampExtent = function (idx) {
+        var dx = this.ropeX[idx] - this.anchorX;
+        var dy = this.ropeY[idx] - this.anchorY;
+        if (!isFinite(dx) || !isFinite(dy)) { this.reset(); return; }
+
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        var maxDist = Math.max(this.segmentLength, this.restLen * ABSOLUTE_STRETCH_RATIO);
+        if (dist <= maxDist || dist <= 0.0001) return;
+
+        var sx = this.anchorX + dx / dist * maxDist;
+        var sy = this.anchorY + dy / dist * maxDist;
+        var mx = sx - this.ropeX[idx], my = sy - this.ropeY[idx];
+        this.ropeX[idx] = sx; this.ropeY[idx] = sy;
+        this.ropeOldX[idx] += mx; this.ropeOldY[idx] += my;
+    };
+
+    // 挂件图左上角应该在的位置（用锚点比例反推）
+    window.PendantPhysics.prototype.pendantTopLeft = function () {
+        var p = this.pendantPos();
+        return { x: p.x - this.anchorRX * this.imageSize, y: p.y - this.anchorRY * this.imageSize };
+    };
+})();
+
+/* ===== 挂件悬停效果（绳子物理）=====
+   从 exe 的 Verlet 实现移植物理（见 PendantPhysics），这里负责渲染与交互。
+
+   触发方式：
+     · 卡片悬停 → 挂件从鼠标位置吊下来，跟随鼠标摆动
+     · 弹窗打开 → 持续吊着（pin 模式），直到弹窗关闭
+
+   与假光标的分工：
+     · cursor 类卡片 → 鼠标本身变成该作品的光标（隐藏真光标）
+     · pendant/follow/sticker 类卡片 → 真光标保留，挂件挂在鼠标上
+   两类互斥，由卡片的下载 tag 决定走哪条路。
+*/
+(function () {
+    var rig = null;           // 单例：一个页面只需要一套绳子和挂件图
+    var activeEl = null;
+    var pinned = false;
+    var raf = null;
+    var lastTime = 0;
+
+    function ensureRig() {
+        if (rig) return rig;
+
+        var cv = document.createElement('canvas');
+        cv.id = 'pendant-rope';
+        cv.style.cssText = 'position:fixed;left:0;top:0;pointer-events:none;z-index:2147483646;';
+        document.body.appendChild(cv);
+
+        var img = document.createElement('img');
+        img.id = 'pendant-img';
+        img.alt = '';
+        img.setAttribute('aria-hidden', 'true');
+        img.style.cssText = 'position:fixed;left:0;top:0;pointer-events:none;' +
+            'z-index:2147483647;display:none;image-rendering:pixelated;will-change:transform;';
+        document.body.appendChild(img);
+
+        rig = { cv: cv, ctx: cv.getContext('2d'), img: img, phys: null, meta: null, k: 1, url: null };
+        return rig;
+    }
+
+    function resizeCanvas() {
+        if (!rig) return;
+        rig.cv.width = window.innerWidth;
+        rig.cv.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+
+    // 与光标一致的尺寸规则：源图内容已是 64px，按 dpr 取整数倍放大
+    function scaleForDpr(dpr) {
+        if (dpr <= 1) return 1;
+        if (dpr <= 1.5) return 1.5;
+        if (dpr <= 2) return 2;
+        if (dpr <= 3) return 3;
+        return Math.round(dpr);
+    }
+
+    // 缓存已加载的元数据，避免每次悬停都 fetch
+    var metaCache = {};
+
+    function loadMeta(url) {
+        if (metaCache[url]) return Promise.resolve(metaCache[url]);
+        return fetch(url, { cache: 'force-cache' })
+            .then(function (r) { return r.ok ? r.json() : null; })
+            .then(function (m) { if (m) metaCache[url] = m; return m; })
+            .catch(function () { return null; });
+    }
+
+    function start(url, meta, el) {
+        var r = ensureRig();
+        var dpr = Math.max(1, window.devicePixelRatio || 1);
+        var k = scaleForDpr(dpr);
+        var cssW = meta.width * k / dpr;
+        var cssH = meta.height * k / dpr;
+
+        // 换挂件图
+        if (r.url !== url) {
+            r.url = url;
+            r.meta = meta;
+            r.k = k;
+            r.img.src = 'pendant/' + meta.file;
+            r.img.style.width = cssW + 'px';
+            r.img.style.height = cssH + 'px';
+            r.phys = new window.PendantPhysics({
+                imageSize: cssW,
+                ropeLength: meta.ropeLength,
+                ropeSegments: meta.ropeSegments,
+                gravity: meta.gravity,
+                anchorX: meta.anchorX,
+                anchorY: meta.anchorY,
+            });
+            r.phys.setAnchor(mx, my, true);
+        } else {
+            // 同一挂件重复显示：只更新尺寸（dpr 可能变了）
+            r.meta = meta; r.k = k;
+            r.img.style.width = cssW + 'px';
+            r.img.style.height = cssH + 'px';
+            if (r.phys) r.phys.imageSize = cssW;
+        }
+
+        resizeCanvas();
+        r.img.style.display = 'block';
+        activeEl = el;
+        if (!raf) { lastTime = performance.now(); raf = requestAnimationFrame(loop); }
+    }
+
+    function loop(now) {
+        raf = null;
+        if (!activeEl || !rig || !rig.phys) return;
+        var dt = Math.min(0.05, (now - lastTime) / 1000);
+        lastTime = now;
+
+        rig.phys.setAnchor(mx, my);
+        rig.phys.advance(dt);
+
+        // 挂件位置：锚点比例决定图相对挂点的偏移
+        var tl = rig.phys.pendantTopLeft();
+        rig.img.style.transform = 'translate(' + tl.x + 'px,' + tl.y + 'px)';
+
+        // 画绳子
+        var ctx = rig.ctx, nodes = rig.phys.nodes();
+        ctx.clearRect(0, 0, rig.cv.width, rig.cv.height);
+        ctx.strokeStyle = (rig.meta && rig.meta.ropeColor) || '#464646';
+        var dpr = Math.max(1, window.devicePixelRatio || 1);
+        ctx.lineWidth = Math.max(1, 1.5 * rig.k / dpr);
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(nodes[0].x, nodes[0].y);
+        for (var i = 1; i < nodes.length; i++) ctx.lineTo(nodes[i].x, nodes[i].y);
+        ctx.stroke();
+
+        raf = requestAnimationFrame(loop);
+    }
+
+    function stop() {
+        generation++;   // 作废所有在途的异步显示请求
+        if (raf) { cancelAnimationFrame(raf); raf = null; }
+        if (rig) {
+            rig.img.style.display = 'none';
+            rig.ctx.clearRect(0, 0, rig.cv.width, rig.cv.height);
+        }
+        activeEl = null;
+    }
+
+    var mx = 0, my = 0;
+    // 异步守卫：pendantShow 里的 fetch 可能比 mouseleave 晚返回，
+    // 若不校验就会把已经收起的挂件重新唤醒（实测出现过这个 bug）。
+    var generation = 0;
+
+    window.addEventListener('mousemove', function (e) {
+        mx = e.clientX; my = e.clientY;
+        // 首次显示前锚点还没定位，这里兜底更新
+        if (activeEl && rig && rig.phys && rig.phys.anchorX === 0 && rig.phys.anchorY === 0) {
+            rig.phys.setAnchor(mx, my, true);
+        }
+    }, { passive: true });
+
+    window.pendantShow = function (url, el) {
+        if (!window.PendantPhysics) return;
+        var gen = ++generation;
+        loadMeta(url).then(function (meta) {
+            if (!meta) return;
+            // 期间用户已经移开或换了别的卡片 → 放弃这次显示
+            if (gen !== generation) return;
+            if (mx === 0 && my === 0) { mx = window.innerWidth / 2; my = window.innerHeight / 2; }
+            start(url, meta, el);
+        });
+    };
+
+    window.pendantHide = function (el) {
+        if (pinned) return;              // 钉住期间不隐藏
+        if (el && activeEl && activeEl !== el) return;
+        stop();
+    };
+
+    // 弹窗用：持续吊着直到弹窗关闭
+    var pinObserver = null;
+    window.pendantPin = function (url, el, guard) {
+        pinned = true;
+        window.pendantShow(url, el);
+        if (pinObserver) { try { pinObserver.disconnect(); } catch (e) {} pinObserver = null; }
+        if (guard && window.MutationObserver) {
+            try {
+                pinObserver = new MutationObserver(function () {
+                    if (guard.style.display === 'none') window.pendantUnpin();
+                });
+                pinObserver.observe(guard, { attributes: true, attributeFilter: ['style'] });
+            } catch (e) {}
+        }
+    };
+
+    window.pendantUnpin = function () {
+        pinned = false;
+        if (pinObserver) { try { pinObserver.disconnect(); } catch (e) {} pinObserver = null; }
+        stop();
+    };
+
+    // 兜底：鼠标移出文档 / 窗口失焦 → 收起（钉住时除外）
+    document.addEventListener('mouseleave', function () { if (!pinned) stop(); });
+    window.addEventListener('blur', function () { if (!pinned) stop(); });
+
+    // 诊断
+    window.__pendantInfo = function () {
+        return {
+            active: !!activeEl,
+            pinned: pinned,
+            url: rig ? rig.url : null,
+            display: rig ? getComputedStyle(rig.img).display : null,
+            restLen: rig && rig.phys ? rig.phys.restLen : null,
+            pos: rig && rig.phys ? rig.phys.pendantPos() : null,
+            imgLoaded: rig ? rig.img.naturalWidth > 0 : false,
+        };
+    };
+})();

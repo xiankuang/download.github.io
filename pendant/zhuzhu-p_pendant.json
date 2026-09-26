@@ -1,0 +1,19 @@
+{
+  "width": 80,
+  "height": 70,
+  "contentWidth": 72,
+  "contentHeight": 64,
+  "originalWidth": 227,
+  "originalHeight": 199,
+  "projectType": "Pendant",
+  "ropeLength": 140,
+  "ropeSegments": 4,
+  "ropeColor": "#464646",
+  "gravity": 11000,
+  "anchorX": 0.5,
+  "anchorY": 0.5,
+  "cursorAnchorX": 0.59375,
+  "cursorAnchorY": 0.8125,
+  "source": "猪猪挂件.scpm",
+  "file": "zhuzhu-p_pendant.png"
+}

@@ -1,0 +1,19 @@
+{
+  "width": 99,
+  "height": 99,
+  "contentWidth": 68,
+  "contentHeight": 64,
+  "originalWidth": 96,
+  "originalHeight": 96,
+  "projectType": "Pendant",
+  "ropeLength": 100,
+  "ropeSegments": 4,
+  "ropeColor": "#292955",
+  "gravity": 11000,
+  "anchorX": 0.5,
+  "anchorY": 0.5,
+  "cursorAnchorX": 0.5,
+  "cursorAnchorY": 0.46875,
+  "source": "niko3.0.scpm",
+  "file": "niko-p_pendant.gif"
+}
