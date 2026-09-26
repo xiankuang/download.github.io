@@ -19,33 +19,5 @@
   "ropeLengthManifest": 100,
   "ropeLengthSource": "manifest",
   "pendulumSegments": 7,
-  "imageSize": 48,
-  "images": {
-    "_1": {
-      "file": "yileina-p_pendant.gif",
-      "width": 75,
-      "height": 75
-    },
-    "follow": {
-      "file": "yileina-p_follow.gif",
-      "width": 75,
-      "height": 75
-    },
-    "follow_pass_right": {
-      "file": "yileina-p_follow_pass_right.gif",
-      "width": 75,
-      "height": 75
-    },
-    "follow_pass_up": {
-      "file": "yileina-p_follow_pass_up.gif",
-      "width": 75,
-      "height": 75
-    },
-    "follow_pass_down": {
-      "file": "yileina-p_follow_pass_down.gif",
-      "width": 75,
-      "height": 75
-    }
-  },
-  "uniformScale": 1.560976
+  "imageSize": 48
 }

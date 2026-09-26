@@ -1727,8 +1727,6 @@ window.PendantSticker.prototype.pose = function () {
         // 换作品或换模式时重建物理对象
         if (r.mode !== mode || r.url !== url || !r.phys) {
             r.mode = mode;
-            r.wantAction = 'idle';        // 换作品时复位动作状态，避免沿用上一个卡片
-            r.shownFile = null;
             if (mode === 'follow') {
                 r.phys = new window.PendantFollow({ restLen: restLen });
                 r.phys.reset(mx + r.offX, my + r.offY);
@@ -1752,26 +1750,10 @@ window.PendantSticker.prototype.pose = function () {
             r.phys.restLen = restLen;
         }
 
-        // 动作图：贴纸按住 / 悬浮移动 时换图
-        applyActionImage(r, meta, mode);
-
         resizeCanvas();
         r.img.style.display = 'block';
         activeEl = el;
         if (!raf) { lastTime = performance.now(); raf = requestAnimationFrame(loop); }
-    }
-
-    // 选当前该显示哪张图（主图 or 动作图）
-    function applyActionImage(r, meta, mode) {
-        var file = meta.file;
-        var imgs = meta.images || {};
-        // 悬浮挂件移动中用 follow 图；贴纸按住用 sticker_hold
-        if (mode === 'follow' && r.wantAction === 'move' && imgs.follow) file = imgs.follow.file;
-        else if (mode === 'sticker' && r.wantAction === 'hold' && imgs.sticker_hold) file = imgs.sticker_hold.file;
-        if (r.shownFile !== file) {
-            r.shownFile = file;
-            r.img.src = 'pendant/' + file;
-        }
     }
 
     function loop(now) {
@@ -1786,14 +1768,6 @@ window.PendantSticker.prototype.pose = function () {
         var meta = rig.meta;
         var pose = rig.phys.pendantPose ? rig.phys.pendantPose() : rig.phys.pose();
         var scaleX = pose.scaleX == null ? 1 : pose.scaleX;
-
-        // 悬浮挂件：移动中换成 follow 动作图（exe 用 followIdleSeconds 判定）
-        if (rig.mode === 'follow') {
-            var moving = Math.abs(rig.phys.vx) > 2 || Math.abs(rig.phys.vy) > 2;
-            var want = moving ? 'move' : 'idle';
-            if (rig.wantAction !== want) { rig.wantAction = want; applyActionImage(rig, meta, 'follow'); }
-        }
-
         // 挂件：先把锚点比例对应的那个点移到绳末端，再按绳末端角度旋转
         //   exe: Translate(pendantX,pendantY) → Rotate(angle) → DrawImage(-w/2-ax*w, -h/2-ay*h)
         //   等价于 translate(x,y) rotate(a) translate(-ax*w, -ay*h)
@@ -1854,20 +1828,6 @@ window.PendantSticker.prototype.pose = function () {
         mx = e.clientX; my = e.clientY;
     }, { passive: true });
 
-    // 贴纸按住时切换到 sticker_hold 图（exe: _isStickerHoldActive）
-    window.addEventListener('mousedown', function () {
-        if (rig && rig.mode === 'sticker' && rig.wantAction !== 'hold') {
-            rig.wantAction = 'hold';
-            applyActionImage(rig, rig.meta, 'sticker');
-        }
-    });
-    window.addEventListener('mouseup', function () {
-        if (rig && rig.mode === 'sticker' && rig.wantAction !== 'idle') {
-            rig.wantAction = 'idle';
-            applyActionImage(rig, rig.meta, 'sticker');
-        }
-    });
-
     window.pendantShow = function (url, el) {
         if (!window.PendantPhysics) return;
         var gen = ++generation;
@@ -1922,8 +1882,6 @@ window.PendantSticker.prototype.pose = function () {
             pinned: pinned,
             // 只在真正激活时回报 mode/图，避免刚 stop() 后仍读到上一次的残留值
             mode: activeEl && rig ? rig.mode : null,
-            action: activeEl && rig ? rig.wantAction : null,
-            shownFile: activeEl && rig ? rig.shownFile : null,
             url: rig ? rig.url : null,
             display: rig && rig.img ? getComputedStyle(rig.img).display : null,
             restLen: rig && rig.phys ? rig.phys.restLen : null,
