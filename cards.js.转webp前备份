@@ -4,7 +4,7 @@ const resources = [
         id: 'scm',
         title: '简易光标制作器scm',
         description: '超级好用的光标编辑器',
-        image: './icon/scm宣传.webp',
+        image: './icon/scm宣传.png',
         links: {
             quark: 'https://pan.quark.cn/s/2b1a0dbb34e9',
             baidu: 'https://pan.baidu.com/s/1JJs5Jnr3lEtm0SerPfbiFA?pwd=xkxk',
@@ -16,7 +16,7 @@ const resources = [
         id: 'xingjianya2.1',
         title: '星见雅光标',
         description: '可爱镍',
-        image: './icon/xingjianya2_光标_宣传.webp',
+        image: './icon/xingjianya2_光标_宣传.gif',
         cursor: './cursor/miyabi_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/2f459d07c4f1',
@@ -28,7 +28,7 @@ const resources = [
         id: 'maodie',
         title: '哈气耄耋',
         description: '哈',
-        image: './icon/哈气耄耋.webp',
+        image: './icon/哈气耄耋.png',
         links: {
             quark: 'https://pan.quark.cn/s/dc9ea1a3431a',
             lanzou: 'https://wwbny.lanzoue.com/b00l32nc3g',
@@ -39,7 +39,7 @@ const resources = [
         id: 'luoxi',
         title: '洛茜',
         description: '小红帽',
-        image: './icon/洛茜挂件宣传.webp',
+        image: './icon/洛茜挂件宣传.gif',
         links: {
             quark: 'https://pan.quark.cn/s/7a8d82d9d58e',
             lanzou: 'https://wwbny.lanzoue.com/b00l33k7fg',
@@ -50,7 +50,7 @@ const resources = [
         id: 'yileina-p',
         title: '伊雷娜',
         description: '伊雷娜',
-        image: './icon/伊雷娜悬浮挂件宣传a.webp',
+        image: './icon/伊雷娜悬浮挂件宣传a.gif',
         links: {
             quark: 'https://pan.quark.cn/s/0e72d673eaea',
             lanzou: 'https://wwbny.lanzoue.com/b00l33g4xc',
@@ -61,7 +61,7 @@ const resources = [
         id: 'quancifang',
         title: '泉此方',
         description: '幸运星',
-        image: './icon/泉此方光标宣传.webp',
+        image: './icon/泉此方光标宣传.gif',
         cursor: './cursor/konata_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/1f548ba2ee6e',
@@ -73,7 +73,7 @@ const resources = [
         id: 'deekseek',
         title: '大肥鱼',
         description: '吃白饭',
-        image: './icon/大肥鱼挂件宣传.webp',
+        image: './icon/大肥鱼挂件宣传.gif',
         links: {
             quark: 'https://pan.quark.cn/s/11c9ff0630c7',
             lanzou: 'https://wwbny.lanzoue.com/b00l31hzih密码:6h9h',
@@ -84,7 +84,7 @@ const resources = [
         id: 'teto3.0',
         title: 'teto',
         description: 'teto',
-        image: './icon/teto_挂件_宣传.webp',
+        image: './icon/teto_挂件_宣传.gif',
         links: {
             quark: 'https://pan.quark.cn/s/606e427622ae',
             lanzou: 'https://wwbny.lanzoue.com/b00l312i7e密码:9tba',
@@ -95,7 +95,7 @@ const resources = [
         id: 'niko3.0',
         title: 'Niko',
         description: 'Oneshot',
-        image: './icon/niko挂件宣传.webp',
+        image: './icon/niko挂件宣传.gif',
         links: {
             quark: 'https://pan.quark.cn/s/091edbe43c0d',
             lanzou: 'https://wwbny.lanzoue.com/b00l32nc9c',
@@ -106,7 +106,7 @@ const resources = [
         id: 'miku3.0',
         title: '初音未来',
         description: '初音未来',
-        image: './icon/初音未来_挂件_宣传.webp',
+        image: './icon/初音未来_挂件_宣传.gif',
         links: {
             quark: 'https://pan.quark.cn/s/d45d1c79ef01',
             lanzou: 'https://wwbny.lanzoue.com/b00l2o49he',
@@ -117,7 +117,7 @@ const resources = [
         id: 'zhuzhu',
         title: '猪猪挂件',
         description: '猪猪',
-        image: './icon/猪猪挂件.webp',
+        image: './icon/猪猪挂件.png',
         links: {
             quark: 'https://pan.quark.cn/s/c4ed8013684c',
             lanzou: 'https://wwbny.lanzoue.com/b00l2o49gd',
@@ -129,7 +129,7 @@ const resources = [
         id: 'liyefu',
         title: '绿虫虫',
         description: '莉耶芙',
-        image: './icon/绿虫虫挂件宣传.webp',
+        image: './icon/绿虫虫挂件宣传.gif',
         links: {
             quark: 'https://pan.quark.cn/s/86f81db4e97c',
             lanzou: 'https://wwbny.lanzoue.com/b00l2o49da',
@@ -140,7 +140,7 @@ const resources = [
         id: 'feibi',
         title: '菲比',
         description: '菲比丘比',
-        image: './icon/菲比光标宣传.webp',
+        image: './icon/菲比光标宣传.gif',
         cursor: './cursor/feibi_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/8c4e21383e38',
@@ -153,7 +153,7 @@ const resources = [
         id: 'zaomiao',
         title: '早苗',
         description: '早苗',
-        image: './icon/早苗光标宣传.webp',
+        image: './icon/早苗光标宣传.gif',
         cursor: './cursor/zaomiao_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/f91991d26afd',
@@ -168,7 +168,7 @@ const resources = [
         id: 'chenqianyu',
         title: '陈千语',
         description: '啥子',
-        image: './icon/陈千语光标宣传.webp',
+        image: './icon/陈千语光标宣传.gif',
         cursor: './cursor/chenqianyu_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/6e659ce89a58',
@@ -180,7 +180,7 @@ const resources = [
         id: 'xiaosan',
         title: '多多良小伞',
         description: '小伞',
-        image: './icon/小伞光标宣传.webp',
+        image: './icon/小伞光标宣传.gif',
         cursor: './cursor/kogasa_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/6be825387d35',
@@ -192,7 +192,7 @@ const resources = [
         id: 'tiedaoshuangzi',
         title: '橘光橘望',
         description: '可爱捏',
-        image: './icon/橘光橘望光标宣传.webp',
+        image: './icon/橘光橘望光标宣传.gif',
         cursor: './cursor/tachibana_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/2a86f97f589f',
@@ -205,7 +205,7 @@ const resources = [
         id: 'katixiya',
         title: '卡缇希娅',
         description: '可爱捏',
-        image: './icon/卡缇希娅光标宣传.webp',
+        image: './icon/卡缇希娅光标宣传.gif',
         cursor: './cursor/katixiya_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/c2812e04fa37',
@@ -219,7 +219,7 @@ const resources = [
         id: 'fulan',
         title: '芙兰朵露',
         description: '可爱捏',
-        image: './icon/芙兰朵露光标宣传.webp',
+        image: './icon/芙兰朵露光标宣传.gif',
         cursor: './cursor/flandre_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/e348395d7225',
@@ -232,7 +232,7 @@ const resources = [
         id: 'saba',
         title: '猫鲨saba',
         description: '可爱捏',
-        image: './icon/saba光标宣传.webp',
+        image: './icon/saba光标宣传.gif',
         cursor: './cursor/saba_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/262c8cb07ec4',
@@ -245,7 +245,7 @@ const resources = [
         id: 'mumingdijue',
         title: '古明地觉',
         description: '小五',
-        image: './icon/古明地觉宣传.webp',
+        image: './icon/古明地觉宣传.gif',
         cursor: './cursor/satori_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/8411f55ad57b',
@@ -258,7 +258,7 @@ const resources = [
         id: 'molis',
         title: '魔理莎',
         description: '莎莎',
-        image: './icon/魔理沙宣传.webp',
+        image: './icon/魔理沙宣传.gif',
         cursor: './cursor/marisa_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/64d83bc83d49',
@@ -271,7 +271,7 @@ const resources = [
         id: 'fulil',
         title: '芙莉莲',
         description: '=w=',
-        image: './icon/芙莉莲宣传.webp',
+        image: './icon/芙莉莲宣传.gif',
         cursor: './cursor/frieren_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/2ade2b99f8d8',
@@ -284,7 +284,7 @@ const resources = [
         id: 'teto',
         title: 'teto',
         description: '红色钻头',
-        image: './icon/teto光标宣传.webp',
+        image: './icon/teto光标宣传.gif',
         cursor: './cursor/teto_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/85d7a87b873f',
@@ -297,7 +297,7 @@ const resources = [
         id: 'lingmeng',
         title: '博丽灵梦',
         description: 'good apple',
-        image: './icon/灵梦宣传aa2.webp',
+        image: './icon/灵梦宣传aa2.gif',
         cursor: './cursor/reimu_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/5e61d07a2cf5',
@@ -310,7 +310,7 @@ const resources = [
         id: 'yileina',
         title: '伊蕾娜',
         description: '可爱',
-        image: './icon/伊蕾娜光标宣传a2.webp',
+        image: './icon/伊蕾娜光标宣传a2.gif',
         cursor: './cursor/yileina_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/0b9aeb8ba9ed',
@@ -323,7 +323,7 @@ const resources = [
         id: 'boqi',
         title: '可爱波奇',
         description: '可爱',
-        image: './icon/波奇酱宣传a2.webp',
+        image: './icon/波奇酱宣传a2.gif',
         cursor: './cursor/bocchi_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/7b4b1bd17cb1',
@@ -336,7 +336,7 @@ const resources = [
         id: 'xnyxy',
         title: '可爱星野',
         description: '可爱星野',
-        image: './icon/小鸟游星野光标宣传2.webp',
+        image: './icon/小鸟游星野光标宣传2.gif',
         cursor: './cursor/hoshino_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/b605be6adac5',
@@ -349,7 +349,7 @@ const resources = [
         id: 'ralsei',
         title: 'ralsei',
         description: '超级可爱！',
-        image: './icon/三角符文小羊光标宣传2.webp',
+        image: './icon/三角符文小羊光标宣传2.gif',
         cursor: './cursor/ralsei_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/fdd616816133',
@@ -363,7 +363,7 @@ const resources = [
         cursor: './cursor/miku_cursor.gif',
         title: '初音未来光标',
         description: '超级可爱！',
-        image: './icon/初音未来光标宣传2.webp',
+        image: './icon/初音未来光标宣传2.gif',
         links: {
             quark: 'https://pan.quark.cn/s/aa5d3badc6ac',
             baidu: 'https://pan.baidu.com/s/1-IFShF99Dnm65_wkrQUcYA?pwd=xkxk',
@@ -375,7 +375,7 @@ const resources = [
         id: 'koishi',
         title: '恋恋光标',
         description: '用着用着就消失了',
-        image: './icon/恋恋光标宣传2.webp',
+        image: './icon/恋恋光标宣传2.gif',
         cursor: './cursor/koishi_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/c952fa6b39fb',
@@ -389,7 +389,7 @@ const resources = [
         cursor: './cursor/niko2_cursor.gif',
         title: 'oneshot niko 光标',
         description: '不敢用怕只能用一次',
-        image: './icon/niko光标宣传2.webp',
+        image: './icon/niko光标宣传2.gif',
         links: {
             quark: 'https://pan.quark.cn/s/a4e0d941bf2d',
             baidu: 'https://pan.baidu.com/s/14w7K0B46__oL1hnw2ck0yw?pwd=xkxk',
@@ -402,7 +402,7 @@ const resources = [
         cursor: './cursor/niko1_cursor.gif',
         title: 'oneshot niko 光标（旧）',
         description: '不敢用怕只能用一次',
-        image: './icon/niko1.0光标宣传2.webp',
+        image: './icon/niko1.0光标宣传2.gif',
         links: {
             quark: 'https://pan.quark.cn/s/42480abfef98',
             baidu: 'https://pan.baidu.com/s/1D14uQSotg2r7QkitBX2t2Q?pwd=xkxk',
@@ -414,7 +414,7 @@ const resources = [
         id: 'xiaotao',
         title: '碧蓝档案小桃光标',
         description: 'omg是王小桃',
-        image: './icon/小桃光标宣传2.webp',
+        image: './icon/小桃光标宣传2.gif',
         cursor: './cursor/momoi_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/56affc620a29',
@@ -428,7 +428,7 @@ const resources = [
         cursor: './cursor/pixelanim_cursor.gif',
         title: '动态简单像素光标',
         description: '最经典的光标',
-        image: './icon/动态简单像素光标宣传.webp',
+        image: './icon/动态简单像素光标宣传.gif',
         links: {
             quark: 'https://pan.quark.cn/s/fccb7ad0e841',
             baidu: 'https://pan.baidu.com/s/1PdahtFMN1wy36G4hzEt2NQ?pwd=xkxk',
@@ -441,7 +441,7 @@ const resources = [
         cursor: './cursor/invcolor_cursor.gif',
         title: '反色动态简单像素光标',
         description: '最经典的光标的反色',
-        image: './icon/反色动态简单像素光标.webp',
+        image: './icon/反色动态简单像素光标.gif',
         links: {
             quark: 'https://pan.quark.cn/s/623d5e5a5728',
             baidu: 'https://pan.baidu.com/s/1N60sFEjWX4NH1CL6fA-mWg?pwd=xkxk',
