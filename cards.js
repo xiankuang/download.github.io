@@ -1771,8 +1771,16 @@ window.PendantSticker.prototype.pose = function () {
         // 挂件：先把锚点比例对应的那个点移到绳末端，再按绳末端角度旋转
         //   exe: Translate(pendantX,pendantY) → Rotate(angle) → DrawImage(-w/2-ax*w, -h/2-ay*h)
         //   等价于 translate(x,y) rotate(a) translate(-ax*w, -ay*h)
-        var ax = (meta.anchorX == null ? 0.5 : meta.anchorX) * rig.cssW;
-        var ay = (meta.anchorY == null ? 0.5 : meta.anchorY) * rig.cssH;
+        // 贴纸特殊：让图的【左上角】落在挂点上，这样贴纸整体待在光标右下方、不遮挡光标。
+        // （其他模式仍按 anchorX/anchorY 对齐，比如挂件是中心 0.5/0.5）
+        var ax, ay;
+        if (rig.mode === 'sticker') {
+            ax = 0;
+            ay = 0;
+        } else {
+            ax = (meta.anchorX == null ? 0.5 : meta.anchorX) * rig.cssW;
+            ay = (meta.anchorY == null ? 0.5 : meta.anchorY) * rig.cssH;
+        }
         // scaleX 用于悬浮挂件的左右朝向翻转（exe 的 FlipPendantHorizontally）
         rig.img.style.transform =
             'translate(' + pose.x + 'px,' + pose.y + 'px) ' +
