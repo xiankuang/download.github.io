@@ -15,5 +15,9 @@
   "cursorAnchorX": 0.59375,
   "cursorAnchorY": 0.8125,
   "source": "大肥鱼挂件.scpm",
-  "file": "bigfish-p_pendant.gif"
+  "file": "bigfish-p_pendant.gif",
+  "ropeLengthManifest": 100,
+  "ropeLengthSource": "manifest",
+  "pendulumSegments": 7,
+  "imageSize": 48
 }

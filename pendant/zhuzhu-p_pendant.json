@@ -15,5 +15,9 @@
   "cursorAnchorX": 0.59375,
   "cursorAnchorY": 0.8125,
   "source": "猪猪挂件.scpm",
-  "file": "zhuzhu-p_pendant.png"
+  "file": "zhuzhu-p_pendant.png",
+  "ropeLengthManifest": 140,
+  "ropeLengthSource": "manifest",
+  "pendulumSegments": 5,
+  "imageSize": 48
 }

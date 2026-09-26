@@ -15,5 +15,9 @@
   "cursorAnchorX": 0.34375,
   "cursorAnchorY": 0.75,
   "source": "绿虫虫挂件3.0.scpm",
-  "file": "liyefu-p_pendant.gif"
+  "file": "liyefu-p_pendant.gif",
+  "ropeLengthManifest": 100,
+  "ropeLengthSource": "manifest",
+  "pendulumSegments": 5,
+  "imageSize": 48
 }

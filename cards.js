@@ -1130,6 +1130,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 return {
                     dpr: readDpr(),
                     pinned: pinned,
+                    // display/src 之前漏了，外部探针读不到光标是否真的显示
+                    display: ghost ? getComputedStyle(ghost).display : null,
+                    src: ghost ? (ghost.getAttribute('src') || '').split('/').pop() : null,
+                    active: !!activeEl,
                     native: ghost ? [ghost.naturalWidth, ghost.naturalHeight] : null,
                     cssSize: ghost ? [ghost.style.width, ghost.style.height] : null,
                     integerN: ghost ? ghost.dataset.n : null,
@@ -1142,193 +1146,192 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /* ====================================================================
    挂件悬停效果：绳子物理 + 渲染
-   物理部分从 exe 的 Form1.PhysicsEngine3.cs 移植（Verlet + 距离约束）
+   物理 1:1 移植 exe 的 Form1.PhysicsEngine3.cs（Verlet + 距离约束）。
+   下面每个常量的数值、每个公式的顺序都与 exe 一致，改动处均有注释说明。
    ==================================================================== */
-/* ===== 挂件绳子物理（从 exe 的 Verlet 实现移植）=====
-   原实现在 Form1.PhysicsEngine3.cs，这里 1:1 复刻其积分与约束，
-   保证网页上的摆动和 exe 里一致。
-
-   单位说明：
-     exe 里 ImageSize=48 是基准，绳子长 100 表示「图片 48px 时长 100px」。
-     网页上挂件图按同一比例显示，所以所有长度都乘 scale = 显示尺寸 / 48。
-     物理本身在 CSS 像素下算（与 exe 的物理像素在 100% DPI 下等价）。
-
-   固定步长很关键：exe 用 1/240 秒定步长 + 累加器，这样摆动速度与帧率无关。
-   如果直接用 rAF 的 dt，120Hz 屏和 60Hz 屏的摆动会不一样。 */
 (function () {
-    // ── 与原实现一致的常量 ──
-    var FIXED_STEP = 1 / 240;          // FixedPhysicsStep
-    var MAX_FRAME_DELTA = 0.033;       // MaxFrameDelta
-    var MAX_STEPS_PER_TICK = 8;        // MaxPhysicsStepsPerTick
-    var MAX_ANCHOR_MOVE_PER_STEP = 48; // MaxAnchorMovePerPhysicsStep
-    var MAX_ANCHOR_STEPS = 18;         // MaxAnchorPhysicsStepsPerTick
-
-    var VELOCITY_DAMPING = 0.993;      // Engine3VelocityDamping
-    var AIR_DAMPING = 0.960;           // Engine3AirDamping
-    var GRAVITY_SCALE = 0.864;         // Engine3GravityScale
-    var ANCHOR_VELOCITY_TRANSFER = 0.225; // Engine3AnchorVelocityTransfer
-    var CONSTRAINT_VELOCITY_PRESERVE = 0.88; // Engine3ConstraintVelocityPreserve
+    /* ── 与 exe 完全一致的常量 ──────────────────────────────────
+       Form1.RuntimeState.cs / Form1.PhysicsEngine3.cs             */
+    var GRAVITY_DEFAULT     = 11000;   // manifest Gravity（GRAVITY 字段默认 11300）
+    var FIXED_STEP          = 1 / 240; // FixedPhysicsStep
+    var MAX_FRAME_DELTA     = 0.033;   // MaxFrameDelta
+    var MAX_STEPS_PER_TICK  = 8;       // MaxPhysicsStepsPerTick
+    var VELOCITY_DAMPING    = 0.993;   // Engine3VelocityDamping
+    var AIR_DAMPING         = 0.960;   // Engine3AirDamping
+    var GRAVITY_SCALE       = 0.864;   // Engine3GravityScale
+    var ANCHOR_VEL_TRANSFER = 0.225;   // Engine3AnchorVelocityTransfer
+    var CONSTRAINT_PRESERVE = 0.88;    // Engine3ConstraintVelocityPreserve
     var STRETCH_GUARD_RATIO = 1.18;    // Engine3StretchGuardRatio
-    var ABSOLUTE_STRETCH_RATIO = 1.32; // Engine3AbsoluteStretchRatio
-    var LONG_SEGMENT_REF = 18;         // Engine3LongSegmentReferenceLength
-    var LONG_SEGMENT_TIGHT = 1.10;     // Engine3LongSegmentTightStretchGuardRatio
-    var MAX_POINT_DELTA = 28;          // Engine3MaxPointDelta
-    var MAX_PENDANT_DELTA = 38;        // Engine3MaxPendantDelta
+    var ABS_STRETCH_RATIO   = 1.32;    // Engine3AbsoluteStretchRatio
+    var LONG_SEG_REF        = 18;      // Engine3LongSegmentReferenceLength
+    var LONG_SEG_TIGHT      = 1.10;    // Engine3LongSegmentTightStretchGuardRatio
+    var MAX_POINT_DELTA     = 28;      // Engine3MaxPointDelta
+    var MAX_PENDANT_DELTA   = 38;      // Engine3MaxPendantDelta
     var MIN_CONSTRAINT_ITER = 5;       // Engine3MinimumConstraintIterations
-    var STRETCH_GUARD_ITER = 2;        // Engine3StretchGuardIterations
+    var CONSTRAINT_ITER     = 10;      // RuntimeState.constraintIterations（exe 取 max(5,10)=10）
+    var STRETCH_GUARD_ITER  = 2;       // Engine3StretchGuardIterations
+    var LONG_SEG_MAX_EXTRA  = 8;       // Engine3LongSegmentMaxExtraIterations
+    var REST_MOVE_THRESHOLD = 0.05;    // Engine3RestAnchorMoveThreshold
+    var REST_ANGLE_TOL      = 1;       // Engine3RestAngleToleranceDegrees
+    var REST_DELAY          = 0.3;     // Engine3RestDelaySeconds
+    var BASE_IMAGE_SIZE     = 48;      // ImageSize 基准（manifest 全是 48）
+    var EXE_DRAW_SIDE       = BASE_IMAGE_SIZE * 2; // exe: drawSize 最长边 = _imageSize*2 = 96
 
-    // 创建一个绳+挂件的模拟器
-    // opts: { imageSize, ropeLength, ropeSegments, gravity, anchorX, anchorY }
-    //   imageSize  挂件图的显示边长（CSS px）
-    //   ropeLength 原始绳长（以 48 为基准的单位）
-    //   anchorX/Y  挂件图内的挂点比例
+    /* 挂点相对真实鼠标的偏移基准（exe: Form1.NativeInterop.cs 的 BaseCursorSize）。
+       渲染模块在另一个 IIFE 里，故挂到 window 共用。 */
+    window.PENDANT_BASE_CURSOR_SIZE = 32;
+
     window.PendantPhysics = function (opts) {
         var self = this;
 
-        // 把 exe 的单位换算到网页
-        var baseSize = 48;
-        var scale = opts.imageSize / baseSize;
+        // exe: GetPendulumSegmentCount() = max(1, ropeSegmentCount + 1)
+        // manifest 的 RopeSegments=6 → 7 段 → 8 个质点
+        this.segments = Math.max(1, (opts.ropeSegments | 0) + 1);
+        this.points = this.segments + 1;
 
-        this.imageSize = opts.imageSize;
-        // 绳长换算：exe 里 ropeLength 配 ImageSize=48 使用，比例是 2.08 倍图高，
-        // 那在桌面挂件上合适，但网页悬停场景太长（96px 图会有 200px 绳子，
-        // 挂件垂到鼠标下方很远）。这里改成「ropeLength/100 × 图高」，
-        // 使绳长 ≈ 图高的 1.0~1.4 倍，紧凑且仍能摆动。
-        this.restLen = (opts.ropeLength || 100) / 100 * opts.imageSize;
-        this.segmentCount = Math.max(1, opts.ropeSegments || 6);
-        this.gravity = opts.gravity || 11000;
-        this.anchorRX = opts.anchorX == null ? 0.5 : opts.anchorX;
-        this.anchorRY = opts.anchorY == null ? 0.5 : opts.anchorY;
+        this.restLen = opts.restLen;          // 已是 CSS 像素
+        this.gravity = opts.gravity;          // 已按比例换算
+        this.segLen = this.restLen / this.segments;
 
-        this.segmentLength = this.restLen / this.segmentCount;
-
-        // sizeMassScale：越大的挂件惯性越大（原实现用 sqrt(imageSize/48)）
-        var sizeRatio = Math.max(0.25, opts.imageSize / baseSize);
+        // exe: GetPhysicsEngine3PendantSizeMassScale()，_imageSize=48 → 1.0
+        var sizeRatio = Math.max(0.25, (opts.imageSize || BASE_IMAGE_SIZE) / BASE_IMAGE_SIZE);
         this.sizeMassScale = Math.min(2.2, Math.max(0.75, Math.sqrt(sizeRatio)));
 
-        var n = this.segmentCount + 1;
+        var n = this.points;
         this.ropeX = new Float64Array(n);
         this.ropeY = new Float64Array(n);
         this.ropeOldX = new Float64Array(n);
         this.ropeOldY = new Float64Array(n);
 
         this.anchorX = 0; this.anchorY = 0;
-        this.targetAnchorX = 0; this.targetAnchorY = 0;
+        this.targetX = 0; this.targetY = 0;
         this.prevAnchorX = 0; this.prevAnchorY = 0;
         this.accumulator = 0;
+        this.stillSeconds = 0;
+        this.frozenAtRest = false;
 
         this.reset();
     };
 
-    // 重置到「绳子竖直垂下」的静止状态
+    // exe: InitializePhysicsEngine3()
     window.PendantPhysics.prototype.reset = function () {
-        var n = this.ropeX.length;
+        var n = this.points;
         for (var i = 0; i < n; i++) {
             this.ropeX[i] = this.anchorX;
-            this.ropeY[i] = this.anchorY + this.segmentLength * i;
+            this.ropeY[i] = this.anchorY + this.segLen * i;
             this.ropeOldX[i] = this.ropeX[i];
             this.ropeOldY[i] = this.ropeY[i];
         }
         this.prevAnchorX = this.anchorX;
         this.prevAnchorY = this.anchorY;
         this.accumulator = 0;
+        this.stillSeconds = 0;
+        this.frozenAtRest = false;
     };
 
-    // 设定挂点（鼠标位置）——立即对齐还是平滑跟随由 advance 处理
     window.PendantPhysics.prototype.setAnchor = function (x, y, instant) {
         if (instant) {
             var dx = x - this.anchorX, dy = y - this.anchorY;
             this.anchorX = x; this.anchorY = y;
-            this.targetAnchorX = x; this.targetAnchorY = y;
+            this.targetX = x; this.targetY = y;
             this.prevAnchorX = x; this.prevAnchorY = y;
-            for (var i = 0; i < this.ropeX.length; i++) {
+            for (var i = 0; i < this.points; i++) {
                 this.ropeX[i] += dx; this.ropeY[i] += dy;
                 this.ropeOldX[i] += dx; this.ropeOldY[i] += dy;
             }
         } else {
-            this.targetAnchorX = x; this.targetAnchorY = y;
+            this.targetX = x; this.targetY = y;
         }
     };
 
-    // 挂件中心位置（绳子末端）
     window.PendantPhysics.prototype.pendantPos = function () {
-        var last = this.ropeX.length - 1;
+        var last = this.points - 1;
         return { x: this.ropeX[last], y: this.ropeY[last] };
     };
 
-    // 绳子的各个节点（用于绘制）
     window.PendantPhysics.prototype.nodes = function () {
         var out = [];
-        for (var i = 0; i < this.ropeX.length; i++) out.push({ x: this.ropeX[i], y: this.ropeY[i] });
+        for (var i = 0; i < this.points; i++) out.push({ x: this.ropeX[i], y: this.ropeY[i] });
         return out;
     };
 
-    window.PendantPhysics.prototype.advance = function (dt) {
-        if (dt <= 0) return;
-        this.accumulator += Math.min(dt, MAX_FRAME_DELTA);
+    /* 挂件姿态：位置 + 角度。
+       位置 = 绳末端（exe: pendantPosition = new PointF(ballX, ballY)）。
+       角度 = 绳末端那一段的切线方向（"垂线和绳子末端角度对齐"）。
+         exe 用的是整条绳的弦向 atan2(ballY-anchorY, ballX-anchorX) - π/2；
+         这里改用末段切线，静止时两者完全相同，摆动中挂件会贴合最后一段绳，
+         视觉上更贴切「垂线对齐绳末端」。 */
+    window.PendantPhysics.prototype.pendantPose = function () {
+        var last = this.points - 1;
+        var a = last - 1 >= 0 ? last - 1 : last;
+        var dx = this.ropeX[last] - this.ropeX[a];
+        var dy = this.ropeY[last] - this.ropeY[a];
+        var angle = Math.atan2(dy, dx) - Math.PI / 2;
+        if (!isFinite(angle)) angle = 0;
+        return { x: this.ropeX[last], y: this.ropeY[last], angle: angle };
+    };
 
+    /* exe: AdvancePhysics(frameDelta) —— 固定步长 + 累加器 */
+    window.PendantPhysics.prototype.advance = function (frameDelta) {
+        if (!(frameDelta > 0)) return;
+
+        this.accumulator += Math.min(frameDelta, MAX_FRAME_DELTA);
         var steps = Math.min(MAX_STEPS_PER_TICK, Math.floor(this.accumulator / FIXED_STEP));
         if (steps <= 0) return;
 
-        // 挂点在帧内平滑移动（原实现：把这一帧的位移拆到各物理步里）
         var startX = this.anchorX, startY = this.anchorY;
-        var endX = isFinite(this.targetAnchorX) ? this.targetAnchorX : this.anchorX;
-        var endY = isFinite(this.targetAnchorY) ? this.targetAnchorY : this.anchorY;
+        var endX = isFinite(this.targetX) ? this.targetX : this.anchorX;
+        var endY = isFinite(this.targetY) ? this.targetY : this.anchorY;
 
-        // 单帧位移过大时再细分（原实现 MaxAnchorMovePerPhysicsStep）
-        var mdx = endX - startX, mdy = endY - startY;
-        var moveDist = Math.sqrt(mdx * mdx + mdy * mdy);
-        var extra = Math.max(1, Math.min(MAX_ANCHOR_STEPS, Math.ceil(moveDist / MAX_ANCHOR_MOVE_PER_STEP)));
-        var totalSteps = steps * extra;
-
-        for (var step = 1; step <= totalSteps; step++) {
-            var progress = step / totalSteps;
+        // exe 把一帧的锚点位移均匀摊到各固定步里，不做额外细分
+        for (var step = 1; step <= steps; step++) {
+            var progress = step / steps;
             this.anchorX = startX + (endX - startX) * progress;
             this.anchorY = startY + (endY - startY) * progress;
-            // 每个子步用更小的时间步，保持物理稳定
-            this._update(FIXED_STEP / extra);
+            this._update(FIXED_STEP);
         }
 
         this.accumulator -= steps * FIXED_STEP;
         if (this.accumulator >= FIXED_STEP) this.accumulator = 0;
     };
 
+    // exe: UpdatePhysicsEngine3(dt)
     window.PendantPhysics.prototype._update = function (dt) {
-        var n = this.ropeX.length;
-        var last = n - 1;
+        var last = this.points - 1;
+        var moveX = this.anchorX - this.prevAnchorX;
+        var moveY = this.anchorY - this.prevAnchorY;
 
-        var anchorMoveX = this.anchorX - this.prevAnchorX;
-        var anchorMoveY = this.anchorY - this.prevAnchorY;
+        // exe: TryFreezePhysicsEngine3AtRest —— 静止时冻结，避免细碎抖动
+        if (this._tryFreeze(moveX, moveY, dt, last)) return;
 
-        // 锚点
         this.ropeX[0] = this.anchorX;
         this.ropeY[0] = this.anchorY;
-        // 锚点的位移按比例传给首端，模拟「手带动绳子」
-        this.ropeOldX[0] = this.anchorX - anchorMoveX * ANCHOR_VELOCITY_TRANSFER;
-        this.ropeOldY[0] = this.anchorY - anchorMoveY * ANCHOR_VELOCITY_TRANSFER;
+        this.ropeOldX[0] = this.anchorX - moveX * ANCHOR_VEL_TRANSFER;
+        this.ropeOldY[0] = this.anchorY - moveY * ANCHOR_VEL_TRANSFER;
         this.prevAnchorX = this.anchorX;
         this.prevAnchorY = this.anchorY;
 
         this._integrate(last, dt);
-        this._solveConstraints(this._constraintIterations(anchorMoveX, anchorMoveY));
+        this._solveConstraints(this._constraintIterations(moveX, moveY));
         this._stretchGuard();
         this._pinAnchor();
         this._clampExtent(last);
     };
 
+    // exe: IntegratePhysicsEngine3Points
     window.PendantPhysics.prototype._integrate = function (pendantIndex, dt) {
-        var effectiveDamping = Math.min(0.997, Math.max(0.94, VELOCITY_DAMPING * AIR_DAMPING));
-        var gravityStep = this.gravity * GRAVITY_SCALE * dt * dt;
+        // exe: effectiveDamping = min(0.997, max(0.94, 0.993*0.960))
+        var eff = Math.min(0.997, Math.max(0.94, VELOCITY_DAMPING * AIR_DAMPING));
+        var gStep = this.gravity * GRAVITY_SCALE * dt * dt;
 
         var inertiaBoost = Math.max(0, this.sizeMassScale - 1) * 0.035;
         var smallDrag = Math.max(0, 1 - this.sizeMassScale) * 0.008;
-        var pendantDamping = Math.min(0.997, Math.max(0.94, effectiveDamping + inertiaBoost - smallDrag));
+        var pendantDamping = Math.min(0.997, Math.max(0.94, eff + inertiaBoost - smallDrag));
 
-        var n = this.ropeX.length;
-        for (var i = 1; i < n; i++) {
+        for (var i = 1; i < this.points; i++) {
             var isPendant = i >= pendantIndex;
-            var damping = isPendant ? pendantDamping : effectiveDamping;
-            var grav = isPendant ? gravityStep * this.sizeMassScale : gravityStep;
+            var damping = isPendant ? pendantDamping : eff;
+            var grav = isPendant ? gStep * this.sizeMassScale : gStep;
 
             var vx = (this.ropeX[i] - this.ropeOldX[i]) * damping;
             var vy = (this.ropeY[i] - this.ropeOldY[i]) * damping;
@@ -1342,6 +1345,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // exe: ClampPhysicsEngine3PointVelocity
     window.PendantPhysics.prototype._clampVelocity = function (i, pendantIndex) {
         var vx = this.ropeX[i] - this.ropeOldX[i];
         var vy = this.ropeY[i] - this.ropeOldY[i];
@@ -1353,29 +1357,30 @@ document.addEventListener('DOMContentLoaded', () => {
         this.ropeOldY[i] = this.ropeY[i] - vy * k;
     };
 
+    // exe: GetPhysicsEngine3ConstraintIterations —— 起点是 max(5, 10) = 10
     window.PendantPhysics.prototype._constraintIterations = function (mx, my) {
-        var it = MIN_CONSTRAINT_ITER;
+        var it = Math.max(MIN_CONSTRAINT_ITER, CONSTRAINT_ITER);
         var move = Math.sqrt(mx * mx + my * my);
         if (move > 24) it += Math.min(8, Math.ceil((move - 24) / 26));
-        // 段很长时多迭代几次，避免拉伸
-        if (this.segmentLength > LONG_SEGMENT_REF) {
-            var s = (this.segmentLength - LONG_SEGMENT_REF) / LONG_SEGMENT_REF;
-            it += Math.min(8, Math.ceil(s * 4));
+        if (this.segLen > LONG_SEG_REF) {
+            var s = (this.segLen - LONG_SEG_REF) / LONG_SEG_REF;
+            it += Math.min(LONG_SEG_MAX_EXTRA, Math.ceil(s * 4));
         }
         return it;
     };
 
+    // exe: SolvePhysicsEngine3Constraints
     window.PendantPhysics.prototype._solveConstraints = function (iterations) {
-        var n = this.ropeX.length;
         for (var iter = 0; iter < iterations; iter++) {
             this.ropeX[0] = this.anchorX;
             this.ropeY[0] = this.anchorY;
-            for (var i = 0; i < n - 1; i++) {
-                this._distanceConstraint(i, i + 1, this.segmentLength, CONSTRAINT_VELOCITY_PRESERVE);
+            for (var i = 0; i < this.points - 1; i++) {
+                this._distanceConstraint(i, i + 1, this.segLen, CONSTRAINT_PRESERVE);
             }
         }
     };
 
+    // exe: ApplyPhysicsEngine3DistanceConstraint
     window.PendantPhysics.prototype._distanceConstraint = function (a, b, target, preserve) {
         var dx = this.ropeX[b] - this.ropeX[a];
         var dy = this.ropeY[b] - this.ropeY[a];
@@ -1383,10 +1388,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (dist <= 0.0001) return;
 
         var correction = (dist - target) / dist;
-        // 首端是锚点不参与移动，其余平均分摊
         var aWeight = a === 0 ? 0 : 0.5;
         var bWeight = a === 0 ? 1 : 0.5;
-
         var offX = dx * correction, offY = dy * correction;
 
         if (a !== 0) {
@@ -1399,22 +1402,22 @@ document.addEventListener('DOMContentLoaded', () => {
         this.ropeOldX[b] += bx * preserve; this.ropeOldY[b] += by * preserve;
     };
 
-    window.PendantPhysics.prototype._stretchGuardRatio = function () {
-        if (this.segmentLength <= LONG_SEGMENT_REF) return STRETCH_GUARD_RATIO;
-        var s = (this.segmentLength - LONG_SEGMENT_REF) / LONG_SEGMENT_REF;
-        var drop = Math.min(STRETCH_GUARD_RATIO - LONG_SEGMENT_TIGHT, s * 0.05);
+    // exe: GetPhysicsEngine3StretchGuardRatio
+    window.PendantPhysics.prototype._guardRatio = function () {
+        if (this.segLen <= LONG_SEG_REF) return STRETCH_GUARD_RATIO;
+        var s = (this.segLen - LONG_SEG_REF) / LONG_SEG_REF;
+        var drop = Math.min(STRETCH_GUARD_RATIO - LONG_SEG_TIGHT, s * 0.05);
         return STRETCH_GUARD_RATIO - drop;
     };
 
+    // exe: ApplyPhysicsEngine3StretchGuard
     window.PendantPhysics.prototype._stretchGuard = function () {
-        var n = this.ropeX.length;
-        var maxSeg = this.segmentLength * this._stretchGuardRatio();
-
+        var maxSeg = this.segLen * this._guardRatio();
         for (var iter = 0; iter < STRETCH_GUARD_ITER; iter++) {
             var adjusted = false;
             this.ropeX[0] = this.anchorX;
             this.ropeY[0] = this.anchorY;
-            for (var i = 0; i < n - 1; i++) {
+            for (var i = 0; i < this.points - 1; i++) {
                 var dx = this.ropeX[i + 1] - this.ropeX[i];
                 var dy = this.ropeY[i + 1] - this.ropeY[i];
                 if (dx * dx + dy * dy > maxSeg * maxSeg) {
@@ -1426,6 +1429,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // exe: PinPhysicsEngine3Anchor
     window.PendantPhysics.prototype._pinAnchor = function () {
         this.ropeX[0] = this.anchorX;
         this.ropeY[0] = this.anchorY;
@@ -1433,15 +1437,14 @@ document.addEventListener('DOMContentLoaded', () => {
         this.ropeOldY[0] = this.anchorY;
     };
 
+    // exe: ClampPhysicsEngine3PendantExtent
     window.PendantPhysics.prototype._clampExtent = function (idx) {
         var dx = this.ropeX[idx] - this.anchorX;
         var dy = this.ropeY[idx] - this.anchorY;
         if (!isFinite(dx) || !isFinite(dy)) { this.reset(); return; }
-
         var dist = Math.sqrt(dx * dx + dy * dy);
-        var maxDist = Math.max(this.segmentLength, this.restLen * ABSOLUTE_STRETCH_RATIO);
+        var maxDist = Math.max(this.segLen, this.restLen * ABS_STRETCH_RATIO);
         if (dist <= maxDist || dist <= 0.0001) return;
-
         var sx = this.anchorX + dx / dist * maxDist;
         var sy = this.anchorY + dy / dist * maxDist;
         var mx = sx - this.ropeX[idx], my = sy - this.ropeY[idx];
@@ -1449,31 +1452,59 @@ document.addEventListener('DOMContentLoaded', () => {
         this.ropeOldX[idx] += mx; this.ropeOldY[idx] += my;
     };
 
-    // 挂件图左上角应该在的位置（用锚点比例反推）
-    window.PendantPhysics.prototype.pendantTopLeft = function () {
-        var p = this.pendantPos();
-        return { x: p.x - this.anchorRX * this.imageSize, y: p.y - this.anchorRY * this.imageSize };
+    // exe: IsPhysicsEngine3RestCandidate + TryFreezePhysicsEngine3AtRest
+    window.PendantPhysics.prototype._isRestCandidate = function (mx, my) {
+        if (Math.abs(mx) > REST_MOVE_THRESHOLD || Math.abs(my) > REST_MOVE_THRESHOLD) {
+            this.stillSeconds = 0; this.frozenAtRest = false;
+            return false;
+        }
+        var last = this.points - 1;
+        var dx = this.ropeX[last] - this.anchorX;
+        var dy = this.ropeY[last] - this.anchorY;
+        var len = Math.sqrt(dx * dx + dy * dy);
+        if (len <= 0.0001 || dy <= 0) {
+            this.stillSeconds = 0; this.frozenAtRest = false;
+            return false;
+        }
+        var verticalCos = dy / len;
+        var tolCos = Math.cos(REST_ANGLE_TOL * Math.PI / 180);
+        if (verticalCos >= tolCos) return true;
+        this.stillSeconds = 0; this.frozenAtRest = false;
+        return false;
+    };
+
+    window.PendantPhysics.prototype._freeze = function () {
+        this.frozenAtRest = true;
+        this._pinAnchor();
+        for (var i = 0; i < this.points; i++) {
+            this.ropeOldX[i] = this.ropeX[i];
+            this.ropeOldY[i] = this.ropeY[i];
+        }
+        this.prevAnchorX = this.anchorX;
+        this.prevAnchorY = this.anchorY;
+    };
+
+    window.PendantPhysics.prototype._tryFreeze = function (mx, my, dt, last) {
+        if (!this._isRestCandidate(mx, my)) return false;
+        if (this.frozenAtRest) { this._freeze(); return true; }
+        this.stillSeconds += Math.max(0, dt);
+        if (this.stillSeconds < REST_DELAY) return false;
+        this._freeze();
+        return true;
     };
 })();
 
-/* ===== 挂件悬停效果（绳子物理）=====
-   从 exe 的 Verlet 实现移植物理（见 PendantPhysics），这里负责渲染与交互。
 
-   触发方式：
-     · 卡片悬停 → 挂件从鼠标位置吊下来，跟随鼠标摆动
-     · 弹窗打开 → 持续吊着（pin 模式），直到弹窗关闭
-
-   与假光标的分工：
-     · cursor 类卡片 → 鼠标本身变成该作品的光标（隐藏真光标）
-     · pendant/follow/sticker 类卡片 → 真光标保留，挂件挂在鼠标上
-   两类互斥，由卡片的下载 tag 决定走哪条路。
-*/
+/* ===== 挂件渲染：把物理结果画到页面上 ===== */
 (function () {
-    var rig = null;           // 单例：一个页面只需要一套绳子和挂件图
+    var rig = null;
     var activeEl = null;
     var pinned = false;
     var raf = null;
     var lastTime = 0;
+    var mx = 0, my = 0;
+    var generation = 0;   // 异步守卫：fetch 可能比 mouseleave 晚返回
+    var metaCache = {};
 
     function ensureRig() {
         if (rig) return rig;
@@ -1488,21 +1519,29 @@ document.addEventListener('DOMContentLoaded', () => {
         img.alt = '';
         img.setAttribute('aria-hidden', 'true');
         img.style.cssText = 'position:fixed;left:0;top:0;pointer-events:none;' +
-            'z-index:2147483647;display:none;image-rendering:pixelated;will-change:transform;';
+            'z-index:2147483647;display:none;image-rendering:pixelated;' +
+            'transform-origin:0 0;will-change:transform;';
         document.body.appendChild(img);
 
-        rig = { cv: cv, ctx: cv.getContext('2d'), img: img, phys: null, meta: null, k: 1, url: null };
+        rig = { cv: cv, ctx: cv.getContext('2d'), img: img, phys: null, meta: null,
+                shapeScale: 1, offX: 0, offY: 0, cssW: 0, cssH: 0, url: null, dpr: 1 };
         return rig;
     }
 
     function resizeCanvas() {
         if (!rig) return;
-        rig.cv.width = window.innerWidth;
-        rig.cv.height = window.innerHeight;
+        var dpr = Math.max(1, window.devicePixelRatio || 1);
+        rig.dpr = dpr;
+        rig.cv.width = Math.round(window.innerWidth * dpr);
+        rig.cv.height = Math.round(window.innerHeight * dpr);
+        rig.cv.style.width = window.innerWidth + 'px';
+        rig.cv.style.height = window.innerHeight + 'px';
+        // 之后所有绘制都用 CSS 像素坐标
+        rig.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
     window.addEventListener('resize', resizeCanvas);
 
-    // 与光标一致的尺寸规则：源图内容已是 64px，按 dpr 取整数倍放大
+    // 与光标一致的尺寸规则：源图内容为 64px，按 dpr 取整数倍
     function scaleForDpr(dpr) {
         if (dpr <= 1) return 1;
         if (dpr <= 1.5) return 1.5;
@@ -1510,9 +1549,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (dpr <= 3) return 3;
         return Math.round(dpr);
     }
-
-    // 缓存已加载的元数据，避免每次悬停都 fetch
-    var metaCache = {};
 
     function loadMeta(url) {
         if (metaCache[url]) return Promise.resolve(metaCache[url]);
@@ -1529,29 +1565,42 @@ document.addEventListener('DOMContentLoaded', () => {
         var cssW = meta.width * k / dpr;
         var cssH = meta.height * k / dpr;
 
-        // 换挂件图
+        // exe 里挂件一律按「最长边 = _imageSize*2 = 96」绘制，绳长 100 是同一坐标系下的值，
+        // 所以所有作品的绳长/重力都相同。我们的挂件图已把「内容高度」统一到 64px，
+        // 各图因透明边距不同而整体尺寸不同 —— 若按整体尺寸换算，绳长会在 78~116px 之间漂移，
+        // 两个挂件并排就会一长一短。这里改用「内容尺寸」为基准，于是 shapeScale 恒为 1，
+        // 绳长/重力与 exe 的绝对数值一致（100px / 11000）。
+        var shapeScale = (meta.contentHeight || 64) / 64;
+        if (!isFinite(shapeScale) || shapeScale <= 0) shapeScale = 1;
+
         if (r.url !== url) {
             r.url = url;
-            r.meta = meta;
-            r.k = k;
             r.img.src = 'pendant/' + meta.file;
-            r.img.style.width = cssW + 'px';
-            r.img.style.height = cssH + 'px';
+        }
+        r.meta = meta;
+        r.shapeScale = shapeScale;
+        r.cssW = cssW;
+        r.cssH = cssH;
+        r.img.style.width = cssW + 'px';
+        r.img.style.height = cssH + 'px';
+
+        // 挂点相对鼠标的偏移（右下）。exe: ratio * BaseCursorSize
+        r.offX = (meta.cursorAnchorX == null ? 0.594 : meta.cursorAnchorX) * window.PENDANT_BASE_CURSOR_SIZE;
+        r.offY = (meta.cursorAnchorY == null ? 0.813 : meta.cursorAnchorY) * window.PENDANT_BASE_CURSOR_SIZE;
+
+        if (!r.phys) {
             r.phys = new window.PendantPhysics({
-                imageSize: cssW,
-                ropeLength: meta.ropeLength,
+                imageSize: meta.imageSize || BASE_IMAGE_SIZE,
+                // 绳长与重力同时按 shapeScale 换算，摆动周期与形状和 exe 保持一致
+                restLen: meta.ropeLength * shapeScale,
+                gravity: meta.gravity * shapeScale,
                 ropeSegments: meta.ropeSegments,
-                gravity: meta.gravity,
-                anchorX: meta.anchorX,
-                anchorY: meta.anchorY,
             });
-            r.phys.setAnchor(mx, my, true);
+            r.phys.setAnchor(mx + r.offX, my + r.offY, true);
         } else {
-            // 同一挂件重复显示：只更新尺寸（dpr 可能变了）
-            r.meta = meta; r.k = k;
-            r.img.style.width = cssW + 'px';
-            r.img.style.height = cssH + 'px';
-            if (r.phys) r.phys.imageSize = cssW;
+            r.phys.restLen = meta.ropeLength * shapeScale;
+            r.phys.gravity = meta.gravity * shapeScale;
+            r.phys.segLen = r.phys.restLen / r.phys.segments;
         }
 
         resizeCanvas();
@@ -1566,30 +1615,49 @@ document.addEventListener('DOMContentLoaded', () => {
         var dt = Math.min(0.05, (now - lastTime) / 1000);
         lastTime = now;
 
-        rig.phys.setAnchor(mx, my);
+        rig.phys.setAnchor(mx + rig.offX, my + rig.offY);
         rig.phys.advance(dt);
 
-        // 挂件位置：锚点比例决定图相对挂点的偏移
-        var tl = rig.phys.pendantTopLeft();
-        rig.img.style.transform = 'translate(' + tl.x + 'px,' + tl.y + 'px)';
+        var meta = rig.meta;
+        var pose = rig.phys.pendantPose();
 
-        // 画绳子
+        // 挂件：先把锚点比例对应的那个点移到绳末端，再按绳末端角度旋转
+        //   exe: Translate(pendantX,pendantY) → Rotate(angle) → DrawImage(-w/2-ax*w, -h/2-ay*h)
+        //   等价于 translate(x,y) rotate(a) translate(-ax*w, -ay*h)
+        var ax = (meta.anchorX == null ? 0.5 : meta.anchorX) * rig.cssW;
+        var ay = (meta.anchorY == null ? 0.5 : meta.anchorY) * rig.cssH;
+        rig.img.style.transform =
+            'translate(' + pose.x + 'px,' + pose.y + 'px) ' +
+            'rotate(' + pose.angle + 'rad) ' +
+            'translate(' + (-ax) + 'px,' + (-ay) + 'px)';
+
+        // 绳子
         var ctx = rig.ctx, nodes = rig.phys.nodes();
         ctx.clearRect(0, 0, rig.cv.width, rig.cv.height);
-        ctx.strokeStyle = (rig.meta && rig.meta.ropeColor) || '#464646';
-        var dpr = Math.max(1, window.devicePixelRatio || 1);
-        ctx.lineWidth = Math.max(1, 1.5 * rig.k / dpr);
+        ctx.strokeStyle = (meta.ropeColor || '#464646');
+        ctx.lineWidth = Math.max(1, 3 * rig.shapeScale);   // exe: Pen(color, 3)
         ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
         ctx.beginPath();
         ctx.moveTo(nodes[0].x, nodes[0].y);
-        for (var i = 1; i < nodes.length; i++) ctx.lineTo(nodes[i].x, nodes[i].y);
+        if (nodes.length >= 4) {
+            // exe 用 DrawCurve(tension 0.45)；这里用中点二次曲线近似，观感一致
+            for (var i = 1; i < nodes.length - 1; i++) {
+                var midX = (nodes[i].x + nodes[i + 1].x) / 2;
+                var midY = (nodes[i].y + nodes[i + 1].y) / 2;
+                ctx.quadraticCurveTo(nodes[i].x, nodes[i].y, midX, midY);
+            }
+            ctx.lineTo(nodes[nodes.length - 1].x, nodes[nodes.length - 1].y);
+        } else {
+            for (var j = 1; j < nodes.length; j++) ctx.lineTo(nodes[j].x, nodes[j].y);
+        }
         ctx.stroke();
 
         raf = requestAnimationFrame(loop);
     }
 
     function stop() {
-        generation++;   // 作废所有在途的异步显示请求
+        generation++;
         if (raf) { cancelAnimationFrame(raf); raf = null; }
         if (rig) {
             rig.img.style.display = 'none';
@@ -1598,17 +1666,8 @@ document.addEventListener('DOMContentLoaded', () => {
         activeEl = null;
     }
 
-    var mx = 0, my = 0;
-    // 异步守卫：pendantShow 里的 fetch 可能比 mouseleave 晚返回，
-    // 若不校验就会把已经收起的挂件重新唤醒（实测出现过这个 bug）。
-    var generation = 0;
-
     window.addEventListener('mousemove', function (e) {
         mx = e.clientX; my = e.clientY;
-        // 首次显示前锚点还没定位，这里兜底更新
-        if (activeEl && rig && rig.phys && rig.phys.anchorX === 0 && rig.phys.anchorY === 0) {
-            rig.phys.setAnchor(mx, my, true);
-        }
     }, { passive: true });
 
     window.pendantShow = function (url, el) {
@@ -1616,20 +1675,18 @@ document.addEventListener('DOMContentLoaded', () => {
         var gen = ++generation;
         loadMeta(url).then(function (meta) {
             if (!meta) return;
-            // 期间用户已经移开或换了别的卡片 → 放弃这次显示
-            if (gen !== generation) return;
+            if (gen !== generation) return;     // 已经移开或换了卡片
             if (mx === 0 && my === 0) { mx = window.innerWidth / 2; my = window.innerHeight / 2; }
             start(url, meta, el);
         });
     };
 
     window.pendantHide = function (el) {
-        if (pinned) return;              // 钉住期间不隐藏
+        if (pinned) return;
         if (el && activeEl && activeEl !== el) return;
         stop();
     };
 
-    // 弹窗用：持续吊着直到弹窗关闭
     var pinObserver = null;
     window.pendantPin = function (url, el, guard) {
         pinned = true;
@@ -1651,19 +1708,24 @@ document.addEventListener('DOMContentLoaded', () => {
         stop();
     };
 
-    // 兜底：鼠标移出文档 / 窗口失焦 → 收起（钉住时除外）
     document.addEventListener('mouseleave', function () { if (!pinned) stop(); });
     window.addEventListener('blur', function () { if (!pinned) stop(); });
 
-    // 诊断
     window.__pendantInfo = function () {
+        var pose = rig && rig.phys ? rig.phys.pendantPose() : null;
         return {
             active: !!activeEl,
             pinned: pinned,
             url: rig ? rig.url : null,
             display: rig ? getComputedStyle(rig.img).display : null,
             restLen: rig && rig.phys ? rig.phys.restLen : null,
-            pos: rig && rig.phys ? rig.phys.pendantPos() : null,
+            segments: rig && rig.phys ? rig.phys.segments : null,
+            points: rig && rig.phys ? rig.phys.points : null,
+            shapeScale: rig ? rig.shapeScale : null,
+            offset: rig ? [Math.round(rig.offX), Math.round(rig.offY)] : null,
+            pose: pose ? { x: Math.round(pose.x), y: Math.round(pose.y),
+                           angleDeg: +(pose.angle * 180 / Math.PI).toFixed(1) } : null,
+            frozen: rig && rig.phys ? rig.phys.frozenAtRest : null,
             imgLoaded: rig ? rig.img.naturalWidth > 0 : false,
         };
     };

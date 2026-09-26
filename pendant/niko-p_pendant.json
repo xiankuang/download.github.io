@@ -15,5 +15,9 @@
   "cursorAnchorX": 0.5,
   "cursorAnchorY": 0.46875,
   "source": "niko3.0.scpm",
-  "file": "niko-p_pendant.gif"
+  "file": "niko-p_pendant.gif",
+  "ropeLengthManifest": 100,
+  "ropeLengthSource": "manifest",
+  "pendulumSegments": 5,
+  "imageSize": 48
 }

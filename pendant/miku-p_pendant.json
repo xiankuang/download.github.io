@@ -15,5 +15,9 @@
   "cursorAnchorX": 0.5,
   "cursorAnchorY": 0.96875,
   "source": "初音未来挂件3.91_1.scpm",
-  "file": "miku-p_pendant.gif"
+  "file": "miku-p_pendant.gif",
+  "ropeLengthManifest": 100,
+  "ropeLengthSource": "texture",
+  "pendulumSegments": 5,
+  "imageSize": 48
 }

@@ -15,5 +15,9 @@
   "cursorAnchorX": 0.59375,
   "cursorAnchorY": 0.8125,
   "source": "耄耋哈气鼠标贴纸_5.scpm",
-  "file": "maodie-p_pendant.png"
+  "file": "maodie-p_pendant.png",
+  "ropeLengthManifest": 100,
+  "ropeLengthSource": "manifest",
+  "pendulumSegments": 7,
+  "imageSize": 48
 }

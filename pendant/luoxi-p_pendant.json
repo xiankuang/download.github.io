@@ -15,5 +15,9 @@
   "cursorAnchorX": 0.59375,
   "cursorAnchorY": 0.8125,
   "source": "洛茜挂件_2.scpm",
-  "file": "luoxi-p_pendant.gif"
+  "file": "luoxi-p_pendant.gif",
+  "ropeLengthManifest": 100,
+  "ropeLengthSource": "manifest",
+  "pendulumSegments": 7,
+  "imageSize": 48
 }
