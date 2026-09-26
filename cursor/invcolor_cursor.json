@@ -1,0 +1,15 @@
+{
+  "width": 16,
+  "height": 16,
+  "nativeWidth": 16,
+  "nativeHeight": 16,
+  "hotspot": [
+    0,
+    0
+  ],
+  "frameCount": 11,
+  "frameMs": 83,
+  "loop": true,
+  "scaled": false,
+  "source": "反色动态像素光标.zip (Normal.ani)"
+}

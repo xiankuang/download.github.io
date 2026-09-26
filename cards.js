@@ -360,6 +360,7 @@ const resources = [
     },
     {
         id: 'miku',
+        cursor: './cursor/miku_cursor.gif',
         title: '初音未来光标',
         description: '超级可爱！',
         image: './icon/初音未来光标宣传2.gif',
@@ -385,6 +386,7 @@ const resources = [
     },
     {
         id: 'niko2',
+        cursor: './cursor/niko2_cursor.gif',
         title: 'oneshot niko 光标',
         description: '不敢用怕只能用一次',
         image: './icon/niko光标宣传2.gif',
@@ -397,6 +399,7 @@ const resources = [
     },
     {
         id: 'niko1',
+        cursor: './cursor/niko1_cursor.gif',
         title: 'oneshot niko 光标（旧）',
         description: '不敢用怕只能用一次',
         image: './icon/niko1.0光标宣传2.gif',
@@ -422,6 +425,7 @@ const resources = [
     },
     {
         id: 'gifcursor',
+        cursor: './cursor/pixelanim_cursor.gif',
         title: '动态简单像素光标',
         description: '最经典的光标',
         image: './icon/动态简单像素光标宣传.gif',
@@ -434,6 +438,7 @@ const resources = [
     },
     {
         id: 'ungifcursor',
+        cursor: './cursor/invcolor_cursor.gif',
         title: '反色动态简单像素光标',
         description: '最经典的光标的反色',
         image: './icon/反色动态简单像素光标.gif',

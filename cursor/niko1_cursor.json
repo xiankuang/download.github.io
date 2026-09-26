@@ -1,0 +1,15 @@
+{
+  "width": 32,
+  "height": 32,
+  "nativeWidth": 32,
+  "nativeHeight": 32,
+  "hotspot": [
+    2,
+    1
+  ],
+  "frameCount": 6,
+  "frameMs": 100,
+  "loop": true,
+  "scaled": false,
+  "source": "niko1.0像素光标.zip (Normal.ani)"
+}
