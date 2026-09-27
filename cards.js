@@ -99,6 +99,7 @@ const resources = [
         links: {
             quark: 'https://pan.quark.cn/s/606e427622ae',
             lanzou: 'https://wwbny.lanzoue.com/b00l312i7e密码:9tba',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/pendant/teto-p_teto.exe',
         }
     },
 

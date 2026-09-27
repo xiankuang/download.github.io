@@ -1,0 +1,23 @@
+{
+  "width": 96,
+  "height": 96,
+  "contentWidth": 68,
+  "contentHeight": 64,
+  "originalWidth": 96,
+  "originalHeight": 96,
+  "projectType": "Pendant",
+  "ropeLength": 100.0,
+  "ropeSegments": 6,
+  "ropeColor": "#464646",
+  "gravity": 11000.0,
+  "anchorX": 0.4375,
+  "anchorY": 0.375,
+  "cursorAnchorX": 0.5625,
+  "cursorAnchorY": 0.71875,
+  "source": "teto挂件.scpm",
+  "file": "teto-p_pendant.gif",
+  "ropeLengthManifest": 100.0,
+  "ropeLengthSource": "manifest",
+  "pendulumSegments": 7,
+  "imageSize": 48.0
+}

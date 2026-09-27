@@ -1,0 +1,23 @@
+{
+  "width": 93,
+  "height": 93,
+  "contentWidth": 60,
+  "contentHeight": 64,
+  "originalWidth": 48,
+  "originalHeight": 48,
+  "projectType": "Pendant",
+  "ropeLength": 100.0,
+  "ropeSegments": 6,
+  "ropeColor": "#464646",
+  "gravity": 11000.0,
+  "anchorX": 0.5,
+  "anchorY": 0.5,
+  "cursorAnchorX": 0.59375,
+  "cursorAnchorY": 0.8125,
+  "source": "小红帽挂件.scpm",
+  "file": "xiaohongmao-p_pendant.gif",
+  "ropeLengthManifest": 100.0,
+  "ropeLengthSource": "manifest",
+  "pendulumSegments": 7,
+  "imageSize": 48.0
+}
