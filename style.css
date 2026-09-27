@@ -383,6 +383,13 @@ body {
     z-index: 1001;
     /* 在遮罩上方 */
     animation: fadeInUp 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+    /* 弹窗里有下载项 + 扩展包推广，内容可能比屏幕高。
+       矮屏（如 1024x560）下不给上限就会被上下裁掉、扩展包完全看不到。
+       这里限制高度并让内部滚动，保证任何屏幕都能看全。 */
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    /* 内容超高时滚动条贴着圆角，留点内边距更好看 */
+    scrollbar-width: thin;
 }
 
 /* 关闭按钮 */

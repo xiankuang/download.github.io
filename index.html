@@ -22,6 +22,21 @@
             <div class="download-area" id="downloadArea">
                 <!-- 下载项会通过JS动态生成 -->
             </div>
+
+            <!-- ================================================================
+                 扩展包推广区
+                 内容由 cards.js 按当前卡片动态生成（文案跟随浏览器语言）。
+                 只有该卡片 links 里写了 bili / kofi 时才显示，否则整块隐藏。
+                 ================================================================ -->
+            <div class="extpack" id="extpack" style="display:none;">
+                <div class="extpack-head">
+                    <span class="extpack-title" id="extpackTitle"></span>
+                    <span class="extpack-tag" id="extpackTag"></span>
+                </div>
+                <p class="extpack-desc" id="extpackDesc1"></p>
+                <p class="extpack-desc" id="extpackDesc2"></p>
+                <div class="extpack-btns" id="extpackBtns"></div>
+            </div>
         </div>
     </div>
     <div class="popup-overlay hidden-overlay" id="hiddenOverlay">
@@ -85,7 +100,7 @@
     </div>
 
     <!-- 只引入合并后的文件 -->
-    <script src="cards.js?v=20260926-1915"></script>
+    <script src="cards.js?v=20260927-2307"></script>
 </body>
 
 </html>

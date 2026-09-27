@@ -76,3 +76,98 @@
     background-color: #3367d6;
     /*  hover时加深 */
 }
+
+/* ============================================================================
+   扩展包推广区（弹窗下方）
+   和上面的 .download-item 保持同一套视觉语言：浅灰底 + 圆角 + 细边框。
+   用左侧一条竖线把它和下载区区分开，避免看起来像"又一个下载项"。
+   ============================================================================ */
+.extpack {
+    margin-top: 4px;
+    padding: 12px 14px;
+    background-color: #fafbfc;
+    border: 1px solid #e8eaed;
+    border-left: 4px solid #ffb02e;
+    /* 橙色竖线：一眼看出这是推广区，不是下载项 */
+    border-radius: 8px;
+}
+
+.extpack-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.extpack-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+/* 「可选」小标签 */
+.extpack-tag {
+    font-size: 11px;
+    line-height: 1;
+    padding: 3px 6px;
+    color: #8a6d1f;
+    background-color: #fff4dd;
+    border: 1px solid #ffe0a3;
+    border-radius: 4px;
+}
+
+.extpack-desc {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #5f6368;
+    margin: 0 0 4px;
+}
+
+.extpack-desc b {
+    color: #333;
+    font-weight: 600;
+}
+
+.extpack-btns {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* 两个按钮平分宽度，窄屏自动换行 */
+.extpack-btn {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 9px 12px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #dadce0;
+    border-radius: 7px;
+    text-decoration: none;
+    transition: border-color 0.2s, background-color 0.2s, box-shadow 0.2s;
+}
+
+.extpack-btn:hover {
+    background-color: #f1f3f4;
+    border-color: #c4c7cb;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.extpack-btn img {
+    height: 1.15em;
+    width: auto;
+    flex-shrink: 0;
+}
+
+/* 窄屏：按钮竖排，避免文字被挤断 */
+@media (max-width: 420px) {
+    .extpack-btns {
+        flex-direction: column;
+    }
+}

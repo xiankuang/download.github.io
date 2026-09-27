@@ -13,11 +13,22 @@ const resources = [
         }
     },
     {
+        id: 'xiaohongmao',
+        title: '小红帽',
+        description: 'awa',
+        image: './icon/xiaohongmao_宣传.gif',
+        links: {
+            quark: 'https://pan.quark.cn/s/42085299dac7',
+            lanzou: 'https://wwbny.lanzoue.com/b00l32nc5i',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/pendant/xiaohongmao_main.exe',
+        }
+    },
+    {
         id: 'xingjianya2.1',
         title: '星见雅光标',
         description: '可爱镍',
         image: './icon/xingjianya2_光标_宣传.webp',
-        cursor: './cursor/miyabi_cursor.gif',
+        cursor: './cursor/xingjianya2_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/2f459d07c4f1',
             lanzou: 'https://wwbny.lanzoue.com/b00l32nc4h',
@@ -451,6 +462,133 @@ const resources = [
     }
 ];
 
+// ============================================================================
+// 扩展包推广文案（多语言）
+//
+// 什么时候显示：该卡片的 links 里有 bili / kofi 才显示（见 renderExtPack）。
+// 用哪个语言：看浏览器语言自动选，不支持的语言回落到英文。
+//
+// 想改文案就改这里；想加语言就往 EXT_PACK_I18N 里加一条，键名用小写语言码。
+// {title} 之类不在这里替换 —— 只做纯文本，避免注入。
+// ============================================================================
+const EXT_PACK_I18N = {
+    'zh-cn': {
+        title: '扩展包', tag: '可选',
+        desc1: '免费版已经兼容<b>主要的光标</b>；扩展包补齐剩下那些<b>基本不影响观感</b>的组件。',
+        desc2: '购买扩展包，也是<b>支持线框（作者）持续创作</b>。',
+        bili: 'B站工坊', kofi: 'Ko-fi',
+    },
+    'zh-tw': {
+        title: '擴充包', tag: '選購',
+        desc1: '免費版已經相容<b>主要的光標</b>；擴充包補齊剩下那些<b>基本不影響觀感</b>的元件。',
+        desc2: '購買擴充包，也是<b>支持線框（作者）持續創作</b>。',
+        bili: 'B站工坊', kofi: 'Ko-fi',
+    },
+    en: {
+        title: 'Extension Pack', tag: 'Optional',
+        desc1: 'The free version already covers <b>the main cursors</b>. ' +
+               'The extension pack fills in the remaining bits that <b>barely affect the look</b>.',
+        desc2: 'Buying it also <b>supports 线框 (the author)</b> in making more.',
+        bili: 'Bilibili Shop', kofi: 'Ko-fi',
+    },
+    ja: {
+        title: '拡張パック', tag: 'オプション',
+        desc1: '無料版でも<b>主要なカーソル</b>は対応済みです。拡張パックは、' +
+               '残りの<b>見た目にほとんど影響しない</b>パーツを補います。',
+        desc2: 'ご購入は<b>線框（作者）の制作支援</b>にもなります。',
+        bili: 'Bilibiliショップ', kofi: 'Ko-fi',
+    },
+    ko: {
+        title: '확장 팩', tag: '선택',
+        desc1: '무료 버전도 <b>주요 커서</b>는 지원합니다. 확장 팩은 ' +
+               '<b>보기에 거의 영향이 없는</b> 나머지 부분을 채워 줍니다.',
+        desc2: '구매하시면 <b>线框(제작자)의 지속적인 제작</b>을 응원하게 됩니다.',
+        bili: 'Bilibili 상점', kofi: 'Ko-fi',
+    },
+    ru: {
+        title: 'Дополнение', tag: 'Опционально',
+        desc1: 'Бесплатная версия уже поддерживает <b>основные курсоры</b>. ' +
+               'Дополнение добавляет остальные части, которые <b>почти не влияют на вид</b>.',
+        desc2: 'Покупка также <b>поддерживает 线框 (автора)</b> в создании нового.',
+        bili: 'Магазин Bilibili', kofi: 'Ko-fi',
+    },
+    es: {
+        title: 'Paquete extra', tag: 'Opcional',
+        desc1: 'La versión gratuita ya incluye <b>los cursores principales</b>. ' +
+               'El paquete extra añade el resto, que <b>apenas afecta al aspecto</b>.',
+        desc2: 'Comprarlo también <b>apoya a 线框 (el autor)</b> a seguir creando.',
+        bili: 'Tienda de Bilibili', kofi: 'Ko-fi',
+    },
+    fr: {
+        title: 'Pack d’extension', tag: 'Optionnel',
+        desc1: 'La version gratuite couvre déjà <b>les curseurs principaux</b>. ' +
+               'Le pack complète le reste, qui <b>n’affecte presque pas l’apparence</b>.',
+        desc2: 'L’acheter <b>soutient aussi 线框 (l’auteur)</b> dans la création.',
+        bili: 'Boutique Bilibili', kofi: 'Ko-fi',
+    },
+    de: {
+        title: 'Erweiterungspaket', tag: 'Optional',
+        desc1: 'Die kostenlose Version deckt bereits <b>die wichtigsten Cursor</b> ab. ' +
+               'Das Paket ergänzt den Rest, der <b>kaum sichtbar ist</b>.',
+        desc2: 'Der Kauf <b>unterstützt außerdem 线框 (den Autor)</b> beim Weitermachen.',
+        bili: 'Bilibili-Shop', kofi: 'Ko-fi',
+    },
+    pt: {
+        title: 'Pacote extra', tag: 'Opcional',
+        desc1: 'A versão gratuita já cobre <b>os cursores principais</b>. ' +
+               'O pacote extra completa o resto, que <b>quase não afeta a aparência</b>.',
+        desc2: 'Comprá-lo também <b>apoia 线框 (o autor)</b> a continuar criando.',
+        bili: 'Loja do Bilibili', kofi: 'Ko-fi',
+    },
+    it: {
+        title: 'Pacchetto extra', tag: 'Opzionale',
+        desc1: 'La versione gratuita copre già <b>i cursori principali</b>. ' +
+               'Il pacchetto completa il resto, che <b>incide appena sull’aspetto</b>.',
+        desc2: 'Acquistarlo <b>sostiene 线框 (l’autore)</b> nel continuare a creare.',
+        bili: 'Negozio Bilibili', kofi: 'Ko-fi',
+    },
+    vi: {
+        title: 'Gói mở rộng', tag: 'Tùy chọn',
+        desc1: 'Bản miễn phí đã hỗ trợ <b>các con trỏ chính</b>. ' +
+               'Gói mở rộng bổ sung phần còn lại, <b>hầu như không ảnh hưởng ngoại hình</b>.',
+        desc2: 'Mua gói cũng là <b>ủng hộ 线框 (tác giả)</b> tiếp tục sáng tác.',
+        bili: 'Shop Bilibili', kofi: 'Ko-fi',
+    },
+    th: {
+        title: 'แพ็กเสริม', tag: 'ตัวเลือก',
+        desc1: 'เวอร์ชันฟรีรองรับ<b>เคอร์เซอร์หลัก</b>แล้ว แพ็กเสริมจะเติมส่วนที่เหลือ ' +
+               'ซึ่ง<b>แทบไม่มีผลต่อหน้าตา</b>',
+        desc2: 'การซื้อแพ็กยัง<b>สนับสนุนให้ 线框 (ผู้สร้าง) ผลิตต่อ</b>',
+        bili: 'ร้าน Bilibili', kofi: 'Ko-fi',
+    },
+    id: {
+        title: 'Paket Ekstra', tag: 'Opsional',
+        desc1: 'Versi gratis sudah mendukung <b>kursor utama</b>. ' +
+               'Paket ekstra melengkapi sisanya yang <b>hampir tidak memengaruhi tampilan</b>.',
+        desc2: 'Membelinya juga <b>mendukung 线框 (penulis)</b> untuk terus berkarya.',
+        bili: 'Toko Bilibili', kofi: 'Ko-fi',
+    },
+};
+
+// 选文案：优先精确匹配语言码，其次只匹配主语言（如 zh-HK → zh），最后回落英文
+function pickExtPackText() {
+    const raw = (navigator.languages && navigator.languages[0]) || navigator.language || 'en';
+    const full = String(raw).toLowerCase();
+    const main = full.split('-')[0];
+    if (EXT_PACK_I18N[full]) return EXT_PACK_I18N[full];
+
+    // 中文要分清简繁：zh 本身、zh-Hans、zh-SG 都算简体；
+    // zh-Hant / zh-HK / zh-MO / zh-TW 算繁体。
+    // 不能直接靠 EXT_PACK_I18N['zh'] 兜底 —— 表里没有 'zh' 这个键，
+    // 不特判的话 zh-Hans-CN、zh、zh-SG 会一路掉到英文。
+    if (main === 'zh') {
+        return /hant|tw|hk|mo/.test(full) ? EXT_PACK_I18N['zh-tw'] : EXT_PACK_I18N['zh-cn'];
+    }
+
+    if (EXT_PACK_I18N[main]) return EXT_PACK_I18N[main];
+    return EXT_PACK_I18N.en;
+}
+
 // 页面加载完成后执行
 document.addEventListener('DOMContentLoaded', () => {
     // 获取DOM元素
@@ -466,6 +604,75 @@ document.addEventListener('DOMContentLoaded', () => {
     const hiddenPopupTitle = document.getElementById('hiddenPopupTitle');
     const hiddenStatus = document.getElementById('hiddenStatus');
     const hiddenCardGrid = document.getElementById('hiddenCardGrid');
+    const extpackEl = document.getElementById('extpack');
+    const extpackTitleEl = document.getElementById('extpackTitle');
+    const extpackTagEl = document.getElementById('extpackTag');
+    const extpackDesc1El = document.getElementById('extpackDesc1');
+    const extpackDesc2El = document.getElementById('extpackDesc2');
+    const extpackBtnsEl = document.getElementById('extpackBtns');
+
+    // ========================================================================
+    // 扩展包区渲染
+    //
+    // 只认 links 里的这两个键（写成别的名字不会触发）：
+    //   bili —— B站工坊链接
+    //   kofi —— Ko-fi 链接
+    // 两个都没有 → 整块隐藏，不占位置。
+    //
+    // 注意：这两个键不能被当成下载项！下面的下载循环会把 links 里
+    // 每个键渲染成一个「下载」按钮，还去找 downloadicon/<键>.png 图标。
+    // 所以 EXT_PACK_KEYS 在下载区里被跳过。
+    // ========================================================================
+    const EXT_PACK_KEYS = ['bili', 'kofi'];
+    const EXT_PACK_ICON = { bili: './biblil.png', kofi: './ko-fi.png' };
+
+    const renderExtPack = (item) => {
+        if (!extpackEl) return;
+
+        const links = (item && item.links) || {};
+        const has = EXT_PACK_KEYS.filter(k => typeof links[k] === 'string' && links[k].trim());
+
+        // 没写扩展包链接 → 整块隐藏
+        if (!has.length) {
+            extpackEl.style.display = 'none';
+            extpackBtnsEl.innerHTML = '';
+            return;
+        }
+
+        const t = pickExtPackText();
+        extpackTitleEl.textContent = t.title;
+        extpackTagEl.textContent = t.tag;
+        // 文案里带 <b>，是作者自己写在 I18N 表里的固定字符串，不含用户输入
+        extpackDesc1El.innerHTML = t.desc1;
+        extpackDesc2El.innerHTML = t.desc2;
+
+        extpackBtnsEl.innerHTML = '';
+        has.forEach((key) => {
+            const url = links[key].trim();
+            const a = document.createElement('a');
+            a.className = 'extpack-btn';
+            a.target = '_blank';
+            a.rel = 'noopener noreferrer';
+            // 只放行 http/https，防止作者误填 javascript: 之类
+            a.href = /^https?:\/\//i.test(url) ? url : '#';
+
+            const img = document.createElement('img');
+            img.src = EXT_PACK_ICON[key];
+            img.alt = '';
+            a.appendChild(img);
+
+            const span = document.createElement('span');
+            span.textContent = t[key] || key;
+            a.appendChild(span);
+
+            if (a.getAttribute('href') === '#') {
+                a.addEventListener('click', (e) => e.preventDefault());
+            }
+            extpackBtnsEl.appendChild(a);
+        });
+
+        extpackEl.style.display = '';
+    };
 
     // 更新卡片数量显示
     if (cardCountEl) {
@@ -585,12 +792,23 @@ document.addEventListener('DOMContentLoaded', () => {
             downloadArea.innerHTML = ''; // 清空历史内容
             downloadArea.style.display = 'none'; // 默认隐藏
 
+            // 扩展包推广区：只有这张卡写了 bili / kofi 才显示
+            renderExtPack(item);
+
+            // 下载项 = links 里除了扩展包键（bili/kofi）之外的所有键。
+            // 不排除的话，kofi 会被当成一个下载源，还会去找不存在的
+            // downloadicon/kofi.png，弹窗里就多一个坏掉的「下载」按钮。
+            const downloadKeys = item.links && typeof item.links === 'object'
+                ? Object.keys(item.links).filter(k => EXT_PACK_KEYS.indexOf(k) < 0)
+                : [];
+
             // 检查是否有下载链接
-            if (item.links && typeof item.links === 'object' && Object.keys(item.links).length > 0) {
+            if (downloadKeys.length > 0) {
                 downloadArea.style.display = 'flex'; // 显示下载区域
 
                 // 遍历所有下载链接，生成下载项
-                Object.entries(item.links).forEach(([type, url]) => {
+                downloadKeys.forEach((type) => {
+                    const url = item.links[type];
                     const iconPath = `./downloadicon/${type}.png`;
                     const displayName = '下载';
 
