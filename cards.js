@@ -33,6 +33,7 @@ const resources = [
             quark: 'https://pan.quark.cn/s/2f459d07c4f1',
             lanzou: 'https://wwbny.lanzoue.com/b00l32nc4h',
             github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/xingjianya2_6.exe',
+            bili: 'https://gf.bilibili.com/item/detail/1109887056',
         }
     },
     {
@@ -55,6 +56,8 @@ const resources = [
             quark: 'https://pan.quark.cn/s/7a8d82d9d58e',
             lanzou: 'https://wwbny.lanzoue.com/b00l33k7fg',
             github: 'https://github.com/xiankuang/all-cursor-install/releases/download/pendant/luoxi-p_main_2.exe',
+            bili: 'https://gf.bilibili.com/item/detail/1109857056',
+            kofi: 'https://ko-fi.com/s/e88a983c34',
         }
     }, 
     {
@@ -66,6 +69,8 @@ const resources = [
             quark: 'https://pan.quark.cn/s/0e72d673eaea',
             lanzou: 'https://wwbny.lanzoue.com/b00l33g4xc',
             github: 'https://github.com/xiankuang/all-cursor-install/releases/download/follow/yileina-f_main_2.exe',
+            bili: 'https://gf.bilibili.com/item/detail/1109839056',
+            kofi: 'https://ko-fi.com/s/bfa467afe0',
         }
     }, 
     {
@@ -78,6 +83,8 @@ const resources = [
             quark: 'https://pan.quark.cn/s/1f548ba2ee6e',
             lanzou: 'https://wwpy.lanzoue.com/b00l2e7bah',
             github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/konata_6.exe',
+            kofi: 'https://ko-fi.com/s/f4ff69ec1b',
+            bili: 'https://gf.bilibili.com/item/detail/1109826056',
         }
     }, 
      {
