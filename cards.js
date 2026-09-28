@@ -34,6 +34,7 @@ const resources = [
             lanzou: 'https://wwbny.lanzoue.com/b00l32nc4h',
             github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/xingjianya2_6.exe',
             bili: 'https://gf.bilibili.com/item/detail/1109887056',
+            kofi: 'https://ko-fi.com/s/c56ce69333',
         }
     },
     {
