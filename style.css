@@ -139,7 +139,9 @@ body {
 .card1-buttons {
     white-space: nowrap;
     display: flex;
-    gap: 15px;
+    flex-wrap: wrap;
+    /* 加上 X / YouTube 后共有 5 个按钮，260px 宽一行放不下 —— 让它自动换行 */
+    gap: 8px;
     /* 按钮之间的间距 */
 
     /* 窄屏时自动换行 */
@@ -153,19 +155,20 @@ body {
     font-weight: 600;
     white-space: nowrap;
     /* 核心：强制不换行，内容在一行显示 */
-    width: 60px;
-    /* 图标宽度（数值越小越窄，建议12-18px） */
+    width: auto;
+    /* 宽度跟着内容走。原来是 width:60px + padding:10px 40px，
+       border-box 下内容盒被压成 0，文字一直溢出按钮 —— 短标签看不出来，
+       「YouTube」就会明显露到药丸外面。改成 auto 后每个按钮都刚好包住内容。 */
+    min-width: 0;
     height: 30px;
-    /* 高度与宽度一致，避免拉伸变形 */
     align-items: center;
     /* 垂直居中（图标和文字对齐） */
     justify-content: center;
     /* 水平居中（整个内容在按钮内居中） */
     display: flex;
-    align-items: center;
     gap: 5px;
     /* 图标与文字间距 */
-    padding: 10px 40px;
+    padding: 0 12px;
     background-color: #ffffff;
     color: rgb(0, 0, 0);
     border-radius: 30px;
@@ -518,7 +521,9 @@ body {
 @media (max-aspect-ratio: 1/1) {
     .card1 {
         width: 100%;
-        height: 260px;
+        /* 原来是固定 height:260px。加了 X / YouTube 后按钮变两行，
+           内容高约 286px，会被裁掉一截 —— 改成 min-height 让它能撑开。 */
+        min-height: 260px;
 
     }
 

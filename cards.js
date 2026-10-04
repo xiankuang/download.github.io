@@ -13,6 +13,18 @@ const resources = [
         }
     },
     {
+        id: 'jiuhu',
+        title: '酒狐光标',
+        description: '',
+        image: './icon/jiuhu_宣传.gif',
+        cursor: './cursor/jiuhu_cursor.gif',
+        links: {
+            quark: 'https://pan.quark.cn/s/46ae40a7376f',
+            lanzou: 'https://wwbny.lanzoue.com/b00l32nc6j',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/jiuhu_main.exe',
+        }
+    },
+    {
         id: 'xiaohongmao',
         title: '小红帽',
         description: 'awa',

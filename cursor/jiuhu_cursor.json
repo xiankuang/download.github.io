@@ -1,0 +1,10 @@
+{
+  "width": 48,
+  "height": 48,
+  "hotspot": [
+    2,
+    0
+  ],
+  "frameCount": 10,
+  "frameMs": 100
+}
