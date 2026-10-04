@@ -350,6 +350,30 @@ body {
 
 }
 
+/* ===== 跳转卡片：整张卡点开就是别的网站 ===== */
+/* cards.js 里那张卡的数据带 link 字段时，会自动加上 .card2-link */
+.card2-link {
+    cursor: pointer;
+    /* 把图片四角裁进圆角里 */
+    overflow: hidden;
+    border-color: rgba(255, 203, 92, 0.9);
+    /* 金色边框缓慢呼吸 */
+    animation: cardLinkGlow 3.6s ease-in-out infinite;
+}
+
+.card2-link:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+    transform: translateY(-3px);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* 系统开了「减少动态效果」→ 边框不再呼吸 */
+@media (prefers-reduced-motion: reduce) {
+    .card2-link {
+        animation: none;
+    }
+}
+
 /* 弹窗背景遮罩（全屏，半透明，模糊背景） */
 .popup-overlay {
     position: fixed;

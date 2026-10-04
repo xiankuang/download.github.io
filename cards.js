@@ -13,9 +13,19 @@ const resources = [
         }
     },
     {
+        id: 'wildfire',
+        title: '我的世界野火整合包',
+        description: '神作高难整合包',
+        image: './icon/wildfire宣传.webp',
+        // 有这个字段 = 跳转卡片：整张卡点开就去这个网站，不弹下载窗
+        link: 'https://wildfire.ovso.me/',
+        links: {
+        }
+    },
+    {
         id: 'jiuhu',
         title: '酒狐光标',
-        description: '',
+        description: '车万女仆',
         image: './icon/jiuhu_宣传.gif',
         cursor: './cursor/jiuhu_cursor.gif',
         links: {
@@ -739,6 +749,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p class="card-desc">${item.description || '无描述'}</p>
             </div>
         `;
+
+        // 跳转卡片：data 里带 link 字段的，整张卡就是一个外站链接。
+        // 点了直接开新标签页去那个网站，不打开下载弹窗；
+        // 也不接管光标/挂件 —— 这里直接 return，后面的逻辑全部跳过。
+        if (item.link && String(item.link).trim() !== '') {
+            const linkUrl = String(item.link).trim();
+            card.classList.add('card2-link');
+            card.setAttribute('role', 'link');
+            card.setAttribute('tabindex', '0');
+            card.setAttribute('title', (item.title || '') + ' · 点击进入 ' + linkUrl);
+
+            const goLink = () => window.open(linkUrl, '_blank', 'noopener,noreferrer');
+            card.addEventListener('click', goLink);
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    goLink();
+                }
+            });
+
+            return card;
+        }
 
         // 悬停时用「假光标」：隐藏真光标，让一个 <img> 播放该作品的光标动画。
         // 没配 cursor / 文件不存在 → 什么都不做，保持系统默认光标。
