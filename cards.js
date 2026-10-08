@@ -22,6 +22,7 @@ const resources = [
             lanzou: 'https://wwbny.lanzoue.com/b00l32nc8b',
             github: 'https://github.com/xiankuang/all-cursor-install/releases/download/pendant/tfls_main_2.exe',
             bili: 'https://gf.bilibili.com/publish/1109906056',
+            kofi: 'https://ko-fi.com/s/39c8192474',
         }
     },
     {
