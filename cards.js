@@ -13,6 +13,18 @@ const resources = [
         }
     },
     {
+        id: 'tfls',
+        title: '提弗洛斯挂件',
+        description: '可爱镍',
+        image: './icon/tfls_宣传.gif',
+        links: {
+            quark: 'https://pan.quark.cn/s/d4926f907972',
+            lanzou: 'https://wwbny.lanzoue.com/b00l32nc8b',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/pendant/tfls_main_2.exe',
+            bili: 'https://gf.bilibili.com/publish/1109906056',
+        }
+    },
+    {
         id: 'wildfire',
         title: '我的世界野火整合包',
         description: '神作高难整合包',
