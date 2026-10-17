@@ -72,9 +72,48 @@
     /* 核心：去掉链接默认下划线 */
 }
 
+/* 悬停（老大 2026-10-17 要求）：
+   文字隐去、只剩一颗纯白的粗↓箭头；整体压暗；按钮微微下沉。
+   —— 文字用 color:transparent 而不是 display:none，按钮宽度不会因为文字消失而跳变。 */
+.download-btn {
+    position: relative;
+    transition: background-color 0.18s, transform 0.18s;
+}
+
 .download-btn:hover {
-    background-color: #3367d6;
-    /*  hover时加深 */
+    background-color: #2a56c6;      /* 整体变暗（常态 #4285F4，hover 原来的 #3367d6 再深一档） */
+    color: transparent;             /* 文字消失 */
+    transform: translateY(2px);     /* 微微向下 */
+}
+
+/* 粗↓箭头 = 竖杆（::before）+ 三角头（::after），纯白实心 */
+.download-btn:hover::before,
+.download-btn:hover::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    pointer-events: none;
+}
+
+.download-btn:hover::before {
+    width: 4px;
+    height: 9px;
+    margin-left: -2px;
+    top: 50%;
+    margin-top: -6px;
+    border-radius: 2px;
+    background-color: #fff;
+}
+
+.download-btn:hover::after {
+    width: 0;
+    height: 0;
+    margin-left: -6px;
+    top: 50%;
+    margin-top: 3px;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 7px solid #fff;
 }
 
 /* ============================================================================
