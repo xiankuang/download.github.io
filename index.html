@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style.css?v=20260709-1905"> <!-- 保持不变 -->
     <link rel="stylesheet" href="download.css?v=20260709-1905"> <!-- 保持不变 -->
     <link rel="stylesheet" href="animation.css?v=20260709-1905"> <!-- 保持不变 -->
+    <link rel="stylesheet" href="donate.css?v=20261017-1130"> <!-- 捐款框：只在宽屏显示 -->
 </head>
 
 <body>
@@ -109,6 +110,47 @@
                 </a>
             </div>
 
+            <!-- ============================================================
+                 捐款框
+                 只在宽屏（min-aspect-ratio: 1/1）显示，样式见 donate.css，
+                 逻辑见 donate.js。
+                 爱心是按钮里的一层（常态半透明、悬停变亮放大），不飞出按钮。
+                 纯静态站没有后端：点「确认捐助」= 跳到对应平台，金额不会自动
+                 带过去（平台不接受该参数），所以跳转后要自己填。
+                 ============================================================ -->
+            <div class="donate-box" id="donateBox">
+                <div class="donate-title">支持一下</div>
+                <div class="donate-sub">金额随意，都是心意</div>
+
+                <div class="donate-cur" role="group" aria-label="货币">
+                    <button type="button" data-cur="cny" aria-pressed="true">¥ 元</button>
+                    <button type="button" data-cur="usd" aria-pressed="false">$ 美刀</button>
+                </div>
+
+                <div class="donate-amounts" role="group" aria-label="金额">
+                    <button type="button" data-idx="0" aria-pressed="true">¥ 5</button>
+                    <button type="button" data-idx="1" aria-pressed="false">¥ 10</button>
+                    <button type="button" data-idx="2" aria-pressed="false">¥ 20</button>
+                    <button type="button" data-idx="3" aria-pressed="false">¥ 50</button>
+                    <button type="button" data-idx="4" aria-pressed="false">¥ 100</button>
+                </div>
+
+                <button type="button" class="donate-go" id="donateGo">
+                    <span class="go-hearts" aria-hidden="true">
+                        <span class="gh gh-1">&#10084;</span>
+                        <span class="gh gh-2">&#10084;</span>
+                        <span class="gh gh-3">&#10084;</span>
+                        <span class="gh gh-4">&#10084;</span>
+                        <span class="gh gh-5">&#10084;</span>
+                    </span>
+                    <span class="go-label">确认捐助</span>
+                    <span class="go-pop" aria-hidden="true">&#10084;</span>
+                </button>
+
+                <a class="donate-note" id="donateNote"
+                   href="https://afdian.com/order/create?user_id=4ce0136447e811ed96ce52540025c377&remark=&affiliate_code=">用 爱发电 支付 · 跳转后自己填金额</a>
+            </div>
+
         </div>
     </div>
     <div class="card2-grid"></div>
@@ -116,6 +158,7 @@
 
     <!-- 只引入合并后的文件 -->
     <script src="cards.js?v=20261009-0115"></script>
+    <script src="donate.js?v=20261017-1130"></script>
 </body>
 
 </html>

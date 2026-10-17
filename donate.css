@@ -1,0 +1,274 @@
+/* ============================================================================
+   捐款框（宽屏专用）
+   只有宽屏（min-aspect-ratio: 1/1）才显示——窄屏时侧边栏没空间，硬塞会把按钮挤成两行。
+   视觉语言跟着站点走：半透明白底 + 蓝色主色 #4285F4 + 红色主按钮（#ee5353 取自
+   Blender 捐款组件的实测色，见 798x562 截图采样）。
+   ============================================================================ */
+
+.donate-box {
+    display: none;                     /* 默认隐藏，宽屏媒体查询里再打开 */
+    width: 100%;
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px 14px 12px;
+    border-radius: 12px;
+    /* 老大要「纯透明」：底、边框、阴影、模糊全不要，直接浮在侧边栏上 */
+    background-color: transparent;
+    border: 1px solid transparent;
+    box-shadow: none;
+    text-align: left;
+}
+
+/* 宽屏（横向）才出现 */
+@media (min-aspect-ratio: 1/1) {
+    .donate-box {
+        display: flex;
+    }
+}
+
+/* 够高的时候才「钉在侧边栏最下面」：脱离文档流贴住 card1 底部
+   （card1 是 position:relative、padding:20px），不动上面头像/名字/按钮的居中排布。
+   ⚠ 必须加 min-height：屏幕不够高时若也钉底，会直接压到上面的按钮上——
+   实测内容块约 320px、捐款块约 205px，900 高时安全，768 高的笔记本会撞。 */
+@media (min-aspect-ratio: 1/1) and (min-height: 800px) {
+    .donate-box {
+        position: absolute;
+        left: 20px;
+        right: 20px;
+        bottom: 20px;
+        width: auto;
+    }
+}
+
+.donate-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.2;
+}
+
+.donate-sub {
+    font-size: 12px;
+    color: #5f6368;
+    line-height: 1.4;
+    margin-top: -4px;
+}
+
+/* ── 货币切换：¥ / $ ───────────────────────────────────────────────── */
+.donate-cur {
+    display: flex;
+    gap: 4px;
+    padding: 3px;
+    background-color: rgba(0, 0, 0, 0.06);
+    border-radius: 9px;
+}
+
+.donate-cur button {
+    flex: 1 1 0;
+    height: 30px;
+    border: none;
+    border-radius: 7px;
+    background: transparent;
+    color: #444;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.donate-cur button[aria-pressed="true"] {
+    background-color: #4285F4;
+    color: #fff;
+}
+
+/* ── 金额按钮：1 / 2 / 3 / 5 / 10 ──────────────────────────────────── */
+.donate-amounts {
+    display: flex;
+    gap: 5px;
+}
+
+.donate-amounts button {
+    flex: 1 1 0;
+    min-width: 0;
+    height: 36px;
+    padding: 0 2px;
+    border: 1.5px solid #d7dbe0;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #333;
+    font-family: inherit;
+    font-size: 12.5px;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: border-color 0.2s, background-color 0.2s, color 0.2s, transform 0.12s;
+}
+
+.donate-amounts button:hover {
+    border-color: #b9c0c8;
+}
+
+.donate-amounts button[aria-pressed="true"] {
+    background-color: #4285F4;
+    border-color: #4285F4;
+    color: #fff;
+}
+
+/* ── 确认捐助按钮：爱心在按钮里自下而上飘，悬停时过渡 ─────────────────
+   两个状态都按截图采样过（老大给的几张图）：
+     常态：背景 #ee5353，爱心是半透明白（约 28%），小颗散在按钮各处，
+           各按自己的速度**自下而上**飘（升到顶淡出，再从下方重新出现）
+     悬停：背景压暗到 #4c2e2e（实测 rgb(76,46,46)），背景的心变成**红色**
+           （≈ 实测 rgb(205,75,75)）；只有「确认捐助」右边那颗是**白色带光晕**，
+           文字浮起一层白色辉光 —— 走 0.35s 过渡
+   ==================================================================== */
+.donate-go {
+    position: relative;
+    width: 100%;
+    height: 40px;
+    border: none;
+    border-radius: 8px;
+    background-color: #ee5353;
+    color: #fff;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+    overflow: hidden;                   /* 爱心只在按钮里，不飞出去 */
+    transition: background-color 0.35s ease, transform 0.12s ease;
+}
+
+.donate-go:hover,
+.donate-go.is-hover {
+    background-color: #4c2e2e;
+}
+
+.donate-go:active {
+    transform: scale(0.985);
+}
+
+.go-hearts {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.go-hearts .gh {
+    position: absolute;
+    color: #fff;
+    line-height: 1;
+    /* --o = 这颗心此刻多亮：常态淡、悬停亮。亮度写进关键帧引用它，
+       否则动画的 opacity 会盖掉悬停时的提亮。 */
+    --o: 0.28;
+    transform: translate(-50%, -50%) scale(1);
+    opacity: var(--o);
+    transition: transform 0.45s ease, color 0.35s ease, filter 0.35s ease;
+    translate: 0 12px;
+    animation: heartUp var(--fdur, 2.8s) ease-in-out var(--fdel, 0s) infinite;
+}
+
+/* 自下而上：从按钮下部升到上部，快到位时淡出，再从下面重新出现
+   速度 = 上一版 ×1.5（周期 4.2→2.8｜5.1→3.4｜3.4→2.27｜4.7→3.13｜3.9→2.6 秒） */
+@keyframes heartUp {
+    0% {
+        translate: 0 12px;
+        opacity: 0;
+    }
+    12% {
+        opacity: var(--o);
+    }
+    75% {
+        translate: 0 -6px;
+        opacity: var(--o);
+    }
+    100% {
+        translate: 0 -10px;
+        opacity: 0;
+    }
+}
+
+/* 五颗心：左侧一颗小的、右侧一大一小、中间偏左一颗淡的、最右一颗极小
+   各自速度不同、相位错开，才不会像整排一起上升 */
+.go-hearts .gh-1 { left: 11%; top: 63%; font-size: 10px; --fdur: 2.8s;  --fdel: -0.4s; }
+.go-hearts .gh-2 { left: 86%; top: 36%; font-size: 17px; --fdur: 3.4s;  --fdel: -1.4s; }
+.go-hearts .gh-3 { left: 79%; top: 71%; font-size: 9px;  --fdur: 2.27s; --fdel: -0.8s; }
+.go-hearts .gh-4 { left: 47%; top: 20%; font-size: 12px; --fdur: 3.13s; --fdel: -0.2s; --o: 0.12; }
+.go-hearts .gh-5 { left: 95%; top: 80%; font-size: 7px;  --fdur: 2.6s;  --fdel: -1.9s; }
+
+/* 悬停：背景的心变红（#ee5353 以 0.82 叠在 #4c2e2e 上 ≈ 实测 rgb(205,75,75)），
+   只有「确认捐助」右边那颗（.go-pop）是白的 */
+.donate-go:hover .gh,
+.donate-go.is-hover .gh {
+    --o: 0.82;
+    color: #ee5353;
+    transform: translate(-50%, -50%) scale(1.12);
+}
+
+/* 中间那颗更红一点，对应图里按钮上沿那颗 */
+.donate-go:hover .gh-4,
+.donate-go.is-hover .gh-4 {
+    --o: 1;
+    color: #ff5a5a;
+    transform: translate(-50%, -50%) scale(1.3);
+}
+.go-label {
+    position: relative;
+    z-index: 1;
+    transition: text-shadow 0.35s ease;
+}
+
+.donate-go:hover .go-label,
+.donate-go.is-hover .go-label {
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.9), 0 0 14px rgba(255, 255, 255, 0.5);
+}
+
+/* 系统开了「减少动态效果」→ 心不飘，只保留悬停的提亮 */
+@media (prefers-reduced-motion: reduce) {
+    .go-hearts .gh {
+        animation: none;
+        translate: 0 0;
+    }
+
+    .donate-go:hover .go-pop,
+    .donate-go.is-hover .go-pop {
+        transition: none;
+    }
+}
+
+/* 悬停时「确认捐助」右边冒出来的那颗心：从无到有弹出来（回弹曲线） */
+.go-pop {
+    position: absolute;
+    left: calc(50% + 44px);
+    top: 50%;
+    z-index: 2;
+    font-size: 15px;
+    line-height: 1;
+    color: #fff;
+    pointer-events: none;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.2);
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.95));
+    transition: opacity 0.22s ease, transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.donate-go:hover .go-pop,
+.donate-go.is-hover .go-pop {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* ── 底部说明 ─────────────────────────────────────────────────────── */
+.donate-note {
+    display: block;
+    font-size: 11px;
+    color: #6b7280;
+    text-decoration: underline;
+    text-align: center;
+    line-height: 1.4;
+}
+
+.donate-note:hover {
+    color: #4285F4;
+}
