@@ -139,6 +139,59 @@ body {
     /* 图片填充圆形，不拉伸 */
 }
 
+/* ── 点头像：捏一下（逻辑见 avatar.js）───────────────────────────────── */
+.card1-img-container {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* 键盘聚焦也要看得见 */
+.card1-img-container:focus-visible {
+    outline: 3px solid #4285F4;
+    outline-offset: 4px;
+}
+
+/* 被捏扁 → 回弹拉伸 → 小抖两下 → 归位 */
+@keyframes squish {
+    0% {
+        transform: scale(1, 1) rotate(0deg);
+    }
+
+    16% {
+        transform: scale(1.17, 0.83) rotate(-2deg);
+    }
+
+    34% {
+        transform: scale(0.9, 1.12) rotate(1.6deg);
+    }
+
+    52% {
+        transform: scale(1.08, 0.94) rotate(-1deg);
+    }
+
+    70% {
+        transform: scale(0.97, 1.04) rotate(0.5deg);
+    }
+
+    86% {
+        transform: scale(1.02, 0.99) rotate(0deg);
+    }
+
+    100% {
+        transform: scale(1, 1) rotate(0deg);
+    }
+}
+
+.card1-img-container.is-squish {
+    animation: squish 0.75s cubic-bezier(0.36, 0.66, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .card1-img-container.is-squish {
+        animation: none !important;
+    }
+}
+
 /* 文字介绍样式 */
 .card1-desc {
     margin-bottom: 10px;
