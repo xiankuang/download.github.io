@@ -24,11 +24,16 @@
         usd: [1, 3, 5, 10, 20]
     };
 
+    /* 每档的玩笑话（老大 2026-10-17 给的原话）。只配给人民币档；
+       美刀档先只显示价格 —— 老大要给美元版文案时加一行数组就行。 */
+    var PHRASES = ['请框框吃薯片', '请框框喝奶茶', '给框框买箱干脆面', 'v框50元', '哇哇哇，真的么'];
+
     var state = { currency: 'cny', idx: 0 };
 
     var curBtns = box.querySelectorAll('.donate-cur button');
     var amtBtns = box.querySelectorAll('.donate-amounts button');
     var goBtn = box.querySelector('#donateGo');
+    var goLabel = goBtn ? goBtn.querySelector('.go-label') : null;
     var note = box.querySelector('#donateNote');
 
     function each(list, fn) {
@@ -36,11 +41,22 @@
     }
 
     /* 选中第几档（切换货币时档位保持不变） */
+    /* 选中哪一档，「确认捐助」上的字就换成那一档的话（老大 2026-10-17 要的）。
+       美刀档没配文案，保持「确认捐助」不变。 */
+    function setGoLabel() {
+        if (!goLabel) return;
+        var note = state.currency === 'cny' ? PHRASES[state.idx] : '';
+        goLabel.textContent = note || '确认捐助';
+        /* 悬停那颗白心跟着文字的右边缘走：文字变长时不能还停在 50%+44px（会压到字上） */
+        goBtn.style.setProperty('--pop-left', Math.round(goLabel.offsetWidth / 2 + 12) + 'px');
+    }
+
     function setAmount(idx) {
         state.idx = idx;
         each(amtBtns, function (b, i) {
             b.setAttribute('aria-pressed', String(i === idx));
         });
+        setGoLabel();
     }
 
     /* 货币切换：换符号、换价位、换平台链接、换说明文字 */
@@ -75,8 +91,12 @@
 
     /* 悬停效果是纯 CSS 的 :hover，鼠标移开本来就会自己复原；
        这里再兜一层：指针离开 / 失焦时把临时的 .is-hover 摘掉，保证一定复原 */
+    /* 截图钩子会用 forceHover 把状态钉住，这时不能被这些事件顺手摘掉 */
+    var forceHover = false;
+
     ['mouseleave', 'pointerleave', 'blur'].forEach(function (ev) {
         goBtn.addEventListener(ev, function () {
+            if (forceHover) return;
             goBtn.classList.remove('is-hover');
         });
     });
@@ -84,6 +104,7 @@
     /* 从「爱发电 / Ko-fi」按浏览器返回时，页面是从 bfcache 里恢复的，
        会把点击那一刻的 DOM 原样带回来 —— 这里清一次，保证按钮回到常态 */
     window.addEventListener('pageshow', function () {
+        if (forceHover) return;          // 截图钩子钉住的状态不许被清
         goBtn.classList.remove('is-hover');
         goBtn.dataset.busy = '';
     });
@@ -105,12 +126,15 @@
     /* 调试用（只影响截图，不影响正常使用）：
        ?donate-cur=usd   → 以美元初始化
        ?donate-hover=1   → 直接挂上悬停状态（无头浏览器没法真的把鼠标移上去） */
+    var idxParam = /[?&]donate-idx=(\d)/.exec(window.location.search);
+    if (idxParam) setAmount(Number(idxParam[1]));
     var curParam = /[?&]donate-cur=(cny|usd)/.exec(window.location.search);
     if (curParam) setCurrency(curParam[1]);
     if (/(\?|&)donate-hover=1/.test(window.location.search) && goBtn) {
         // 无头浏览器里 CSS 过渡不随虚拟时间推进，会被冻在起始帧；
         // 先把过渡关掉再挂状态，截出来的才是"过渡结束"的样子
         goBtn.style.transition = 'none';
+        forceHover = true;
         each(goBtn.querySelectorAll('.gh'), function (h) { h.style.transition = 'none'; });
         each(goBtn.querySelectorAll('.go-label'), function (l) { l.style.transition = 'none'; });
         each(goBtn.querySelectorAll('.go-pop'), function (p) { p.style.transition = 'none'; });

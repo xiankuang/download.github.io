@@ -19,24 +19,28 @@
     text-align: left;
 }
 
-/* 宽屏（横向）才出现 */
+/* 宽屏（横向）才出现，并且整块落在侧边栏最下面 */
 @media (min-aspect-ratio: 1/1) {
     .donate-box {
         display: flex;
     }
-}
 
-/* 够高的时候才「钉在侧边栏最下面」：脱离文档流贴住 card1 底部
-   （card1 是 position:relative、padding:20px），不动上面头像/名字/按钮的居中排布。
-   ⚠ 必须加 min-height：屏幕不够高时若也钉底，会直接压到上面的按钮上——
-   实测内容块约 320px、捐款块约 205px，900 高时安全，768 高的笔记本会撞。 */
-@media (min-aspect-ratio: 1/1) and (min-height: 800px) {
-    .donate-box {
-        position: absolute;
-        left: 20px;
-        right: 20px;
-        bottom: 20px;
-        width: auto;
+    /* 老大 2026-10-17：金额改成带玩笑话的竖排列表后，捐款块从约 205px 长到约 345px，
+       原来的 absolute 钉底会压到上面的按钮。改成弹性布局：
+       上半部分（头像/名字/按钮）flex:1 居中吃掉剩余空间，捐款框自然落在最下面，
+       屏幕再矮也只是上半部分变紧，不会重叠。 */
+    .card1 {
+        align-items: stretch;
+    }
+
+    .card1-top {
+        flex: 1 1 auto;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 25px;
     }
 }
 
@@ -82,7 +86,7 @@
     color: #fff;
 }
 
-/* ── 金额按钮：1 / 2 / 3 / 5 / 10 ──────────────────────────────────── */
+/* ── 金额按钮：5 / 10 / 20 / 50 / 100（文案挂在「确认捐助」按钮上，见下）── */
 .donate-amounts {
     display: flex;
     gap: 5px;
@@ -240,7 +244,7 @@
 /* 悬停时「确认捐助」右边冒出来的那颗心：从无到有弹出来（回弹曲线） */
 .go-pop {
     position: absolute;
-    left: calc(50% + 44px);
+    left: calc(50% + var(--pop-left, 44px));   /* 由 JS 按「文字宽度/2 + 12」写入，文字变长心也跟着靠右 */
     top: 50%;
     z-index: 2;
     font-size: 15px;
