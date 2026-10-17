@@ -42,6 +42,10 @@
     var goLabel = goBtn ? goBtn.querySelector('.go-label') : null;
     var goHearts = box.querySelector('.go-hearts');
     var note = box.querySelector('#donateNote');
+    var titleEl = box.querySelector('.donate-title');
+    var subEl = box.querySelector('.donate-sub');
+    var curGroup = box.querySelector('.donate-cur');
+    var amtGroup = box.querySelector('.donate-amounts');
 
     function each(list, fn) {
         for (var i = 0; i < list.length; i++) fn(list[i], i);
@@ -77,18 +81,46 @@
         setGoLabel();
     }
 
-    /* 货币切换：换符号、换价位、换平台链接、换说明文字 */
+    /* 整块文案按货币切语言：人民币中文、美刀全英文（老大 2026-10-17：「美刀这个也改成英文的」） */
+    var TEXT = {
+        cny: {
+            title: '支持一下',
+            sub: '金额随意，都是心意',
+            cny: '¥ 元',
+            usd: '$ 美刀',
+            ariaCur: '货币',
+            ariaAmt: '金额',
+            note: function (platform) { return '用 ' + platform + ' 支付 · 跳转后自己填金额'; }
+        },
+        usd: {
+            title: 'Support',
+            sub: 'Any amount, all appreciation',
+            cny: '¥ CNY',
+            usd: '$ USD',
+            ariaCur: 'Currency',
+            ariaAmt: 'Amount',
+            note: function (platform) { return 'Pay with ' + platform + ' · enter amount there'; }
+        }
+    };
+
+    /* 货币切换：换符号、换价位、换平台链接、换整块文案 */
     function setCurrency(cur) {
         state.currency = cur;
+        var t = TEXT[cur];
         each(curBtns, function (b) {
             b.setAttribute('aria-pressed', String(b.dataset.cur === cur));
+            b.textContent = b.dataset.cur === 'cny' ? t.cny : t.usd;
         });
         each(amtBtns, function (b, i) {
             b.textContent = SYMBOL[cur] + ' ' + AMOUNTS[cur][i];
         });
+        if (titleEl) titleEl.textContent = t.title;
+        if (subEl) subEl.textContent = t.sub;
+        if (curGroup) curGroup.setAttribute('aria-label', t.ariaCur);
+        if (amtGroup) amtGroup.setAttribute('aria-label', t.ariaAmt);
         if (note) {
             note.href = LINKS[cur];
-            note.textContent = '用 ' + PLATFORM[cur] + ' 支付 · 跳转后自己填金额';
+            note.textContent = t.note(PLATFORM[cur]);
         }
         setAmount(state.idx);
     }
