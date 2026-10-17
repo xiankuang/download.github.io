@@ -102,15 +102,15 @@
     /* 整块文案按**语言**切（货币切换只改符号/价位/平台，不改语言） */
     var TEXT = {
         zh: {
-            title: '支持一下',
-            sub: '金额随意，都是心意',
+            title: '支持框框',
+            sub: '每份赞助都化为了大白饭，喂饱作者',
             ariaCur: '货币',
             ariaAmt: '金额',
             note: function (platform) { return '用 ' + platform + ' 支付 · 跳转后自己填金额'; }
         },
         en: {
-            title: 'Support',
-            sub: 'Any amount, all appreciation',
+            title: 'Support Kuangkuang',
+            sub: 'Each tip feeds Kuangkuang a bowl of rice',
             ariaCur: 'Currency',
             ariaAmt: 'Amount',
             note: function (platform) { return 'Pay with ' + platform + ' · enter amount there'; }
