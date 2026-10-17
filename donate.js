@@ -26,7 +26,11 @@
 
     /* 每档的玩笑话（老大 2026-10-17 给的原话）。只配给人民币档；
        美刀档先只显示价格 —— 老大要给美元版文案时加一行数组就行。 */
-    var PHRASES = ['请框框吃薯片', '请框框喝奶茶', '给框框买箱干脆面', 'v框50元', '哇哇哇，真的么'];
+    /* 人民币用玩笑话，美刀用英文版（老大 2026-10-17：「美刀我们换成英文版的就行」） */
+    var PHRASES = {
+        cny: ['请框框吃薯片', '请框框喝奶茶', '给框框买箱干脆面', 'v框50元', '哇哇哇，真的么'],
+        usd: ['Chips for Kuangkuang', 'Tea for Kuangkuang', 'Noodles for Kuangkuang', 'V Kuangkuang 50', 'Wait, really?!']
+    };
     /* 按钮里飘的剪影跟着档位走：前四档各是一种吃的，第五档还是心心 */
     var FOODS = ['chip', 'tea', 'noodle', 'chicken', 'heart'];
 
@@ -48,8 +52,17 @@
        美刀档没配文案，保持「确认捐助」不变。 */
     function setGoLabel() {
         if (!goLabel) return;
-        var note = state.currency === 'cny' ? PHRASES[state.idx] : '';
-        goLabel.textContent = note || '确认捐助';
+        var list = PHRASES[state.currency] || [];
+        var note = list[state.idx] || '';
+        goLabel.textContent = note || (state.currency === 'usd' ? 'Donate' : '确认捐助');
+        /* 英文那几条比中文长，塞不下就等比缩字号（最小 11px），别让它顶出按钮 */
+        goLabel.style.fontSize = '';
+        var room = goBtn.clientWidth - 26;
+        var w = goLabel.offsetWidth;
+        if (w > room && room > 0) {
+            var size = Math.max(11, Math.floor(15 * room / w));
+            goLabel.style.fontSize = size + 'px';
+        }
         /* 四种吃的对应前四档，第五档回到心心 */
         if (goHearts) goHearts.dataset.food = FOODS[state.idx] || 'heart';
         /* 悬停那颗白心跟着文字的右边缘走：文字变长时不能还停在 50%+44px（会压到字上） */
