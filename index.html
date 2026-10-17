@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css?v=20261017-1700"> <!-- 保持不变 -->
     <link rel="stylesheet" href="download.css?v=20261017-1845"> <!-- 保持不变 -->
     <link rel="stylesheet" href="animation.css?v=20260709-1905"> <!-- 保持不变 -->
-    <link rel="stylesheet" href="donate.css?v=20261017-2110"> <!-- 捐款框：只在宽屏显示 -->
+    <link rel="stylesheet" href="donate.css?v=20261017-2115"> <!-- 捐款框：只在宽屏显示 -->
 </head>
 
 <body>
@@ -124,7 +124,8 @@
                 <div class="donate-title">支持一下</div>
                 <div class="donate-sub">金额随意，都是心意</div>
 
-                <div class="donate-cur" role="group" aria-label="货币">
+                <div class="donate-cur" role="group" aria-label="货币" data-cur="cny">
+                    <span class="cur-thumb" aria-hidden="true"></span>
                     <button type="button" data-cur="cny" aria-pressed="true">¥ CNY</button>
                     <button type="button" data-cur="usd" aria-pressed="false">$ USD</button>
                 </div>
@@ -159,7 +160,7 @@
 
     <!-- 只引入合并后的文件 -->
     <script src="cards.js?v=20261009-0115"></script>
-    <script src="donate.js?v=20261017-2240"></script>
+    <script src="donate.js?v=20261017-2310"></script>
 </body>
 
 </html>

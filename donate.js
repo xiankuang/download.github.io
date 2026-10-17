@@ -137,18 +137,66 @@
         setGoLabel();
     }
 
-    /* 货币切换：只换符号、价位、平台链接和说明里的平台名。
-       货币按钮上写死 ¥ CNY / $ USD，两套语言都一样（老大 2026-10-17 定） */
-    function setCurrency(cur) {
-        state.currency = cur;
-        each(curBtns, function (b) {
-            b.setAttribute('aria-pressed', String(b.dataset.cur === cur));
-        });
+    /* 切货币的动画（老大 2026-10-17 要"流畅"）：
+       ① 蓝色滑块立刻滑过去（纯 CSS 过渡，data-cur 一变就走）
+       ② 金额先淡出 0.15s → 换数字 → 逐个错开淡入（is-out / is-in）
+       ③ 底部说明跟着淡入，换平台名时不硬跳
+       系统开了「减少动态效果」就整段跳过，直接换。 */
+    function noMotion() {
+        try {
+            return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    function paintAmounts(cur) {
         each(amtBtns, function (b, i) {
             b.textContent = SYMBOL[cur] + ' ' + AMOUNTS[cur][i];
         });
-        setNote();
-        setAmount(state.idx);
+    }
+
+    function playIn(el, cls) {
+        if (!el) return;
+        el.classList.remove(cls);
+        void el.offsetWidth;            // 强制回流，动画才会重新播
+        el.classList.add(cls);
+        window.setTimeout(function () { el.classList.remove(cls); }, 460);
+    }
+
+    var swapTimer = 0;
+
+    /* 货币切换：只换符号、价位、平台链接和说明里的平台名。
+       货币按钮上写死 ¥ CNY / $ USD，两套语言都一样（老大 2026-10-17 定） */
+    function setCurrency(cur) {
+        var changed = state.currency !== cur;
+        state.currency = cur;
+        if (curGroup) curGroup.dataset.cur = cur;      // ← 滑块靠这个滑过去
+        each(curBtns, function (b) {
+            b.setAttribute('aria-pressed', String(b.dataset.cur === cur));
+        });
+
+        var animate = changed && !noMotion() && amtGroup;
+        if (!animate) {
+            paintAmounts(cur);
+            setNote();
+            setAmount(state.idx);
+            return;
+        }
+
+        // 连点也不会错乱：上一次没走完就清掉，直接以最新一次为准
+        window.clearTimeout(swapTimer);
+        if (amtGroup) amtGroup.classList.remove('is-in');
+        if (amtGroup) amtGroup.classList.add('is-out');
+
+        swapTimer = window.setTimeout(function () {
+            paintAmounts(cur);
+            setNote();
+            setAmount(state.idx);
+            if (amtGroup) amtGroup.classList.remove('is-out');
+            playIn(amtGroup, 'is-in');
+            playIn(note, 'is-in');
+        }, 150);
     }
 
     /* 点下去：先让按钮亮成悬停态（0.35s 过渡），再跳平台。
