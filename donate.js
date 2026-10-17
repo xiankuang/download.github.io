@@ -16,7 +16,11 @@
         usd: 'https://ko-fi.com/xkxiankuang'
     };
     var SYMBOL = { cny: '\u00a5', usd: '$' };
-    var PLATFORM = { cny: '爱发电', usd: 'Ko-fi' };
+    /* 平台名也要分语言（英文站里 爱发电 写作 Afdian） */
+    var PLATFORM = {
+        cny: { zh: '爱发电', en: 'Afdian' },
+        usd: { zh: 'Ko-fi', en: 'Ko-fi' }
+    };
 
     /* 两套价位：人民币 5/10/20/50/100，美刀 1/3/5/10/20（各五档，位置一一对应） */
     var AMOUNTS = {
@@ -24,17 +28,31 @@
         usd: [1, 3, 5, 10, 20]
     };
 
-    /* 每档的玩笑话（老大 2026-10-17 给的原话）。只配给人民币档；
-       美刀档先只显示价格 —— 老大要给美元版文案时加一行数组就行。 */
-    /* 人民币用玩笑话，美刀用英文版（老大 2026-10-17：「美刀我们换成英文版的就行」） */
+    /* 每档的玩笑话 —— 按**语言**分，不按货币（2026-10-17 老大改成按地区自动切语言） */
     var PHRASES = {
-        cny: ['请框框吃薯片', '请框框喝奶茶', '给框框买箱干脆面', 'v框50元', '哇哇哇，真的么'],
-        usd: ['Chips for Kuangkuang', 'Tea for Kuangkuang', 'Noodles for Kuangkuang', 'V Kuangkuang 50', 'Wait, really?!']
+        zh: ['请框框吃薯片', '请框框喝奶茶', '给框框买箱干脆面', 'v框50元', '哇哇哇，真的么'],
+        en: ['Chips for Kuangkuang', 'Tea for Kuangkuang', 'Noodles for Kuangkuang', 'V Kuangkuang 50', 'Wait, really?!']
     };
     /* 按钮里飘的剪影跟着档位走：前四档各是一种吃的，第五档还是心心 */
     var FOODS = ['chip', 'tea', 'noodle', 'chicken', 'heart'];
 
-    var state = { currency: 'cny', idx: 0 };
+    /* 语言：默认英文，只有中国大陆用中文（老大 2026-10-17：
+       「除了中国，其他的国家都用英文版本」）。没有后端，用**时区**当国家代理，
+       比 navigator.language 准（在中国但系统是英文的用户也会拿到中文版）。 */
+    function guessLang() {
+        var tz = '';
+        try { tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || ''); } catch (e) { tz = ''; }
+        if (/^Asia\/(Shanghai|Chongqing|Harbin|Urumqi|Kashgar|Beijing|Kashi|Hong_Kong|Macau)$/i.test(tz)) return 'zh';
+        if (!tz) {
+            var langs = navigator.languages || [navigator.language || ''];
+            for (var i = 0; i < langs.length; i++) {
+                if (/^zh([-_]|$)/i.test(langs[i])) return 'zh';
+            }
+        }
+        return 'en';
+    }
+
+    var state = { currency: 'cny', idx: 0, lang: guessLang() };
 
     var curBtns = box.querySelectorAll('.donate-cur button');
     var amtBtns = box.querySelectorAll('.donate-amounts button');
@@ -56,9 +74,9 @@
        美刀档没配文案，保持「确认捐助」不变。 */
     function setGoLabel() {
         if (!goLabel) return;
-        var list = PHRASES[state.currency] || [];
+        var list = PHRASES[state.lang] || [];
         var note = list[state.idx] || '';
-        goLabel.textContent = note || (state.currency === 'usd' ? 'Donate' : '确认捐助');
+        goLabel.textContent = note || (state.lang === 'en' ? 'Donate' : '确认捐助');
         /* 英文那几条比中文长，塞不下就等比缩字号（最小 11px），别让它顶出按钮 */
         goLabel.style.fontSize = '';
         var room = goBtn.clientWidth - 26;
@@ -81,47 +99,55 @@
         setGoLabel();
     }
 
-    /* 整块文案按货币切语言：人民币中文、美刀全英文（老大 2026-10-17：「美刀这个也改成英文的」） */
+    /* 整块文案按**语言**切（货币切换只改符号/价位/平台，不改语言） */
     var TEXT = {
-        cny: {
+        zh: {
             title: '支持一下',
             sub: '金额随意，都是心意',
-            cny: '¥ 元',
-            usd: '$ 美刀',
             ariaCur: '货币',
             ariaAmt: '金额',
             note: function (platform) { return '用 ' + platform + ' 支付 · 跳转后自己填金额'; }
         },
-        usd: {
+        en: {
             title: 'Support',
             sub: 'Any amount, all appreciation',
-            cny: '¥ CNY',
-            usd: '$ USD',
             ariaCur: 'Currency',
             ariaAmt: 'Amount',
             note: function (platform) { return 'Pay with ' + platform + ' · enter amount there'; }
         }
     };
 
-    /* 货币切换：换符号、换价位、换平台链接、换整块文案 */
-    function setCurrency(cur) {
-        state.currency = cur;
-        var t = TEXT[cur];
-        each(curBtns, function (b) {
-            b.setAttribute('aria-pressed', String(b.dataset.cur === cur));
-            b.textContent = b.dataset.cur === 'cny' ? t.cny : t.usd;
-        });
-        each(amtBtns, function (b, i) {
-            b.textContent = SYMBOL[cur] + ' ' + AMOUNTS[cur][i];
-        });
+    /* 底部那行说明同时受语言和平台影响，单独一个函数 */
+    function setNote() {
+        if (!note) return;
+        var t = TEXT[state.lang];
+        note.href = LINKS[state.currency];
+        note.textContent = t.note(PLATFORM[state.currency][state.lang]);
+    }
+
+    /* 换语言：标题/副标题/无障碍标签/底部说明/按钮文字一起换 */
+    function setLang(lang) {
+        state.lang = lang;
+        var t = TEXT[lang];
         if (titleEl) titleEl.textContent = t.title;
         if (subEl) subEl.textContent = t.sub;
         if (curGroup) curGroup.setAttribute('aria-label', t.ariaCur);
         if (amtGroup) amtGroup.setAttribute('aria-label', t.ariaAmt);
-        if (note) {
-            note.href = LINKS[cur];
-            note.textContent = t.note(PLATFORM[cur]);
-        }
+        setNote();
+        setGoLabel();
+    }
+
+    /* 货币切换：只换符号、价位、平台链接和说明里的平台名。
+       货币按钮上写死 ¥ CNY / $ USD，两套语言都一样（老大 2026-10-17 定） */
+    function setCurrency(cur) {
+        state.currency = cur;
+        each(curBtns, function (b) {
+            b.setAttribute('aria-pressed', String(b.dataset.cur === cur));
+        });
+        each(amtBtns, function (b, i) {
+            b.textContent = SYMBOL[cur] + ' ' + AMOUNTS[cur][i];
+        });
+        setNote();
         setAmount(state.idx);
     }
 
@@ -170,7 +196,9 @@
 
     if (goBtn) goBtn.addEventListener('click', pay);
 
-    // 初始化
+    // 初始化：语言先定（决定文案），货币再定（中国默认人民币，别处默认美刀）
+    if (state.lang !== 'zh') state.currency = 'usd';
+    setLang(state.lang);
     setCurrency(state.currency);
 
     /* 调试用（只影响截图，不影响正常使用）：
@@ -180,6 +208,8 @@
     if (idxParam) setAmount(Number(idxParam[1]));
     var curParam = /[?&]donate-cur=(cny|usd)/.exec(window.location.search);
     if (curParam) setCurrency(curParam[1]);
+    var langParam = /[?&]lang=(zh|en)/.exec(window.location.search);
+    if (langParam) { setLang(langParam[1]); }
     if (/(\?|&)donate-hover=1/.test(window.location.search) && goBtn) {
         // 无头浏览器里 CSS 过渡不随虚拟时间推进，会被冻在起始帧；
         // 先把过渡关掉再挂状态，截出来的才是"过渡结束"的样子
