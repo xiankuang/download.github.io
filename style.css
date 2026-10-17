@@ -84,6 +84,23 @@ body {
     /* 配合top:50%实现垂直居中 */
     z-index: 10;
     /* 显示在卡片1上方，不被遮挡 */
+
+    opacity: 1;
+    /* 探头每 10 秒一次（见 peek.js）：出现是硬的，消失有一次淡出 */
+}
+
+@keyframes peekOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+.sidebar-left-img.is-leaving {
+    animation: peekOut 0.32s ease forwards;
 }
 
 .card1-content {
