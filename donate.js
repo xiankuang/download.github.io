@@ -27,6 +27,8 @@
     /* 每档的玩笑话（老大 2026-10-17 给的原话）。只配给人民币档；
        美刀档先只显示价格 —— 老大要给美元版文案时加一行数组就行。 */
     var PHRASES = ['请框框吃薯片', '请框框喝奶茶', '给框框买箱干脆面', 'v框50元', '哇哇哇，真的么'];
+    /* 按钮里飘的剪影跟着档位走：前四档各是一种吃的，第五档还是心心 */
+    var FOODS = ['chip', 'tea', 'noodle', 'chicken', 'heart'];
 
     var state = { currency: 'cny', idx: 0 };
 
@@ -34,6 +36,7 @@
     var amtBtns = box.querySelectorAll('.donate-amounts button');
     var goBtn = box.querySelector('#donateGo');
     var goLabel = goBtn ? goBtn.querySelector('.go-label') : null;
+    var goHearts = box.querySelector('.go-hearts');
     var note = box.querySelector('#donateNote');
 
     function each(list, fn) {
@@ -47,6 +50,8 @@
         if (!goLabel) return;
         var note = state.currency === 'cny' ? PHRASES[state.idx] : '';
         goLabel.textContent = note || '确认捐助';
+        /* 四种吃的对应前四档，第五档回到心心 */
+        if (goHearts) goHearts.dataset.food = FOODS[state.idx] || 'heart';
         /* 悬停那颗白心跟着文字的右边缘走：文字变长时不能还停在 50%+44px（会压到字上） */
         goBtn.style.setProperty('--pop-left', Math.round(goLabel.offsetWidth / 2 + 12) + 'px');
     }
