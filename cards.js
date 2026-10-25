@@ -14,7 +14,7 @@ const resources = [
     },
     {
         id: 'zhao',
-        title: 'zhao',
+        title: '小照光标',
         description: '可爱捏',
         image: './icon/zhao_宣传.gif',
         cursor: './cursor/zhao_cursor.gif',
