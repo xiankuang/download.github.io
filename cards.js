@@ -13,6 +13,19 @@ const resources = [
         }
     },
     {
+        id: 'zhao',
+        title: 'zhao',
+        description: '可爱捏',
+        image: './icon/zhao_宣传.gif',
+        cursor: './cursor/zhao_cursor.gif',
+        links: {
+            quark: 'https://pan.quark.cn/s/b06abd78e6ae',
+            lanzou: 'https://wwbny.lanzoue.com/b00l377zbg',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/zhao_6.exe',
+            bili: 'https://gf.bilibili.com/publish/1109948056',
+        }
+    },
+    {
         id: 'tfls',
         title: '提弗洛斯挂件',
         description: '可爱镍',
