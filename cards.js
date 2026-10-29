@@ -13,6 +13,18 @@ const resources = [
         }
     },
     {
+        id: '派蒙挂件',
+        title: '派蒙挂件',
+        description: '可爱镍',
+        image: './icon/派蒙挂件_宣传.gif',
+        links: {
+            quark: 'https://pan.quark.cn/s/6f15c837415c',
+            lanzou: 'https://wwbny.lanzoue.com/b00l37rauf',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/pendant/%E6%B4%BE%E8%92%99%E6%8C%82%E4%BB%B6_main.exe',
+            bili: 'https://gf.bilibili.com/item/detail/1109953056',
+        }
+    },
+    {
         id: 'zhao',
         title: '小照光标',
         description: '可爱捏',
