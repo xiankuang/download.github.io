@@ -13,6 +13,18 @@ const resources = [
         }
     },
     {
+        id: 'aluona',
+        title: '阿罗娜挂件',
+        description: '可爱镍',
+        image: './icon/aluona_宣传.gif',
+        links: {
+            quark: 'https://pan.quark.cn/s/ef5ab354f198',
+            lanzou: 'https://wwbny.lanzoue.com/b00l37s1vi',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/pendant/aluona_main.exe',
+            bili: 'https://gf.bilibili.com/publish/1109954056',
+        }
+    },
+    {
         id: '派蒙挂件',
         title: '派蒙挂件',
         description: '可爱镍',
