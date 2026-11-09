@@ -1,0 +1,23 @@
+{
+  "width": 88,
+  "height": 88,
+  "contentWidth": 62,
+  "contentHeight": 64,
+  "originalWidth": 48,
+  "originalHeight": 48,
+  "projectType": "Pendant",
+  "ropeLength": 100.0,
+  "ropeSegments": 6,
+  "ropeColor": "#292955",
+  "gravity": 11000.0,
+  "anchorX": 0.6041667,
+  "anchorY": 0.4583333,
+  "cursorAnchorX": 0.59375,
+  "cursorAnchorY": 0.8125,
+  "source": "大肥鱼挂件重置.scpm",
+  "file": "dafeiyu-p_pendant.gif",
+  "ropeLengthManifest": 100.0,
+  "ropeLengthSource": "manifest",
+  "pendulumSegments": 7,
+  "imageSize": 48.0
+}

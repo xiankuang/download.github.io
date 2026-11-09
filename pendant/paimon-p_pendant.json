@@ -1,0 +1,23 @@
+{
+  "width": 90,
+  "height": 90,
+  "contentWidth": 54,
+  "contentHeight": 64,
+  "originalWidth": 48,
+  "originalHeight": 48,
+  "projectType": "Pendant",
+  "ropeLength": 150.0,
+  "ropeSegments": 4,
+  "ropeColor": "#464646",
+  "gravity": 11000.0,
+  "anchorX": 0.4791667,
+  "anchorY": 0.5,
+  "cursorAnchorX": 0.5625,
+  "cursorAnchorY": 0.78125,
+  "source": "派蒙挂件单个.scpm",
+  "file": "paimon-p_pendant.gif",
+  "ropeLengthManifest": 150.0,
+  "ropeLengthSource": "manifest",
+  "pendulumSegments": 5,
+  "imageSize": 96.0
+}

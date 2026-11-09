@@ -20,7 +20,7 @@ const resources = [
         links: {
             quark: 'https://pan.quark.cn/s/11c9ff0630c7',
             lanzou: 'https://wwbny.lanzoue.com/b00l31hzih密码:6h9h',
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/pendant/dafeiyu_dafeiyur.exe',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/pendant/dafeiyu_main_2.exe',
         }
     },
     {
@@ -43,7 +43,7 @@ const resources = [
         links: {
             quark: 'https://pan.quark.cn/s/6f15c837415c',
             lanzou: 'https://wwbny.lanzoue.com/b00l37rauf',
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/pendant/%E6%B4%BE%E8%92%99%E6%8C%82%E4%BB%B6_main.exe',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/pendant/paimon_main.exe',
             bili: 'https://gf.bilibili.com/item/detail/1109953056',
         }
     },
