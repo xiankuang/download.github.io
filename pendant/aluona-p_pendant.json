@@ -1,0 +1,23 @@
+{
+  "width": 83,
+  "height": 83,
+  "contentWidth": 50,
+  "contentHeight": 64,
+  "originalWidth": 48,
+  "originalHeight": 48,
+  "projectType": "Pendant",
+  "ropeLength": 150.0,
+  "ropeSegments": 4,
+  "ropeColor": "#464646",
+  "gravity": 11000.0,
+  "anchorX": 0.5,
+  "anchorY": 0.5,
+  "cursorAnchorX": 0.59375,
+  "cursorAnchorY": 0.8125,
+  "source": "阿罗娜挂件单个.scpm",
+  "file": "aluona-p_pendant.gif",
+  "ropeLengthManifest": 150.0,
+  "ropeLengthSource": "manifest",
+  "pendulumSegments": 5,
+  "imageSize": 96.0
+}

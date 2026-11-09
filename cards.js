@@ -16,7 +16,7 @@ const resources = [
         id: 'dafeiyu',
         title: '大肥鱼挂件重置',
         description: '啥鱼别吃了',
-        image: './icon/大肥鱼挂件重置_挂件_宣传.gif',
+        image: './icon/大肥鱼挂件重置_挂件_宣传.webp',
         links: {
             quark: 'https://pan.quark.cn/s/11c9ff0630c7',
             lanzou: 'https://wwbny.lanzoue.com/b00l31hzih密码:6h9h',
@@ -27,7 +27,7 @@ const resources = [
         id: 'aluona',
         title: '阿罗娜挂件',
         description: '可爱镍',
-        image: './icon/aluona_宣传.gif',
+        image: './icon/aluona_宣传.webp',
         links: {
             quark: 'https://pan.quark.cn/s/ef5ab354f198',
             lanzou: 'https://wwbny.lanzoue.com/b00l37s1vi',
@@ -39,7 +39,7 @@ const resources = [
         id: '派蒙挂件',
         title: '派蒙挂件',
         description: '可爱镍',
-        image: './icon/派蒙挂件_宣传.gif',
+        image: './icon/派蒙挂件_宣传.webp',
         links: {
             quark: 'https://pan.quark.cn/s/6f15c837415c',
             lanzou: 'https://wwbny.lanzoue.com/b00l37rauf',
@@ -51,7 +51,7 @@ const resources = [
         id: 'zhao',
         title: '小照光标',
         description: '可爱捏',
-        image: './icon/zhao_宣传.gif',
+        image: './icon/zhao_宣传.webp',
         cursor: './cursor/zhao_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/b06abd78e6ae',
@@ -64,7 +64,7 @@ const resources = [
         id: 'tfls',
         title: '提弗洛斯挂件',
         description: '可爱镍',
-        image: './icon/tfls_宣传.gif',
+        image: './icon/tfls_宣传.webp',
         links: {
             quark: 'https://pan.quark.cn/s/d4926f907972',
             lanzou: 'https://wwbny.lanzoue.com/b00l32nc8b',
@@ -87,7 +87,7 @@ const resources = [
         id: 'jiuhu',
         title: '酒狐光标',
         description: '车万女仆',
-        image: './icon/jiuhu_宣传.gif',
+        image: './icon/jiuhu_宣传.webp',
         cursor: './cursor/jiuhu_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/46ae40a7376f',
@@ -99,7 +99,7 @@ const resources = [
         id: 'xiaohongmao',
         title: '小红帽',
         description: 'awa',
-        image: './icon/xiaohongmao_宣传.gif',
+        image: './icon/xiaohongmao_宣传.webp',
         links: {
             quark: 'https://pan.quark.cn/s/42085299dac7',
             lanzou: 'https://wwbny.lanzoue.com/b00l32nc5i',
