@@ -13,6 +13,17 @@ const resources = [
         }
     },
     {
+        id: 'dafeiyu',
+        title: '大肥鱼挂件重置',
+        description: '啥鱼别吃了',
+        image: './icon/大肥鱼挂件重置_挂件_宣传.gif',
+        links: {
+            quark: 'https://pan.quark.cn/s/11c9ff0630c7',
+            lanzou: 'https://wwbny.lanzoue.com/b00l31hzih密码:6h9h',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/pendant/%E5%A4%A7%E8%82%A5%E9%B1%BC%E6%8C%82%E4%BB%B6%E9%87%8D%E7%BD%AE_%E6%8C%82%E4%BB%B6.exe',
+        }
+    },
+    {
         id: 'aluona',
         title: '阿罗娜挂件',
         description: '可爱镍',
