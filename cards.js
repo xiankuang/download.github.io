@@ -16,7 +16,7 @@ const resources = [
         id: 'dafeiyu',
         title: '大肥鱼挂件重置',
         description: '啥鱼别吃了',
-        image: './icon/大肥鱼挂件重置_挂件_宣传.webp',
+        image: './icon/大肥鱼挂件重置_挂件_宣传.gif',
         links: {
             quark: 'https://pan.quark.cn/s/11c9ff0630c7',
             lanzou: 'https://wwbny.lanzoue.com/b00l31hzih密码:6h9h',
