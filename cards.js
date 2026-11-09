@@ -20,7 +20,7 @@ const resources = [
         links: {
             quark: 'https://pan.quark.cn/s/11c9ff0630c7',
             lanzou: 'https://wwbny.lanzoue.com/b00l31hzih密码:6h9h',
-            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/pendant/%E5%A4%A7%E8%82%A5%E9%B1%BC%E6%8C%82%E4%BB%B6%E9%87%8D%E7%BD%AE_%E6%8C%82%E4%BB%B6.exe',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/pendant/dafeiyu_dafeiyur.exe',
         }
     },
     {
