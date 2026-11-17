@@ -13,6 +13,18 @@ const resources = [
         }
     },
     {
+        id: 'si',
+        title: '祀',
+        description: '小葱',
+        image: './icon/祀_挂件_宣传.gif',
+        links: {
+            quark: 'https://pan.quark.cn/s/bd320429f44a',
+            lanzou: 'https://wwbny.lanzoue.com/b00l39v35e',
+            github: 'https://github.com/xiankuang/all-cursor-install/releases/download/pendant/si_main.exe',
+            bili: 'https://gf.bilibili.com/item/detail/1109983056',
+        }
+    },
+    {
         id: 'dafeiyu',
         title: '大肥鱼挂件重置',
         description: '啥鱼别吃了',
