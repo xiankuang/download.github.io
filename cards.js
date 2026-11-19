@@ -7,7 +7,6 @@ const resources = [
         image: './icon/scm宣传.webp',
         links: {
             quark: 'https://pan.quark.cn/s/2b1a0dbb34e9',
-            baidu: 'https://pan.baidu.com/s/1JJs5Jnr3lEtm0SerPfbiFA?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l1y0s2d',
             steam: 'https://store.steampowered.com/app/3254220/Simple_Cursor_Maker/',
         }
@@ -311,7 +310,6 @@ const resources = [
         cursor: './cursor/tachibana_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/2a86f97f589f',
-            baidu: 'https://pan.baidu.com/s/1r_7rXwv9HvUBUrxUFgAawA?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l2cuqfi',
             github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/tachibana_main.exe',
         }
@@ -324,7 +322,6 @@ const resources = [
         cursor: './cursor/katixiya_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/c2812e04fa37',
-            baidu: 'https://pan.baidu.com/s/1r_7rXwv9HvUBUrxUFgAawA?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l2cesnc',
             github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/katixiya_main.exe',
         }
@@ -338,7 +335,6 @@ const resources = [
         cursor: './cursor/flandre_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/e348395d7225',
-            baidu: 'https://pan.baidu.com/s/1PdahtFMN1wy36G4hzEt2NQ?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l2brbxc',
             github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/flandre_main.exe',
         }
@@ -351,7 +347,6 @@ const resources = [
         cursor: './cursor/saba_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/262c8cb07ec4',
-            baidu: 'https://pan.baidu.com/s/1yknDogS323V27TSaXW5P0Q?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l2ay8vi',
             github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/saba_saba.exe',
         }
@@ -364,7 +359,6 @@ const resources = [
         cursor: './cursor/satori_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/8411f55ad57b',
-            baidu: 'https://pan.baidu.com/s/1ytrYdeBeyQo1dcoYwWG_LA?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l29ycqb',
             github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/satori_main.exe',
         }
@@ -377,7 +371,6 @@ const resources = [
         cursor: './cursor/marisa_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/64d83bc83d49',
-            baidu: 'https://pan.baidu.com/s/1xBc9uvzEWn5BDM8UB9SXiA?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l28zqkj',
             github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/marisa_main.exe',
         }
@@ -390,7 +383,6 @@ const resources = [
         cursor: './cursor/frieren_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/2ade2b99f8d8',
-            baidu: 'https://pan.baidu.com/s/1YaP7LMT-9vvU0v6qGLlJNw?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l26ef7c',
             github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/frieren_main.exe',
         }
@@ -403,7 +395,6 @@ const resources = [
         cursor: './cursor/teto_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/85d7a87b873f',
-            baidu: 'https://pan.baidu.com/s/15iriKVjJDUD1gDTGXddF8Q?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l23xxod',
             github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/teto_teto.exe',
         }
@@ -416,7 +407,6 @@ const resources = [
         cursor: './cursor/reimu_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/5e61d07a2cf5',
-            baidu: 'https://pan.baidu.com/s/1zz4IaEfU_bmqHP7tOHO6ow?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l2378pi',
             github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/reimu_main.exe',
         }
@@ -429,7 +419,6 @@ const resources = [
         cursor: './cursor/yileina_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/0b9aeb8ba9ed',
-            baidu: 'https://pan.baidu.com/s/1B27QOHyN2Fzc6hFvymchmg?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l2116qj',
             github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/yileina_main.exe',
         }
@@ -442,7 +431,6 @@ const resources = [
         cursor: './cursor/bocchi_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/7b4b1bd17cb1',
-            baidu: 'https://pan.baidu.com/s/1TGmpGpNkmu4OU2kUPMvhig?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l20d4he',
             github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/bocchi_main.exe',
         }
@@ -455,7 +443,6 @@ const resources = [
         cursor: './cursor/hoshino_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/b605be6adac5',
-            baidu: 'https://pan.baidu.com/s/1VM88_hZAVGLIVr6y2wmSIw?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l203cmh',
             github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/hoshino_main.exe',
         }
@@ -468,7 +455,6 @@ const resources = [
         cursor: './cursor/ralsei_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/fdd616816133',
-            baidu: 'https://pan.baidu.com/s/1PuVAmVSNcccaH3P_UzdgaQ?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l1zb6ub',
             github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/ralsei_relsei.exe',
         }
@@ -481,7 +467,6 @@ const resources = [
         image: './icon/初音未来光标宣传2.webp',
         links: {
             quark: 'https://pan.quark.cn/s/aa5d3badc6ac',
-            baidu: 'https://pan.baidu.com/s/1-IFShF99Dnm65_wkrQUcYA?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l1xwemf',
             github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/miku_main.exe',
         }
@@ -494,7 +479,6 @@ const resources = [
         cursor: './cursor/koishi_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/c952fa6b39fb',
-            baidu: 'https://pan.baidu.com/s/1ccQnlAOTsJdO1jgdQiPaMA?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l1y20gb',
             github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/koishi_main.exe',
         }
@@ -507,7 +491,6 @@ const resources = [
         image: './icon/niko光标宣传2.webp',
         links: {
             quark: 'https://pan.quark.cn/s/a4e0d941bf2d',
-            baidu: 'https://pan.baidu.com/s/14w7K0B46__oL1hnw2ck0yw?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l1y19mf',
             github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/niko_niko20.exe',
         }
@@ -520,7 +503,6 @@ const resources = [
         image: './icon/niko1.0光标宣传2.webp',
         links: {
             quark: 'https://pan.quark.cn/s/42480abfef98',
-            baidu: 'https://pan.baidu.com/s/1D14uQSotg2r7QkitBX2t2Q?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l25xnef',
             github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/niko_niko10.exe',
         }
@@ -533,7 +515,6 @@ const resources = [
         cursor: './cursor/momoi_cursor.gif',
         links: {
             quark: 'https://pan.quark.cn/s/56affc620a29',
-            baidu: 'https://pan.baidu.com/s/16l1JBn_gopaqbROpJ7eHYg?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l25xn1c',
             github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/momoi_pack.zip',
         }
@@ -546,7 +527,6 @@ const resources = [
         image: './icon/动态简单像素光标宣传.webp',
         links: {
             quark: 'https://pan.quark.cn/s/fccb7ad0e841',
-            baidu: 'https://pan.baidu.com/s/1PdahtFMN1wy36G4hzEt2NQ?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l1y2wsf',
             github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/pixelanim_main.exe',
         }
@@ -559,7 +539,6 @@ const resources = [
         image: './icon/反色动态简单像素光标.webp',
         links: {
             quark: 'https://pan.quark.cn/s/623d5e5a5728',
-            baidu: 'https://pan.baidu.com/s/1N60sFEjWX4NH1CL6fA-mWg?pwd=xkxk',
             lanzou: 'https://wwpy.lanzoue.com/b00l1ywr3a',
             github: 'https://github.com/xiankuang/all-cursor-install/releases/download/cursor/invcolor_main.exe',
         }
